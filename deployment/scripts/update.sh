@@ -25,11 +25,11 @@ for region in "${regions[@]}"
 do
 
    aws cloudformation update-stack --stack-name sbjbECSService --template-body file://templates/service.yaml \
-  --parameters file://scripts/$1/parameters-service.json --capabilities CAPABILITY_IAM || true
+  --parameters file://scripts/$1/parameters-service.json --capabilities CAPABILITY_IAM $2 || true
 
-  aws cloudformation wait stack-update-complete --stack-name sbjbECSService
+  aws cloudformation wait stack-update-complete --stack-name sbjbECSService $2
 
   aws cloudformation update-stack --stack-name sbjbCacheECSDeployment --template-body file://templates/deployment-pipeline.yaml \
-  --parameters file://scripts/$1/parameters.json --capabilities CAPABILITY_IAM
+  --parameters file://scripts/$1/parameters.json --capabilities CAPABILITY_IAM $2
 
 done

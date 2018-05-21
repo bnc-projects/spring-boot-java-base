@@ -8,6 +8,7 @@ Metadata:
         default: Parent Stacks
       Parameters:
       - ParentECSStack
+      - ParentServiceStack
     - Label:
         default: Git Parameters
       Parameters:
@@ -22,6 +23,9 @@ Metadata:
 
 Parameters:
   ParentECSStack:
+    Type: String
+
+  ParentServiceStack:
     Type: String
 
   GitHubUser:
@@ -71,7 +75,7 @@ Resources:
                   - logs:CreateLogStream
                   - logs:PutLogEvents
                   - ecr:GetAuthorizationToken
-              - Resource: !Sub arn:aws:s3:::${ArtifactBucket}/*
+              - Resource: !Join ['', [ 'arn:aws:s3:::', "Fn::ImportValue": {"Fn::Sub":'${ParentECSStack}-BuildCacheBucket'}, '/*']]
                 Effect: Allow
                 Action:
                   - s3:GetObject
@@ -112,7 +116,7 @@ Resources:
                   - logs:CreateLogStream
                   - logs:PutLogEvents
                   - ecr:GetAuthorizationToken
-              - Resource: !Sub arn:aws:s3:::${ArtifactBucket}/*
+              - Resource: !Join ['', [ 'arn:aws:s3:::', "Fn::ImportValue": {"Fn::Sub":'${ParentECSStack}-BuildCacheBucket'}, '/*']]
                 Effect: Allow
                 Action:
                   - s3:GetObject
@@ -145,8 +149,7 @@ Resources:
           PolicyDocument:
             Version: 2012-10-17
             Statement:
-              - Resource:
-                  - !Sub arn:aws:s3:::${ArtifactBucket}/*
+              - Resource: !Join ['', [ 'arn:aws:s3:::', "Fn::ImportValue": {"Fn::Sub":'${ParentECSStack}-BuildCacheBucket'}, '/*']]
                 Effect: Allow
                 Action:
                   - s3:PutObject
@@ -165,13 +168,13 @@ Resources:
                   - codebuild:StartBuild
                   - codebuild:BatchGetBuilds
                   - iam:PassRole
-  ArtifactBucket:
-    Type: AWS::S3::Bucket
-    DeletionPolicy: Retain
 
   JavaBuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
+      Cache:
+        Type: S3
+        Location: !Join ['', [ 'arn:aws:s3:::', "Fn::ImportValue": {"Fn::Sub":'${ParentECSStack}-BuildCacheBucket'}, '/gradle-cache']]
       Artifacts:
         Type: CODEPIPELINE
       Source:
@@ -182,40 +185,34 @@ Resources:
           phases:
             install:
               commands:
-                - echo Nothing to do in the install phase...
+                - echo Install docker daemon
             pre_build:
               commands:
-                - export LC_ALL="en_US.UTF-8"
-                - locale-gen en_US en_US.UTF-8
-                - dpkg-reconfigure locales
-                - locale
                 - TAG="$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
                 - echo "Tag is ${TAG}"
-                - IMAGE_URI="${REPOSITORY_URI}:${TAG}"
+                - $(aws ecr get-login --no-include-email)
+                - echo starting prebuild for ${REPOSITORY_URI}
                 - echo setting gradlew build permissions...
                 - chmod +x gradlew
             build:
               commands:
                 - echo Build started on `date`
-                - echo "Running [./gradlew clean check installDist -PTAG=${TAG}]"
-                - ./gradlew clean check installDist -PTAG=$TAG -PBRANCH=master
-            post_build:
-              commands:
-                - echo $CODEBUILD_RESOLVED_SOURCE_VERSION > source-version.text
+                - echo "Running [./gradlew clean assemble check docker dockerTag dockerPush -PTAG=${TAG} -PBRANCH=master -PREPOSITORY_URI=${REPOSITORY_URI}]"
+                - ./gradlew clean assemble check docker dockerTag dockerPush -PTAG=${TAG} -PBRANCH=master -PREPOSITORY_URI=${REPOSITORY_URI}
+                - printf '[{"name":"sbjb","imageUri":"%s"}]' "${REPOSITORY_URI}:${TAG}" > images.json
+                - echo [{"name":"sbjb","imageUri":"${REPOSITORY_URI}:${TAG}"}]
                 - echo Build completed on `date`
           cache:
             paths:
               - '/root/.gradle/caches/**/*'
           artifacts:
             files:
-              - service/build/install/**/*
-              - service/security/**/*
-              - source-version.text
-              - Dockerfile
+              - images.json
       Environment:
         ComputeType: "BUILD_GENERAL1_SMALL"
         Image: "aws/codebuild/java:openjdk-8"
         Type: "LINUX_CONTAINER"
+        PrivilegedMode: true
         EnvironmentVariables:
           - Name: AWS_DEFAULT_REGION
             Value: !Ref AWS::Region
@@ -224,63 +221,14 @@ Resources:
       Name: !Sub Java-build-${AWS::StackName}
       ServiceRole: !Ref CodeBuildServiceRole
 
-  DockerBuildProject:
-    Type: AWS::CodeBuild::Project
-    Properties:
-      # http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codebuild-project.html#cfn-codebuild-project-cache
-      Cache:
-        Location: !Ref ArtifactBucket
-        Type: "S3"
-      Artifacts:
-        Location: !Ref ArtifactBucket
-        Type: "S3"
-      Source:
-        Location: !Sub ${ArtifactBucket}/source.zip
-        Type: "S3"
-        BuildSpec: |
-          version: 0.2
-          phases:
-            pre_build:
-              commands:
-                - echo starting prebuild for ${REPOSITORY_URI}
-                - $(aws ecr get-login --no-include-email)
-                - TAG="$(cat source-version.text | head -c 8)"
-            build:
-              commands:
-                - echo Build started on `date`
-                - echo "docker build "${BUILD_ARGS}" --tag "${REPOSITORY_URI}:${TAG}" ."
-                - docker build --build-arg spring_profiles="${BUILD_ARGS}" --tag "${REPOSITORY_URI}:${TAG}" .
-            post_build:
-              commands:
-                - echo "docker push ${REPOSITORY_URI}:${TAG}"
-                - docker push "${REPOSITORY_URI}:${TAG}"
-                - printf '[{"name":"sbjb","imageUri":"%s"}]' "${REPOSITORY_URI}:${TAG}" > images.json
-                - echo [{"name":"sbjb","imageUri":"${REPOSITORY_URI}:${TAG}"}]
-                - echo Build completed on `date`
-          artifacts:
-            files:
-              - images.json
-      Environment:
-        ComputeType: "BUILD_GENERAL1_SMALL"
-        Image: "aws/codebuild/docker:17.09.0"
-        Type: "LINUX_CONTAINER"
-        EnvironmentVariables:
-          - Name: AWS_DEFAULT_REGION
-            Value: !Ref AWS::Region
-          - Name: REPOSITORY_URI
-            Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${Repository}
-          - Name: BUILD_ARGS
-            Value: !Ref SpringProfiles
-      Name: !Sub Docker-build-${AWS::StackName}
-      ServiceRole: !Ref CodeBuildServiceRole
-
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
     Properties:
       RoleArn: !GetAtt CodePipelineServiceRole.Arn
       ArtifactStore:
         Type: S3
-        Location: !Ref ArtifactBucket
+        Location:
+          'Fn::ImportValue': !Sub '${ParentECSStack}-BuildCacheBucket'
       Stages:
         - Name: GitHub-Source-Code
           Actions:
@@ -311,23 +259,8 @@ Resources:
               InputArtifacts:
                 - Name: ApplicationSourceCode
               OutputArtifacts:
-                - Name: ApplicationJar
-              RunOrder: 1
-        - Name: DockerBuild
-          Actions:
-            - Name: Build
-              ActionTypeId:
-                Category: Build
-                Owner: AWS
-                Version: 1
-                Provider: CodeBuild
-              Configuration:
-                ProjectName: !Ref DockerBuildProject
-              InputArtifacts:
-                - Name: ApplicationJar
-              OutputArtifacts:
                 - Name: BuildOutput
-              RunOrder: 2
+              RunOrder: 1
         - Name: Deploy
           Actions:
             - Name: Deploy
@@ -340,7 +273,7 @@ Resources:
                 ClusterName:
                   'Fn::ImportValue': !Sub '${ParentECSStack}-Cluster'
                 ServiceName:
-                  'Fn::ImportValue': !Sub '${ParentECSStack}Service-Name'
+                  'Fn::ImportValue': !Sub '${ParentServiceStack}-Name'
                 FileName: images.json
               InputArtifacts:
                 - Name: BuildOutput
@@ -349,4 +282,3 @@ Resources:
 Outputs:
   PipelineUrl:
     Value: !Sub https://console.aws.amazon.com/codepipeline/home?region=${AWS::Region}#/view/${Pipeline}
-
