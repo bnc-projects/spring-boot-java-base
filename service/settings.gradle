@@ -1,3 +1,0 @@
-project.name = 'service'
-include 'exchange', 'test-utilities'
-
