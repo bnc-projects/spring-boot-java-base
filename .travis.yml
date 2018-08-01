@@ -1,17 +1,72 @@
 language: java
 jdk:
-  - oraclejdk8
-branches:
-  only:
-  - master  
-before_script:
-  - chmod +x gradlew
+- openjdk8
+- openjdk10
+- openjdk11
+env:
+  global:
+  # Following encrypted environment variables must be present for successful deployment
+  # DEV_ACCOUNT_ID,DEV_ACCESS_KEY_ID,DEV_SECRET_ACCESS_KEY
+  # PROD_ACCOUNT_ID,PROD_ACCESS_KEY_ID,PROD_SECRET_ACCESS_KEY
+  - AWS_DEFAULT_REGION=
+  - ECR_REPOSITORY_NAME=
+  - TASK_NAME=
+before_install:
+- pip install --user awscli
+- export PATH=$PATH:$HOME/.local/bin
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - "$HOME/.gradle/caches/"
-    - "$HOME/.gradle/wrapper/"
-after_success:
-  - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
+  - "$HOME/.local"
+jobs:
+  include:
+  - stage: deploy to development
+    jdk: openjdk8
+    env:
+    - SPLUNK_TOKEN=
+    - ENVIRONMENT=development
+    - SPRING_PROFILES=default,development
+    - CLUSTER_NAME=
+    - SERVICE_NAME=
+    - AWS_ACCESS_KEY_ID=$DEV_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY=$DEV_SECRET_ACCESS_KEY
+    - REPOSITORY_URI=$DEV_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPOSITORY_NAME
+    script: skip
+    before_deploy: deployment/scripts/common/push-docker-image.sh
+    deploy:
+      skip_cleanup: true
+      provider: script
+      script: bash deployment/scripts/common/deploy-ecs.sh --cluster $CLUSTER_NAME --service $SERVICE_NAME --task
+        $TASK_NAME --task-def task_def_${TRAVIS_BUILD_NUMBER}.json
+      on:
+        branch: master
+  - stage: deploy to production
+    jdk: openjdk8
+    env:
+    - SPLUNK_TOKEN=
+    - ENVIRONMENT=production
+    - SPRING_PROFILES=default,production
+    - CLUSTER_NAME=
+    - SERVICE_NAME=
+    - AWS_ACCESS_KEY_ID=$PROD_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY=$PROD_SECRET_ACCESS_KEY
+    - REPOSITORY_URI=$PROD_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPOSITORY_NAME
+    before_deploy: deployment/scripts/common/push-docker-image.sh
+    deploy:
+      skip_cleanup: true
+      provider: script
+      script: bash deployment/scripts/common/deploy-ecs.sh --cluster $CLUSTER_NAME --service $SERVICE_NAME --task
+        $TASK_NAME --task-def task_def_${TRAVIS_BUILD_NUMBER}.json
+      on:
+        branch: master
+  allow_failures:
+    - jdk: openjdk10
+    - jdk: openjdk11
+  fast_finish: true
+notifications:
+  slack:
+    secure:

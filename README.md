@@ -47,9 +47,9 @@ docker run -p 8080:8080 -i -t -e JAVA_OPTS="-javaagent:newrelic/newrelic.jar -Dn
 #### Recommended JAVA_OPTS
 It is strongly recommended that the following Java Options are set when running the service in production.
 
-**-XX:MaxRAMFraction=n** should only be set to 1 for containers with only 1 processes running. Setting the value will set the heap to 50% of the memory in the container.
+**-XX:MaxRAMFraction=n** should only be set to 1 for containers with only 1 processes running. Setting the value will set the heap to 100% of the memory in the container.
 ```base
-JAVA_OPTS="-XX:+UseG1GC -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1 -javaagent:newrelic/newrelic.jar -Dnewrelic.environment=${environment} -Dnewrelic.config.file=newrelic/newrelic.yml -Djava.security.egd=file:/dev/./urandom"
+JAVA_OPTS="-XX:MaxRAMFraction=2 -XX:+UseG1GC -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -javaagent:newrelic/newrelic.jar -Dnewrelic.environment=${environment} -Dnewrelic.config.file=newrelic/newrelic.yml -Djava.security.egd=file:/dev/./urandom"
 ```
 
 ## For more tasks run

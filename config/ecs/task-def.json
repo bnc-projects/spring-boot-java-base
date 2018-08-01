@@ -1,0 +1,38 @@
+{
+  "containerDefinitions": [
+    {
+      "logConfiguration": {
+        "logDriver": "splunk",
+        "options": {
+          "splunk-url": "https://input-prd-p-gffsj6ql3b94.cloud.splunk.com:8088",
+          "splunk-token": "\(.SPLUNK_TOKEN)",
+          "splunk-insecureskipverify": "true",
+          "splunk-format": "raw"
+        }
+      },
+      "portMappings": [
+        {
+          "hostPort": 0,
+          "protocol": "tcp",
+          "containerPort": 8080
+        }
+      ],
+      "cpu": 128,
+      "environment": [
+        {
+          "name": "JAVA_OPTS",
+          "value": "-XX:MaxRAMFraction=2 -XX:+UseG1GC -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -javaagent:newrelic/newrelic.jar -Dnewrelic.environment=\(.ENVIRONMENT) -Dnewrelic.config.file=newrelic/newrelic.yml -Djava.security.egd=file:/dev/./urandom"
+        },
+        {
+          "name": "SPRING_PROFILES_ACTIVE",
+          "value": "\(.SPRING_PROFILES)"
+        }
+      ],
+      "memory": 768,
+      "memoryReservation": 768,
+      "image": "\(.REPOSITORY_URI)",
+      "name": "sbjb"
+    }
+  ],
+  "family": "sbjb-Task"
+}

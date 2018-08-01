@@ -39,5 +39,4 @@ do
   createOrUpdateStack SbjbECRRepository repository
   syncBaseHealthcheckImage sbjb-service
   createOrUpdateStack SBJBECSService service
-  createOrUpdateStack SBJBECSDeployment deployment-pipeline
 done
