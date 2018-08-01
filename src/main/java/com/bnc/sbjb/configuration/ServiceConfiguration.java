@@ -26,7 +26,7 @@ public class ServiceConfiguration {
                 registry.config()
                     .commonTags("application", buildProperties.getName(), "container",
                         InetAddress.getLocalHost().getHostName());
-            } catch (UnknownHostException e) {
+            } catch (UnknownHostException ex) {
                 registry.config()
                     .commonTags("application", buildProperties.getName(), "container", "unknown");
             }
