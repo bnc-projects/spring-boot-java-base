@@ -8,19 +8,15 @@ import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCusto
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 @Configuration
 public class ServiceConfiguration {
 
     private final BuildProperties buildProperties;
 
-    private final Environment environment;
-
     @Autowired
-    public ServiceConfiguration(final BuildProperties buildProperties, final Environment environment) {
+    public ServiceConfiguration(final BuildProperties buildProperties) {
         this.buildProperties = buildProperties;
-        this.environment = environment;
     }
 
     @Bean
