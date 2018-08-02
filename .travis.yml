@@ -5,9 +5,6 @@ jdk:
 - openjdk11
 env:
   global:
-  # Following encrypted environment variables must be present for successful deployment
-  # DEV_ACCOUNT_ID,DEV_ACCESS_KEY_ID,DEV_SECRET_ACCESS_KEY
-  # PROD_ACCOUNT_ID,PROD_ACCESS_KEY_ID,PROD_SECRET_ACCESS_KEY
   - AWS_DEFAULT_REGION=
   - ECR_REPOSITORY_NAME=
   - TASK_NAME=
@@ -22,8 +19,11 @@ cache:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
   - "$HOME/.local"
+script:
+- ./gradlew check sonarqube
 jobs:
   include:
+  - stage: test
   - stage: deploy to development
     jdk: openjdk8
     env:
@@ -40,8 +40,8 @@ jobs:
     deploy:
       skip_cleanup: true
       provider: script
-      script: bash deployment/scripts/common/deploy-ecs.sh --cluster $CLUSTER_NAME --service $SERVICE_NAME --task
-        $TASK_NAME --task-def task_def_${TRAVIS_BUILD_NUMBER}.json
+      script: bash deployment/scripts/common/deploy-ecs.sh --cluster $CLUSTER_NAME
+        --service $SERVICE_NAME --task $TASK_NAME --task-def task_def_${TRAVIS_BUILD_NUMBER}.json
       on:
         branch: master
   - stage: deploy to production
@@ -59,14 +59,19 @@ jobs:
     deploy:
       skip_cleanup: true
       provider: script
-      script: bash deployment/scripts/common/deploy-ecs.sh --cluster $CLUSTER_NAME --service $SERVICE_NAME --task
-        $TASK_NAME --task-def task_def_${TRAVIS_BUILD_NUMBER}.json
+      script: bash deployment/scripts/common/deploy-ecs.sh --cluster $CLUSTER_NAME
+        --service $SERVICE_NAME --task $TASK_NAME --task-def task_def_${TRAVIS_BUILD_NUMBER}.json
       on:
         branch: master
   allow_failures:
-    - jdk: openjdk10
-    - jdk: openjdk11
+  - jdk: openjdk10
+  - jdk: openjdk11
   fast_finish: true
 notifications:
   slack:
     secure: S4Pg6XK5x3pfxldRNJVMuzLfPzKVsGdogr0u0r/pu5dpjJujoecsuDoPS8syej1hZRqJOxK36Ms+NDXRzHNK6w95X69kgwDjzoI3PoKmnqyBJIcgSueyNbm7KoQGgoKTOgEUHZ0A9JbcdH8ThBHUR8wltXctGd3kEp8KC3wSlXzDmLeFJPTqC8DMBmSC00nVL7LtXj4VdOwYZnERKErjjx5f+msOhCNbAXLr7p12O7ewHDhL1jaex4r4yzG8+oevDKYNgpHyd8BCsgsCnjiKewByiVB9q4GBjE6CN3c1VfKdWmPWwF4jgxsz8BqTjshM17msnRyXOaSsB6MG+gGMyNKwFVYEwlsAQyRl5i5IhvjIHVMZVcbon098CpNcpW/ZsWALVQSZUW8yBBVPfVs4gTI071R9hQvDWdHLEkApZpsD24tPwsXGdzupBceyqf3HZn9PDYnqMB+hDxSYmLoJRYqjdFxguUwZEYSRih0c+4npcCBO/QJ5m+4aoG2qJ7Zg10YPr3I/PU+kHKjMzvAME4iZ30CnW0gRskM7nVHZRVmR/vgweZDuo9GYXnOykUUur9S3OEhkEp6Ucmcnkv/DXRa5lU0gqpnfkcJv40UaqoxyypGn2U0dPHPCbYahvTu4QAAAkUU6RsJ3TlDhOg018lJVBBaLx+tXpTD+TpY7/XU=
+addons:
+  sonarcloud:
+    organization: "bnc-projects"
+    token:
+      secure: "Ehm9iNp6f5fBata+4mkkfwpUelmYZZAkmrakZ0jOsZn3Pw/e6+ZskxOWBdRZQxZbpsQ2QTxrunel4pNgjKpuj340OuDGQGb8it23VslTDuffpDguDkYVBe8RQER2TeJ5ZrcpYbTwNg0KUxwvvjSgbmwDogQkvXu6nxmGjcT+kcKMuVNBXSQrIPalKQNlq5Oga+IBfuqK0zhgRmsHq5LQVqjrn3dckXL7rtaqF7yXX8EIxaRXFzE36hjQlLB0b2OpT9ff6/Jx15kBgb0OYTwHOjhzg94UWljsW1u4Unl+B93drRV87HSmJN1kZZkzprixgvO+ERMaAwVsb3qqDb6qqhIS06uUZfmsV/lKOfoB2WEYA8KdS4oYUOuRULjrWBvhqA+dT/6QPHjSpgssVCfnuFsgw7vbyBuCZAifHmS0g9h/4+N40xYk4jw+L5jIDH72AdktD2o2qY+26lqw6XdxPPwKBrsBcElbYbfTdw/VMYlA9yoOFx5mlRUxhv0Jxt7u5ZD5FmE7H9XleTNnmO13dhcRfEZvUpEWa1Ccn5ueq/03kbXLIaZ6I0LM8ONK/qEqUmY12Ztf7QFs94HED54N62o+5fohbURsxVDE286VO1alUqgOVLOt7dd+X4JhDdu2ix4jHjPsan40eAy6e6FxFn4xsQF5BGPrFvDbCsvP6ok="
