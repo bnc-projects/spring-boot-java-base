@@ -3,7 +3,7 @@ FROM openjdk:8u171-jre-alpine3.8
 ARG JAR_FILE
 
 COPY ${JAR_FILE} app.jar
-COPY newrelic-agent-*.jar newrelic/newrelic.jar
+COPY newrelic.jar newrelic/newrelic.jar
 COPY newrelic.yml newrelic/newrelic.yml
 
 EXPOSE 8080

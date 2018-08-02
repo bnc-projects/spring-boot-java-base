@@ -261,6 +261,11 @@ common: &default_settings
     # An example label
     #label_name: label_value
 
+  distributed_tracing:
+
+    # Set to true to enable distributed tracing
+    # Default is false.
+    enabled: true
 
 # Application Environments
 # ------------------------------------------
@@ -276,7 +281,7 @@ common: &default_settings
 localhost:
   <<: *default_settings
   app_name: Spring Boot Java Base (localhost)
-  agent_enabled: false
+  agent_enabled: true
   license_key:
 
 development:
@@ -287,5 +292,6 @@ development:
 
 production:
   <<: *default_settings
+  app_name: Spring Boot Java Base
   agent_enabled: true
   license_key:
