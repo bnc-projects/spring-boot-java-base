@@ -5,6 +5,9 @@ jdk:
 - openjdk11
 env:
   global:
+  # Following encrypted environment variables must be present for successful deployment
+  # DEV_ACCOUNT_ID,DEV_ACCESS_KEY_ID,DEV_SECRET_ACCESS_KEY
+  # PROD_ACCOUNT_ID,PROD_ACCESS_KEY_ID,PROD_SECRET_ACCESS_KEY
   - AWS_DEFAULT_REGION=
   - ECR_REPOSITORY_NAME=
   - TASK_NAME=
