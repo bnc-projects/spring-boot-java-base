@@ -92,7 +92,7 @@ if (!project.hasProperty("TAG")) {
 docker {
     name project.hasProperty("REPOSITORY_URI") ? "${REPOSITORY_URI}" : "${project.name}"
     tags "${TAG}", 'latest'
-    files bootJar.archivePath, "${project.projectDir.absolutePath}/lib/newrelic.jar", "${project.projectDir.absolutePath}/config/newrelic/newrelic.yml"
+    files bootJar.archivePath, "${project.projectDir.absolutePath}/config/newrelic/newrelic.yml"
     buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
 }
 
