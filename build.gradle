@@ -48,6 +48,14 @@ jacocoTestReport {
         html.enabled true
         csv.enabled false
     }
+
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                '**/configuration/MetricsConfiguration.class'
+            ])
+        })
+    }
 }
 
 jacocoTestCoverageVerification {
