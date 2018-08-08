@@ -48,6 +48,14 @@ jacocoTestReport {
         html.enabled true
         csv.enabled false
     }
+
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                '**/configuration/MetricsConfiguration.class'
+            ])
+        })
+    }
 }
 
 jacocoTestCoverageVerification {
@@ -69,6 +77,7 @@ checkstyle {
 sonarqube {
     properties {
         property "sonar.projectKey", "${project.name}"
+        property "sonar.coverage.exclusions", "**/configuration/MetricsConfiguration.java"
     }
 }
 
