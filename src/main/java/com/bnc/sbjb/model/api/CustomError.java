@@ -1,12 +1,9 @@
 package com.bnc.sbjb.model.api;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.time.Instant;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 
-@JsonInclude(Include.NON_NULL)
 public class CustomError {
 
     private HttpStatus status;

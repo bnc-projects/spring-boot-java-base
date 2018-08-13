@@ -3,6 +3,8 @@ spring:
     name: Spring Boot Java Base
   main:
     banner-mode: "off"
+  jackson:
+    default-property-inclusion: non_empty
 
 resource:
   path: /sbjb
