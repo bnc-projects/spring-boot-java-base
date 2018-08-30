@@ -14,7 +14,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,threaddump,env
+        include: '*'
   endpoint:
     health:
       show-details: ALWAYS
