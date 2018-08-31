@@ -16,7 +16,7 @@ public class MetricsConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(MetricsConfiguration.class);
 
     @Bean
-    MeterRegistryCustomizer<MeterRegistry> metricsCommonTags(@Value("${spring.application.name") String name) {
+    MeterRegistryCustomizer<MeterRegistry> metricsCommonTags(@Value("${spring.application.name}") String name) {
         return registry -> {
             try {
                 registry.config().commonTags("application", name, "container", InetAddress.getLocalHost().getHostName());
