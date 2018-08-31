@@ -112,7 +112,6 @@ dependencies {
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: '2.0.1.RELEASE'
     implementation group: 'com.github.spotbugs', name: 'spotbugs-annotations', version: '3.1.6'
     implementation group: 'io.micrometer', name: 'micrometer-registry-new-relic', version: '1.0.6'
-    implementation group: 'io.opentracing.brave', name: 'brave-opentracing', version: '0.32.0'
 
     runtime group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
 
