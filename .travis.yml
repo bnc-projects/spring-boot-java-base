@@ -41,7 +41,7 @@ jobs:
     deploy:
       skip_cleanup: true
       provider: script
-      script: ecs deploy $CLUSTER_NAME $SERVICE_NAME --tag $TRAVIS_BUILD_NUMBER
+      script: ecs deploy $CLUSTER_NAME $SERVICE_NAME --tag $TRAVIS_BUILD_NUMBER --no-deregister
       on:
         branch: master
   - stage: deploy to production
@@ -56,7 +56,7 @@ jobs:
     deploy:
       skip_cleanup: true
       provider: script
-      script: ecs deploy $CLUSTER_NAME $SERVICE_NAME --tag $TRAVIS_BUILD_NUMBER
+      script: ecs deploy $CLUSTER_NAME $SERVICE_NAME --tag $TRAVIS_BUILD_NUMBER --no-deregister
       on:
         branch: master
   allow_failures:
