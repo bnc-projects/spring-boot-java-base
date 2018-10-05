@@ -31,6 +31,16 @@ spotbugs {
     toolVersion = '3.1.7'
 }
 
+jacoco {
+    toolVersion = "0.8.2"
+}
+
+checkstyle {
+    configDir rootProject.file('config/checkstyle')
+    configFile rootProject.file('config/checkstyle/checkstyle.xml')
+    toolVersion '8.1'
+}
+
 springBoot {
     buildInfo()
 }
@@ -66,12 +76,6 @@ jacocoTestCoverageVerification {
             }
         }
     }
-}
-
-checkstyle {
-    configDir rootProject.file('config/checkstyle')
-    configFile rootProject.file('config/checkstyle/checkstyle.xml')
-    toolVersion = "7.6.1"
 }
 
 sonarqube {
