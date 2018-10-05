@@ -10,9 +10,10 @@ env:
   # PROD_ACCOUNT_ID,PROD_ACCESS_KEY_ID,PROD_SECRET_ACCESS_KEY
   - AWS_DEFAULT_REGION=
   - ECR_REPOSITORY_NAME=
-  - TASK_NAME=
 before_install:
-- pip install --user awscli
+- pip install --user pip --upgrade
+- pip install --user awscli --upgrade
+- pip install --user ecs-deploy --upgrade
 - export PATH=$PATH:$HOME/.local/bin
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -30,9 +31,6 @@ jobs:
   - stage: deploy to development
     jdk: openjdk8
     env:
-    - SPLUNK_TOKEN=
-    - ENVIRONMENT=development
-    - SPRING_PROFILES=default,development
     - CLUSTER_NAME=
     - SERVICE_NAME=
     - AWS_ACCESS_KEY_ID=$DEV_ACCESS_KEY_ID
@@ -43,16 +41,12 @@ jobs:
     deploy:
       skip_cleanup: true
       provider: script
-      script: bash deployment/scripts/common/deploy-ecs.sh --cluster $CLUSTER_NAME
-        --service $SERVICE_NAME --task $TASK_NAME --task-def task_def_${TRAVIS_BUILD_NUMBER}.json
+      script: ecs deploy $CLUSTER_NAME $SERVICE_NAME --tag $TRAVIS_BUILD_NUMBER
       on:
         branch: master
   - stage: deploy to production
     jdk: openjdk8
     env:
-    - SPLUNK_TOKEN=
-    - ENVIRONMENT=production
-    - SPRING_PROFILES=default,production
     - CLUSTER_NAME=
     - SERVICE_NAME=
     - AWS_ACCESS_KEY_ID=$PROD_ACCESS_KEY_ID
@@ -62,8 +56,7 @@ jobs:
     deploy:
       skip_cleanup: true
       provider: script
-      script: bash deployment/scripts/common/deploy-ecs.sh --cluster $CLUSTER_NAME
-        --service $SERVICE_NAME --task $TASK_NAME --task-def task_def_${TRAVIS_BUILD_NUMBER}.json
+      script: ecs deploy $CLUSTER_NAME $SERVICE_NAME --tag $TRAVIS_BUILD_NUMBER
       on:
         branch: master
   allow_failures:
