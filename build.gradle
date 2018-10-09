@@ -37,20 +37,7 @@ jacoco {
 
 checkstyle {
     configDir rootProject.file('config/checkstyle')
-    configFile rootProject.file('config/checkstyle/checkstyle.xml')
     toolVersion '8.1'
-
-    checkstyleMain {
-        source = sourceSets.main.allSource
-    }
-
-    configurations {
-        checkstyle
-    }
-
-    dependencies {
-        checkstyle "com.puppycrawl.tools:checkstyle:8.13"
-    }
 }
 
 springBoot {
