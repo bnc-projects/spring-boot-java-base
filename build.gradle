@@ -37,7 +37,6 @@ jacoco {
 
 checkstyle {
     configDir rootProject.file('config/checkstyle')
-    configFile rootProject.file('config/checkstyle/checkstyle.xml')
     toolVersion '8.1'
 }
 
