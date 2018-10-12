@@ -146,6 +146,8 @@ Resources:
       PlacementStrategies:
       - Type: spread
         Field: 'attribute:ecs.availability-zone'
+      PlacementConstraints:
+      - Type: distinctInstance
       TaskDefinition: !Ref TaskDefinition
       LoadBalancers:
       - ContainerName: !Ref ContainerName
