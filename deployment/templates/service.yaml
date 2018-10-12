@@ -146,8 +146,10 @@ Resources:
       PlacementStrategies:
       - Type: spread
         Field: 'attribute:ecs.availability-zone'
-      PlacementConstraints:
-      - Type: distinctInstance
+      - Type: spread
+        Field: 'instanceId'
+      - Type: binpack
+        Field: 'memory'
       TaskDefinition: !Ref TaskDefinition
       LoadBalancers:
       - ContainerName: !Ref ContainerName
