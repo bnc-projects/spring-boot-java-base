@@ -61,13 +61,21 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                '**/configuration/MetricsConfiguration.class'
+                '**/configuration/**'
             ])
         })
     }
 }
 
 jacocoTestCoverageVerification {
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                '**/configuration/**'
+            ])
+        })
+    }
+
     violationRules {
         rule {
             limit {
