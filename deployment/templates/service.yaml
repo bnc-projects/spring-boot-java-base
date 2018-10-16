@@ -166,6 +166,11 @@ Resources:
         Essential: true
         Memory: !Ref MemoryLimit
         MemoryReservation: !Ref MemoryReservation
+        HealthCheck:
+          Command:
+            - "CMD wget --quiet --tries=1 --spider --timeout=30 http://localhost:8080/actuator/health || exit 1"
+          StartPeriod: !Ref HealthCheckGracePeriodSeconds
+          Timeout: 30
         PortMappings:
         - ContainerPort: 8080
         LogConfiguration:
