@@ -51,7 +51,7 @@ Parameters:
 
   HealthCheckGracePeriodSeconds:
     Type: Number
-    Default: 60
+    Default: 300
 
   TaskDeregistrationDelay:
     Type: Number
@@ -168,7 +168,8 @@ Resources:
         MemoryReservation: !Ref MemoryReservation
         HealthCheck:
           Command:
-            - "CMD wget --quiet --tries=1 --spider --timeout=30 http://localhost:8080/actuator/health || exit 1"
+            - "CMD-SHELL"
+            - "wget --quiet --tries=1 --spider --timeout=30 http://localhost:8080/actuator/health || exit 1"
           StartPeriod: !Ref HealthCheckGracePeriodSeconds
           Timeout: 30
         PortMappings:
