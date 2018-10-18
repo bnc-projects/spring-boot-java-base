@@ -10,5 +10,5 @@ EXPOSE 8080
 
 ENTRYPOINT exec java $JAVA_OPTS -jar app.jar
 
-HEALTHCHECK --start-period=90s \
+HEALTHCHECK --start-period=300s \
   CMD wget --quiet --tries=1 --spider --timeout=30 http://localhost:8080/actuator/health || exit 1
