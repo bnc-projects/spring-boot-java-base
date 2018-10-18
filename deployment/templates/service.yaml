@@ -15,6 +15,7 @@ Metadata:
       Parameters:
       - ContainerName
       - DesiredCount
+      - CPUReservation
       - MemoryLimit
       - MemoryReservation
       - HealthCheckGracePeriodSeconds
@@ -51,7 +52,7 @@ Parameters:
 
   HealthCheckGracePeriodSeconds:
     Type: Number
-    Default: 60
+    Default: 300
 
   TaskDeregistrationDelay:
     Type: Number
@@ -66,12 +67,20 @@ Parameters:
   SpringProfile:
     Type: String
 
+  CPUReservation:
+    Description: The number of cpu units to reserve for the container. This is only enforced when CPU cycles are constrained.
+    Type: Number
+    Default: 128
+    AllowedValues: [0, 10, 20, 32, 64, 128, 256, 512, 1024, 2048, 4096]
+
   MemoryReservation:
+    Description: The memory reservation for the task, this is the expected upper limit during normal operations.
     Type: Number
     Default: 768
     AllowedValues: [16, 32, 64, 128, 256, 512, 768, 1024, 1280, 1536, 1792, 2048, 2304, 2560, 2816, 3072, 3328, 3584, 3840, 4096]
 
   MemoryLimit:
+    Description: The memory limit for the task, when reached the task will be automatically terminated
     Type: Number
     Default: 768
     AllowedValues: [16, 32, 64, 128, 256, 512, 768, 1024, 1280, 1536, 1792, 2048, 2304, 2560, 2816, 3072, 3328, 3584, 3840, 4096]
@@ -164,8 +173,15 @@ Resources:
       - Name: !Ref ContainerName
         Image: !Join ['', ["Fn::Sub": '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/', "Fn::ImportValue": {"Fn::Sub":'${AWS::StackName}-RepositoryName'}, ':latest']]
         Essential: true
+        Cpu: !Ref CPUReservation
         Memory: !Ref MemoryLimit
         MemoryReservation: !Ref MemoryReservation
+        HealthCheck:
+          Command:
+            - "CMD-SHELL"
+            - "wget --quiet --tries=1 --spider --timeout=30 http://localhost:8080/actuator/health || exit 1"
+          StartPeriod: !Ref HealthCheckGracePeriodSeconds
+          Timeout: 30
         PortMappings:
         - ContainerPort: 8080
         LogConfiguration:
