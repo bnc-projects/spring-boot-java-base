@@ -88,7 +88,8 @@ jacocoTestCoverageVerification {
 sonarqube {
     properties {
         property "sonar.projectKey", "${project.name}"
-        property "sonar.coverage.exclusions", "**/configuration/MetricsConfiguration.java"
+        property "sonar.coverage.exclusions", "**/configuration/*"
+        property "sonar.cpd.exclusions", "**/model/api/*,**/model/entity/*"
     }
 }
 
