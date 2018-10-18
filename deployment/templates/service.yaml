@@ -15,6 +15,7 @@ Metadata:
       Parameters:
       - ContainerName
       - DesiredCount
+      - CPUReservation
       - MemoryLimit
       - MemoryReservation
       - HealthCheckGracePeriodSeconds
@@ -66,10 +67,10 @@ Parameters:
   SpringProfile:
     Type: String
 
-  CpuReservation:
+  CPUReservation:
     Description: The number of cpu units to reserve for the container. This is only enforced when CPU cycles are constrained.
     Type: Number
-    Default: 0
+    Default: 128
     AllowedValues: [0, 10, 20, 32, 64, 128, 256, 512, 1024, 2048, 4096]
 
   MemoryReservation:
@@ -172,7 +173,7 @@ Resources:
       - Name: !Ref ContainerName
         Image: !Join ['', ["Fn::Sub": '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/', "Fn::ImportValue": {"Fn::Sub":'${AWS::StackName}-RepositoryName'}, ':latest']]
         Essential: true
-        Cpu: !Ref CpuReservation
+        Cpu: !Ref CPUReservation
         Memory: !Ref MemoryLimit
         MemoryReservation: !Ref MemoryReservation
         HealthCheck:
