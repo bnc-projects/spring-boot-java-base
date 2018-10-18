@@ -2,6 +2,8 @@ FROM openjdk:8u181-jre-slim
 
 ARG JAR_FILE
 
+RUN  apt-get update && apt-get install -y wget
+
 COPY ${JAR_FILE} app.jar
 RUN mkdir newrelic && wget https://download.newrelic.com/newrelic/java-agent/newrelic-agent/4.4.0/newrelic-agent-4.4.0.jar -O newrelic/newrelic.jar
 COPY newrelic.yml newrelic/newrelic.yml
