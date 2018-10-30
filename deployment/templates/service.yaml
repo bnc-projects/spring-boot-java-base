@@ -144,7 +144,7 @@ Resources:
     Properties:
       ListenerArn:
         'Fn::ImportValue': !Sub '${ParentECSStack}-ExternalLoadBalancerHttpsListener'
-      Priority: 6
+      Priority: !Ref LoadBalancerPriority
       Conditions:
       - Field: path-pattern
         Values:
@@ -179,7 +179,7 @@ Resources:
     Properties:
       ListenerArn:
         'Fn::ImportValue': !Sub '${ParentECSStack}-InternalLoadBalancerHttpsListener'
-      Priority: 6
+      Priority: !Ref LoadBalancerPriority
       Conditions:
       - Field: path-pattern
         Values:
