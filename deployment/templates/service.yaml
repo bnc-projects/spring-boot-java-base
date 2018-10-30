@@ -139,6 +139,7 @@ Resources:
         Value: !Ref TaskDeregistrationDelay
 
   ExternalHttpsListenerRule:
+    DependsOn: ExternalTargetGroup
     Condition: IsExternalFacing
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
@@ -154,6 +155,7 @@ Resources:
         Type: forward
 
   InternalTargetGroup:
+    DependsOn: InternalTargetGroup
     Condition: IsInternalFacing
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
