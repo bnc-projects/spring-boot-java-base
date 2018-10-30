@@ -119,7 +119,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       ListenerArn:
-        'Fn::ImportValue': !Sub '${ParentECSStack}-ExternalLoadBalancerListener'
+        'Fn::ImportValue': !Sub '${ParentECSStack}-ExternalLoadBalancerHttpsListener'
       Priority: 6
       Conditions:
       - Field: path-pattern
@@ -127,6 +127,39 @@ Resources:
         - !Sub "${ApplicationContext}/*"
       Actions:
       - TargetGroupArn: !Ref ExternalTargetGroup
+        Type: forward
+
+  InternalTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      VpcId:
+        'Fn::ImportValue': !Sub '${ParentVPCStack}-VPC'
+      Port: 80
+      Protocol: HTTP
+      Matcher:
+        HttpCode: 200-299
+      HealthCheckIntervalSeconds: 10
+      HealthCheckPath: !Sub '/actuator/health'
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 5 # Healthcheck timeout must be smaller than the interval
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 3
+      TargetGroupAttributes:
+      - Key: deregistration_delay.timeout_seconds
+        Value: !Ref TaskDeregistrationDelay
+
+  InternalListenerRule:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      ListenerArn:
+        'Fn::ImportValue': !Sub '${ParentECSStack}-InternalLoadBalancerHttpsListener'
+      Priority: 6
+      Conditions:
+      - Field: path-pattern
+        Values:
+        - !Sub "${ApplicationContext}/*"
+      Actions:
+      - TargetGroupArn: !Ref InternalTargetGroup
         Type: forward
 
   ServiceRole:
