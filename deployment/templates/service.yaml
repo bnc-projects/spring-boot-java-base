@@ -119,6 +119,20 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       ListenerArn:
+        'Fn::ImportValue': !Sub '${ParentECSStack}-ExternalLoadBalancerListener'
+      Priority: 6
+      Conditions:
+      - Field: path-pattern
+        Values:
+        - !Sub "${ApplicationContext}/*"
+      Actions:
+      - TargetGroupArn: !Ref ExternalTargetGroup
+        Type: forward
+
+  ExternalHttpsListenerRule:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      ListenerArn:
         'Fn::ImportValue': !Sub '${ParentECSStack}-ExternalLoadBalancerHttpsListener'
       Priority: 6
       Conditions:
@@ -148,7 +162,7 @@ Resources:
       - Key: deregistration_delay.timeout_seconds
         Value: !Ref TaskDeregistrationDelay
 
-  InternalListenerRule:
+  InternalHttpsListenerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       ListenerArn:
