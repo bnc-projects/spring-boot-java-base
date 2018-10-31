@@ -206,6 +206,10 @@ Resources:
       - arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole
 
   ExternalService:
+    DependsOn:
+      - ExternalTargetGroup
+      - TaskDefinition
+      - ServiceRole
     Condition: IsExternalFacing
     Type: AWS::ECS::Service
     Properties:
@@ -228,6 +232,10 @@ Resources:
         TargetGroupArn: !Ref ExternalTargetGroup
 
   InternalService:
+    DependsOn:
+      - InternalTargetGroup
+      - TaskDefinition
+      - ServiceRole
     Condition: IsInternalFacing
     Type: AWS::ECS::Service
     Properties:
@@ -248,7 +256,6 @@ Resources:
       - ContainerName: !Ref ContainerName
         ContainerPort: 8080
         TargetGroupArn: !Ref InternalTargetGroup
-
 
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
@@ -283,6 +290,8 @@ Resources:
             Value: !Ref SpringProfile
 
   HTTPCodeExternalTarget5XXTooHighAlarm:
+    DependsOn:
+      - ExternalTargetGroup
     Condition: CreateExternalAlarms
     Type: 'AWS::CloudWatch::Alarm'
     Properties:
@@ -304,6 +313,9 @@ Resources:
       - Name: TargetGroup
         Value: !GetAtt 'ExternalTargetGroup.TargetGroupFullName'
   NoHealthyExternalServiceAlarm:
+    DependsOn:
+      - ExternalTargetGroup
+      - ExternalService
     Condition: CreateExternalAlarms
     Type: 'AWS::CloudWatch::Alarm'
     Properties:
@@ -326,6 +338,8 @@ Resources:
         Value: !GetAtt 'ExternalTargetGroup.TargetGroupFullName'
 
   HTTPCodeInternalTarget5XXTooHighAlarm:
+    DependsOn:
+      - InternalTargetGroup
     Condition: CreateInternalAlarms
     Type: 'AWS::CloudWatch::Alarm'
     Properties:
@@ -347,6 +361,9 @@ Resources:
       - Name: TargetGroup
         Value: !GetAtt 'InternalTargetGroup.TargetGroupFullName'
   NoHealthyInternalServiceAlarm:
+    DependsOn:
+      - InternalTargetGroup
+      - InternalService
     Condition: CreateInternalAlarms
     Type: 'AWS::CloudWatch::Alarm'
     Properties:
