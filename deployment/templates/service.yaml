@@ -19,6 +19,9 @@ Metadata:
       - MemoryLimit
       - MemoryReservation
       - HealthCheckGracePeriodSeconds
+      - TaskDeregistrationDelay
+      - ExternalFacing
+      - LoadBalancerPriority
     - Label:
         default: Application Parameters
       Parameters:
@@ -30,7 +33,6 @@ Metadata:
       Parameters:
       - SplunkToken
       - SplunkUrl
-      - SplunkEnv
 
 Parameters:
   ParentVPCStack:
@@ -41,7 +43,7 @@ Parameters:
 
   ParentAlertStack:
     Type: String
-    Default: ""
+    Default: ''
 
   ContainerName:
     Type: String
@@ -57,6 +59,19 @@ Parameters:
   TaskDeregistrationDelay:
     Type: Number
     Default: 15
+
+  ExternalFacing:
+    Description: Boolean flag which enables the service to be exposed via the external load balancer
+    Type: String
+    Default: false
+    AllowedValues: [true, false]
+
+  LoadBalancerPriority:
+    Description: The priority of the service in the load balancer
+    Type: Number
+    MinValue: 1
+    MaxValue: 100
+    ConstraintDescription: 'Priority must be provided'
 
   ApplicationContext:
     Type: String
@@ -93,10 +108,18 @@ Parameters:
     Type: String
 
 Conditions:
-  HasAlertTopic: !Not [!Equals [!Ref ParentAlertStack, '']]
+  IsExternalFacing: !Equals [!Ref ExternalFacing, true]
+  IsInternalFacing: !Equals [!Ref ExternalFacing, false]
+  CreateExternalAlarms: !And
+    - !Not [!Equals [!Ref ParentAlertStack, '']]
+    - !Equals [!Ref ExternalFacing, true]
+  CreateInternalAlarms: !And
+    - !Not [!Equals [!Ref ParentAlertStack, '']]
+    - !Equals [!Ref ExternalFacing, false]
 
 Resources:
   ExternalTargetGroup:
+    Condition: IsExternalFacing
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       VpcId:
@@ -115,18 +138,56 @@ Resources:
       - Key: deregistration_delay.timeout_seconds
         Value: !Ref TaskDeregistrationDelay
 
-  ExternalListenerRule:
+  ExternalHttpsListenerRule:
+    DependsOn: ExternalTargetGroup
+    Condition: IsExternalFacing
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       ListenerArn:
-        'Fn::ImportValue': !Sub '${ParentECSStack}-ExternalLoadBalancerListener'
-      Priority: 6
+        'Fn::ImportValue': !Sub '${ParentECSStack}-ExternalLoadBalancerHttpsListener'
+      Priority: !Ref LoadBalancerPriority
       Conditions:
       - Field: path-pattern
         Values:
         - !Sub "${ApplicationContext}/*"
       Actions:
       - TargetGroupArn: !Ref ExternalTargetGroup
+        Type: forward
+
+  InternalTargetGroup:
+    Condition: IsInternalFacing
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      VpcId:
+        'Fn::ImportValue': !Sub '${ParentVPCStack}-VPC'
+      Port: 80
+      Protocol: HTTP
+      Matcher:
+        HttpCode: 200-299
+      HealthCheckIntervalSeconds: 10
+      HealthCheckPath: !Sub '/actuator/health'
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 5 # Healthcheck timeout must be smaller than the interval
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 3
+      TargetGroupAttributes:
+      - Key: deregistration_delay.timeout_seconds
+        Value: !Ref TaskDeregistrationDelay
+
+  InternalHttpsListenerRule:
+    DependsOn: InternalTargetGroup
+    Condition: IsInternalFacing
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      ListenerArn:
+        'Fn::ImportValue': !Sub '${ParentECSStack}-InternalLoadBalancerHttpsListener'
+      Priority: !Ref LoadBalancerPriority
+      Conditions:
+      - Field: path-pattern
+        Values:
+        - !Sub "${ApplicationContext}/*"
+      Actions:
+      - TargetGroupArn: !Ref InternalTargetGroup
         Type: forward
 
   ServiceRole:
@@ -144,7 +205,12 @@ Resources:
       ManagedPolicyArns:
       - arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole
 
-  Service:
+  ExternalService:
+    DependsOn:
+      - ExternalTargetGroup
+      - TaskDefinition
+      - ServiceRole
+    Condition: IsExternalFacing
     Type: AWS::ECS::Service
     Properties:
       Cluster:
@@ -164,6 +230,32 @@ Resources:
       - ContainerName: !Ref ContainerName
         ContainerPort: 8080
         TargetGroupArn: !Ref ExternalTargetGroup
+
+  InternalService:
+    DependsOn:
+      - InternalTargetGroup
+      - TaskDefinition
+      - ServiceRole
+    Condition: IsInternalFacing
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster:
+        'Fn::ImportValue': !Sub '${ParentECSStack}-Cluster'
+      Role: !Ref ServiceRole
+      DesiredCount: !Ref DesiredCount
+      HealthCheckGracePeriodSeconds: !Ref HealthCheckGracePeriodSeconds
+      PlacementStrategies:
+      - Type: spread
+        Field: 'attribute:ecs.availability-zone'
+      - Type: spread
+        Field: 'instanceId'
+      - Type: binpack
+        Field: 'memory'
+      TaskDefinition: !Ref TaskDefinition
+      LoadBalancers:
+      - ContainerName: !Ref ContainerName
+        ContainerPort: 8080
+        TargetGroupArn: !Ref InternalTargetGroup
 
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
@@ -197,8 +289,10 @@ Resources:
           - Name: SPRING_PROFILES_ACTIVE
             Value: !Ref SpringProfile
 
-  HTTPCodeTarget5XXTooHighAlarm:
-    Condition: HasAlertTopic
+  HTTPCodeExternalTarget5XXTooHighAlarm:
+    DependsOn:
+      - ExternalTargetGroup
+    Condition: CreateExternalAlarms
     Type: 'AWS::CloudWatch::Alarm'
     Properties:
       AlarmDescription: '${AWS::StackName} HTTP 500 response code alarm'
@@ -218,8 +312,11 @@ Resources:
           'Fn::ImportValue': !Sub '${ParentECSStack}-ExternalLoadBalancerName'
       - Name: TargetGroup
         Value: !GetAtt 'ExternalTargetGroup.TargetGroupFullName'
-  NoHealthyServiceAlarm:
-    Condition: HasAlertTopic
+  NoHealthyExternalServiceAlarm:
+    DependsOn:
+      - ExternalTargetGroup
+      - ExternalService
+    Condition: CreateExternalAlarms
     Type: 'AWS::CloudWatch::Alarm'
     Properties:
       AlarmDescription: '${AWS::StackName} has no healthy services'
@@ -240,10 +337,65 @@ Resources:
       - Name: TargetGroup
         Value: !GetAtt 'ExternalTargetGroup.TargetGroupFullName'
 
+  HTTPCodeInternalTarget5XXTooHighAlarm:
+    DependsOn:
+      - InternalTargetGroup
+    Condition: CreateInternalAlarms
+    Type: 'AWS::CloudWatch::Alarm'
+    Properties:
+      AlarmDescription: '${AWS::StackName} HTTP 500 response code alarm'
+      Namespace: 'AWS/ApplicationELB'
+      MetricName: HTTPCode_Target_5XX_Count
+      Statistic: Sum
+      Period: 60
+      EvaluationPeriods: 1
+      ComparisonOperator: GreaterThanThreshold
+      Threshold: 0
+      TreatMissingData: notBreaching
+      AlarmActions:
+      - 'Fn::ImportValue': !Sub '${ParentAlertStack}-TopicARN'
+      Dimensions:
+      - Name: LoadBalancer
+        Value:
+          'Fn::ImportValue': !Sub '${ParentECSStack}-InternalLoadBalancerName'
+      - Name: TargetGroup
+        Value: !GetAtt 'InternalTargetGroup.TargetGroupFullName'
+  NoHealthyInternalServiceAlarm:
+    DependsOn:
+      - InternalTargetGroup
+      - InternalService
+    Condition: CreateInternalAlarms
+    Type: 'AWS::CloudWatch::Alarm'
+    Properties:
+      AlarmDescription: '${AWS::StackName} has no healthy services'
+      Namespace: 'AWS/ApplicationELB'
+      MetricName: HealthyHostCount
+      Statistic: Minimum
+      Period: 60
+      EvaluationPeriods: 1
+      ComparisonOperator: LessThanThreshold
+      Threshold: 1
+      TreatMissingData: breaching
+      AlarmActions:
+      - 'Fn::ImportValue': !Sub '${ParentAlertStack}-TopicARN'
+      Dimensions:
+      - Name: LoadBalancer
+        Value:
+          'Fn::ImportValue': !Sub '${ParentECSStack}-InternalLoadBalancerName'
+      - Name: TargetGroup
+        Value: !GetAtt 'InternalTargetGroup.TargetGroupFullName'
+
 Outputs:
-  ServiceName:
-    Description: 'The name of the service running the ECS'
-    Value: !Ref Service
+  ExternalServiceName:
+    Condition: IsExternalFacing
+    Description: 'The name of the external service running the ECS'
+    Value: !Ref ExternalService
+    Export:
+      Name: !Sub '${AWS::StackName}-Name'
+  InternalServiceName:
+    Condition: IsInternalFacing
+    Description: 'The name of the internal service running the ECS'
+    Value: !Ref InternalService
     Export:
       Name: !Sub '${AWS::StackName}-Name'
   ApplicationContext:
