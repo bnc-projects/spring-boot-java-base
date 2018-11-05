@@ -26,6 +26,9 @@ management:
     export:
       newrelic:
         enabled: false
+    tags:
+      application: ${spring.application.name}
+      container: ${HOSTNAME:}${COMPUTERNAME:}
 ---
 spring:
   profiles: production
