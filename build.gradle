@@ -1,6 +1,6 @@
 plugins {
     id "com.github.spotbugs" version "1.6.5"
-    id "org.springframework.boot" version "2.0.6.RELEASE"
+    id "org.springframework.boot" version "2.1.0.RELEASE"
     id "io.spring.dependency-management" version "1.0.6.RELEASE"
     id "com.palantir.docker" version "0.20.1"
     id "org.owasp.dependencycheck" version "3.3.4"
@@ -25,6 +25,7 @@ compileJava.options.encoding = "UTF-8"
 
 repositories {
     mavenCentral()
+    maven { url "https://repo.spring.io/milestone" }
 }
 
 spotbugs {
@@ -117,22 +118,21 @@ docker {
 }
 
 dependencies {
-    def springBootVersion = '2.0.6.RELEASE'
+    def springBootVersion = '2.1.0.RELEASE'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: springBootVersion
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: '2.0.1.RELEASE'
+    // Update this to release version and remove milestone repo
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: '2.1.0.M1'
     implementation group: 'com.github.spotbugs', name: 'spotbugs-annotations', version: '3.1.8'
     implementation group: 'io.micrometer', name: 'micrometer-registry-new-relic', version: '1.1.0'
-
     runtime group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.1'
-    testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.3.1'
-    testRuntime group: 'com.h2database', name: 'h2', version: '1.4.197'
-    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.23.0'
-    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.11.1'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
-
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.1'
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.11.1'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.23.0'
     // Remove once Mockito 3.x gets released with Junit 5 support
     testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.23.0'
+    testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.3.1'
+    testRuntime group: 'com.h2database', name: 'h2', version: '1.4.197'
 }
