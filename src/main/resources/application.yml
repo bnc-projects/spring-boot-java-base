@@ -3,6 +3,8 @@ spring:
     name: Spring Boot Java Base
   main:
     banner-mode: "off"
+  profiles:
+    active: localhost
   jackson:
     default-property-inclusion: non_empty
 
