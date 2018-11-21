@@ -1,6 +1,6 @@
 spring:
   application:
-    name: Spring Boot Java Base
+    name: spring-base
   main:
     banner-mode: "off"
   profiles:
