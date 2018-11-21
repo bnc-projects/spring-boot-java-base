@@ -9,9 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("${resource.path}")
 public class Controller {
 
+    @RequestMapping("/hello-error")
+    @ResponseStatus(HttpStatus.OK)
+    public String notYetWorld() {
+        throw new IllegalStateException("Hello World");
+    }
+
     @RequestMapping("/hello")
     @ResponseStatus(HttpStatus.OK)
     public String helloWorld() {
-        throw new IllegalStateException("Hello World");
+        return "Hello World";
     }
 }
