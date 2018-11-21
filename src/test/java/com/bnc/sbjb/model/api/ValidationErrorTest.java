@@ -2,7 +2,6 @@ package com.bnc.sbjb.model.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.bnc.sbjb.model.api.ValidationError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

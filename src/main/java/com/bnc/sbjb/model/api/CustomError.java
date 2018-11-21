@@ -10,7 +10,7 @@ public class CustomError {
     private Instant timestamp;
     private String message;
 
-    private List<SubError> subErrors;
+    private List<ValidationError> subErrors;
 
     private CustomError() {
         timestamp = Instant.now();
@@ -46,11 +46,11 @@ public class CustomError {
         this.message = message;
     }
 
-    public List<SubError> getSubErrors() {
+    public List<ValidationError> getSubErrors() {
         return subErrors;
     }
 
-    public void setSubErrors(List<SubError> subErrors) {
+    public void setSubErrors(List<ValidationError> subErrors) {
         this.subErrors = subErrors;
     }
 }

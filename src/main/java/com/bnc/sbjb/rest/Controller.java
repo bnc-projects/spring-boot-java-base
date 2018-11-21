@@ -12,6 +12,6 @@ public class Controller {
     @RequestMapping("/hello")
     @ResponseStatus(HttpStatus.OK)
     public String helloWorld() {
-        return "Hello World";
+        throw new IllegalStateException("Hello World");
     }
 }

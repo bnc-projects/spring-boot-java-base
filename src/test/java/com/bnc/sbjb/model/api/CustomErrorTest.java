@@ -3,13 +3,13 @@ package com.bnc.sbjb.model.api;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.Instant;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
-public class CustomErrorTest {
+class CustomErrorTest {
 
     private CustomError customError;
 
@@ -39,8 +39,7 @@ public class CustomErrorTest {
 
     @Test
     void testSubErrorIdempotent() {
-        List<SubError> errors = new ArrayList<SubError>();
-        errors.add(new TestSubError());
+        List<ValidationError> errors = Collections.singletonList(new ValidationError("test", "test"));
         customError.setSubErrors(errors);
         assertThat(customError.getSubErrors().size()).isEqualTo(1);
     }
