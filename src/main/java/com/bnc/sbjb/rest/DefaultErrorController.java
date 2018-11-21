@@ -14,6 +14,8 @@ public class DefaultErrorController implements ErrorController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @RequestMapping(value = PATH)
     public void error() {
+        // Blank method since we don't need to do anything to handle unknown paths.
+        // Any forked service may choose to handle some requests differently.
     }
 
     @Override
