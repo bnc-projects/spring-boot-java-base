@@ -1,6 +1,6 @@
 package com.bnc.sbjb.model.api;
 
-public class ValidationError extends SubError {
+public class ValidationError {
 
     private String object;
     private String field;
