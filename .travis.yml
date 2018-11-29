@@ -28,6 +28,7 @@ jobs:
   include:
   - stage: test
   - stage: deploy to development
+    if: env(DEV_ACCOUNT_ID) is present
     jdk: openjdk8
     env:
     - CLUSTER_NAME=
@@ -44,6 +45,7 @@ jobs:
       on:
         branch: master
   - stage: deploy to production
+    if: env(PROD_ACCOUNT_ID) is present
     jdk: openjdk8
     env:
     - CLUSTER_NAME=
