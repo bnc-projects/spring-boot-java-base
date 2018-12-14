@@ -23,6 +23,11 @@ Metadata:
       - ExternalFacing
       - LoadBalancerPriority
     - Label:
+        default: Container Registry Parameters
+      Parameters:
+        - RegistryAWSAccountId
+        - RegistryAWSRegion
+    - Label:
         default: Application Parameters
       Parameters:
       - ApplicationContext
@@ -105,6 +110,12 @@ Parameters:
     NoEcho: true
 
   SplunkUrl:
+    Type: String
+
+  RegistryAWSAccountId:
+    Type: String
+
+  RegistryAWSRegion:
     Type: String
 
 Conditions:
@@ -205,6 +216,21 @@ Resources:
       ManagedPolicyArns:
       - arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole
 
+  TaskeRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: /
+      AssumeRolePolicyDocument: |
+        {
+            "Statement": [{
+                "Effect": "Allow",
+                "Principal": { "Service": [ "ecs-tasks.amazonaws.com" ]},
+                "Action": [ "sts:AssumeRole" ]
+            }]
+        }
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+
   ExternalService:
     DependsOn:
       - ExternalTargetGroup
@@ -261,9 +287,10 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       Family: !Sub ${AWS::StackName}-Task
+      TaskRoleArn: !Ref IndexControllerTaskRole
       ContainerDefinitions:
       - Name: !Ref ContainerName
-        Image: !Join ['', ["Fn::Sub": '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/', "Fn::ImportValue": {"Fn::Sub":'${AWS::StackName}-RepositoryName'}, ':latest']]
+        Image: !Join ['', ["Fn::Sub": '${RegistryAWSAccountId}.dkr.ecr.${RegistryAWSRegion}.amazonaws.com/', "Fn::ImportValue": {"Fn::Sub":'${AWS::StackName}-RepositoryName'}, ':latest']]
         Essential: true
         Cpu: !Ref CPUReservation
         Memory: !Ref MemoryLimit

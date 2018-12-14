@@ -6,6 +6,9 @@ Parameters:
     Type: String
   ParentServiceStack:
     Type: String
+  DevelopmentAccountId:
+    Description: 'The development account id which needs access to the repository'
+    Type: String
 
 Resources:
   Repository:
@@ -13,6 +16,19 @@ Resources:
     DeletionPolicy: Retain
     Properties:
       RepositoryName: !Ref RepositoryName
+      RepositoryPolicyText:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Sid: AllowPushPull
+            Effect: Allow
+            Principal:
+              AWS:
+                - !Sub 'arn:aws:iam::${DevelopmentAccountId}:root'
+            Action:
+              - "ecr:GetDownloadUrlForLayer"
+              - "ecr:BatchGetImage"
+              - "ecr:BatchCheckLayerAvailability"
 
 Outputs:
   ServiceName:

@@ -9,6 +9,7 @@ env:
   # PROD_ACCOUNT_ID,PROD_ACCESS_KEY_ID,PROD_SECRET_ACCESS_KEY
   - AWS_DEFAULT_REGION=
   - ECR_REPOSITORY_NAME=
+  - REPOSITORY_URI=$PROD_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPOSITORY_NAME;
 before_install:
 - pip install --user pip --upgrade
 - pip install --user awscli --upgrade
@@ -24,6 +25,12 @@ cache:
   - "$HOME/.local"
 script:
 - ./gradlew check sonarqube
+after_success:
+- if [ "$TRAVIS_BRANCH" == "master" ]; then
+    AWS_ACCESS_KEY_ID=$PROD_ACCESS_KEY_ID;
+    AWS_SECRET_ACCESS_KEY=$PROD_SECRET_ACCESS_KEY;
+    deployment/scripts/common/push-docker-image.sh;
+  fi
 jobs:
   include:
   - stage: test
@@ -35,11 +42,9 @@ jobs:
     - SERVICE_NAME=
     - AWS_ACCESS_KEY_ID=$DEV_ACCESS_KEY_ID
     - AWS_SECRET_ACCESS_KEY=$DEV_SECRET_ACCESS_KEY
-    - REPOSITORY_URI=$DEV_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPOSITORY_NAME
     script: skip
-    before_deploy: deployment/scripts/common/push-docker-image.sh
+    after_success: skip
     deploy:
-      skip_cleanup: true
       provider: script
       script: ecs deploy $CLUSTER_NAME $SERVICE_NAME --tag $TRAVIS_BUILD_NUMBER --no-deregister
       on:
@@ -52,16 +57,14 @@ jobs:
     - SERVICE_NAME=
     - AWS_ACCESS_KEY_ID=$PROD_ACCESS_KEY_ID
     - AWS_SECRET_ACCESS_KEY=$PROD_SECRET_ACCESS_KEY
-    - REPOSITORY_URI=$PROD_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPOSITORY_NAME
-    before_deploy: deployment/scripts/common/push-docker-image.sh
+    script: skip
+    after_success: skip
     deploy:
-      skip_cleanup: true
       provider: script
       script: ecs deploy $CLUSTER_NAME $SERVICE_NAME --tag $TRAVIS_BUILD_NUMBER --no-deregister
       on:
         branch: master
   allow_failures:
-  - jdk: openjdk10
   - jdk: openjdk11
   fast_finish: true
 notifications:
