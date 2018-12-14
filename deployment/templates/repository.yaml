@@ -9,6 +9,9 @@ Parameters:
   DevelopmentAccountId:
     Description: 'The development account id which needs access to the repository'
     Type: String
+  ProductionAccountId:
+    Description: 'The production account id which needs access to the repository'
+    Type: String    
 
 Resources:
   Repository:
@@ -20,11 +23,12 @@ Resources:
         Version: "2012-10-17"
         Statement:
           -
-            Sid: AllowPushPull
+            Sid: AllowDockerImagePull
             Effect: Allow
             Principal:
               AWS:
                 - !Sub 'arn:aws:iam::${DevelopmentAccountId}:root'
+                - !Sub 'arn:aws:iam::${ProductionAccountId}:root'
             Action:
               - "ecr:GetDownloadUrlForLayer"
               - "ecr:BatchGetImage"
