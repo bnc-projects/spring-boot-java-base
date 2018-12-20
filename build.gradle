@@ -1,22 +1,20 @@
 plugins {
-    id "com.github.spotbugs" version "1.6.5"
-    id "org.springframework.boot" version "2.1.0.RELEASE"
+    id 'java'
+    id 'jacoco'
+    id 'checkstyle'
+    id 'eclipse'
+    id 'idea'
+    id "com.github.spotbugs" version "1.6.6"
+    id "org.springframework.boot" version "2.1.1.RELEASE"
     id "io.spring.dependency-management" version "1.0.6.RELEASE"
     id "com.palantir.docker" version "0.20.1"
-    id "org.owasp.dependencycheck" version "3.3.4"
     id "org.sonarqube" version "2.6.2"
     id "com.gorylenko.gradle-git-properties" version "1.5.2"
 }
 
+
 group = 'com.bnc'
 version = '0.0.1-SNAPSHOT'
-
-apply plugin: 'java'
-apply plugin: 'jacoco'
-apply plugin: 'checkstyle'
-apply plugin: 'com.github.spotbugs'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -29,7 +27,7 @@ repositories {
 }
 
 spotbugs {
-    toolVersion = '3.1.8'
+    toolVersion = '3.1.10'
 }
 
 jacoco {
@@ -37,7 +35,7 @@ jacoco {
 }
 
 checkstyle {
-    toolVersion '8.14'
+    toolVersion '8.15'
 }
 
 springBoot {
@@ -57,32 +55,6 @@ jacocoTestReport {
         html.enabled true
         csv.enabled false
     }
-
-    afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: [
-                '**/configuration/**'
-            ])
-        })
-    }
-}
-
-jacocoTestCoverageVerification {
-    afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: [
-                '**/configuration/**'
-            ])
-        })
-    }
-
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.8
-            }
-        }
-    }
 }
 
 sonarqube {
@@ -99,7 +71,10 @@ test {
         events "passed", "skipped", "failed"
     }
 
-    finalizedBy jacocoTestReport, jacocoTestCoverageVerification
+    jacoco {
+        excludes += [ '**/configuration/**' ]
+    }
+    finalizedBy jacocoTestReport
 }
 
 if (!project.hasProperty("REPOSITORY_URI")) {
@@ -117,22 +92,25 @@ docker {
     buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
 }
 
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-sleuth:2.1.0.M2"
+    }
+}
+
 dependencies {
-    def springBootVersion = '2.1.0.RELEASE'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: springBootVersion
-    // Update this to release version and remove milestone repo
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: '2.1.0.M1'
-    implementation group: 'com.github.spotbugs', name: 'spotbugs-annotations', version: '3.1.8'
-    implementation group: 'io.micrometer', name: 'micrometer-registry-new-relic', version: '1.1.0'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth'
+    implementation group: 'com.github.spotbugs', name: 'spotbugs-annotations', version: '3.1.10'
+    implementation group: 'io.micrometer', name: 'micrometer-registry-new-relic', version: '1.1.1'
     runtime group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 
-    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.1'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.2'
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.11.1'
-    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.23.0'
-    // Remove once Mockito 3.x gets released with Junit 5 support
-    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.23.0'
-    testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.3.1'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.23.4'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.23.4'
+    testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.3.2'
     testRuntime group: 'com.h2database', name: 'h2', version: '1.4.197'
 }

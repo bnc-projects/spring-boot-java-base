@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.com/bnc-projects/spring-boot-java-base.svg?branch=master)](https://travis-ci.com/bnc-projects/spring-boot-java-base)
-[![codecov](https://codecov.io/gh/bnc-projects/spring-boot-java-base/branch/master/graph/badge.svg)](https://codecov.io/gh/bnc-projects/spring-boot-java-base)
-[![Known Vulnerabilities](https://snyk.io/test/github/bnc-projects/spring-boot-java-base/badge.svg)](https://snyk.io/test/github/bnc-projects/spring-boot-java-base)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=spring-boot-java-base&metric=alert_status)](https://sonarcloud.io/api/project_badges/measure?project=spring-boot-java-base&metric=alert_status)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=spring-boot-java-base&metric=coverage)](https://sonarcloud.io/api/project_badges/measure?project=spring-boot-java-base&metric=coverage)
+[![Known Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=spring-boot-java-base&metric=vulnerabilities)](https://sonarcloud.io/api/project_badges/measure?project=spring-boot-java-base&metric=vulnerabilities)
 # Spring Boot Java Base
 
 ## How tos
