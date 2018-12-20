@@ -55,32 +55,6 @@ jacocoTestReport {
         html.enabled true
         csv.enabled false
     }
-
-    afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: [
-                '**/configuration/**'
-            ])
-        })
-    }
-}
-
-jacocoTestCoverageVerification {
-    afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: [
-                '**/configuration/**'
-            ])
-        })
-    }
-
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.8
-            }
-        }
-    }
 }
 
 sonarqube {
@@ -97,7 +71,10 @@ test {
         events "passed", "skipped", "failed"
     }
 
-    finalizedBy jacocoTestReport, jacocoTestCoverageVerification
+    jacoco {
+        excludes += [ '**/configuration/**' ]
+    }
+    finalizedBy jacocoTestReport
 }
 
 if (!project.hasProperty("REPOSITORY_URI")) {
