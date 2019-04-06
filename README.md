@@ -6,20 +6,7 @@
 
 ## How tos
 
-### Build and Test
-For IDEs run one of the following commands before importing into your IDE.
-
-#### IntelliJ
-```bash
-./gradlew idea
-```
-
-#### Eclipse
-```bash
-./gradlew eclipse
-```
-
-#### Build & Test
+### Build & Test
 ```bash
 ./gradlew clean assemble check
 ```

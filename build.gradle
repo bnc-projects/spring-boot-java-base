@@ -1,114 +1,53 @@
 plugins {
-    id 'java'
-    id 'jacoco'
-    id 'checkstyle'
     id 'eclipse'
     id 'idea'
-    id "com.github.spotbugs" version "1.6.9"
-    id "org.springframework.boot" version "2.1.4.RELEASE"
-    id "io.spring.dependency-management" version "1.0.7.RELEASE"
-    id "com.palantir.docker" version "0.21.0"
-    id "org.sonarqube" version "2.7"
-    id "com.gorylenko.gradle-git-properties" version "2.0.0"
+    id "org.sonarqube" version "2.7" apply false
+    id "com.github.spotbugs" version "1.6.9" apply false
 }
 
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+    apply plugin: 'checkstyle'
+    apply plugin: 'com.github.spotbugs'
+    apply plugin: 'org.sonarqube'
 
-group = 'com.bnc'
-version = '0.0.1-SNAPSHOT'
+    group = 'com.bnc'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = 1.11
+    targetCompatibility = 1.11
 
-sourceCompatibility = 1.11
-targetCompatibility = 1.11
-
-compileJava.options.encoding = "UTF-8"
-
-repositories {
-    mavenCentral()
-    jcenter()
-}
-
-spotbugs {
-    toolVersion = '3.1.12'
-}
-
-jacoco {
-    toolVersion = "0.8.3"
-}
-
-checkstyle {
-    toolVersion '8.19'
-}
-
-springBoot {
-    buildInfo()
-}
-
-tasks.withType(com.github.spotbugs.SpotBugsTask) {
-    reports {
-        xml.enabled = false
-        html.enabled = true
+    repositories {
+        mavenCentral()
+        jcenter()
     }
-}
 
-jacocoTestReport {
-    reports {
-        xml.enabled true
-        html.enabled true
-        csv.enabled false
+    spotbugs {
+        toolVersion = '3.1.12'
+    }
+
+    jacoco {
+        toolVersion = "0.8.3"
+    }
+
+    checkstyle {
+        toolVersion '8.19'
+        tasks.withType(Checkstyle) {
+            reports {
+                xml.enabled false
+                html.enabled true
+            }
+        }
+    }
+
+    dependencies {
+        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.4.1'
+        testRuntime group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.4.1'
     }
 }
 
 sonarqube {
     properties {
-        property "sonar.projectKey", "${project.name}"
-        property "sonar.coverage.exclusions", "**/configuration/*"
-        property "sonar.cpd.exclusions", "**/model/api/*,**/model/entity/*"
+        property "sonar.projectKey", "${rootProject.name}"
     }
-}
-
-test {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
-
-    jacoco {
-        excludes += [ '**/configuration/**' ]
-    }
-    finalizedBy jacocoTestReport
-}
-
-if (!project.hasProperty("REPOSITORY_URI")) {
-    ext.REPOSITORY_URI = jar.baseName
-}
-
-if (!project.hasProperty("TAG")) {
-    ext.TAG = jar.version
-}
-
-docker {
-    name project.hasProperty("REPOSITORY_URI") ? "${REPOSITORY_URI}" : "${project.name}"
-    tags "${TAG}", 'latest'
-    files bootJar.archivePath, "${project.projectDir.absolutePath}/config/newrelic/newrelic.yml"
-    buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-sleuth:2.1.1.RELEASE"
-    }
-}
-
-dependencies {
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth'
-    implementation group: 'com.github.spotbugs', name: 'spotbugs-annotations', version: '3.1.12'
-    implementation group: 'io.micrometer', name: 'micrometer-registry-new-relic', version: '1.1.4'
-
-    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.4.1'
-    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
-    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.26.0'
-    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.26.0'
-    testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.4.1'
 }
