@@ -4,12 +4,12 @@ plugins {
     id 'checkstyle'
     id 'eclipse'
     id 'idea'
-    id "com.github.spotbugs" version "1.6.6"
-    id "org.springframework.boot" version "2.1.1.RELEASE"
-    id "io.spring.dependency-management" version "1.0.6.RELEASE"
-    id "com.palantir.docker" version "0.20.1"
-    id "org.sonarqube" version "2.6.2"
-    id "com.gorylenko.gradle-git-properties" version "1.5.2"
+    id "com.github.spotbugs" version "1.6.9"
+    id "org.springframework.boot" version "2.1.4.RELEASE"
+    id "io.spring.dependency-management" version "1.0.7.RELEASE"
+    id "com.palantir.docker" version "0.21.0"
+    id "org.sonarqube" version "2.7"
+    id "com.gorylenko.gradle-git-properties" version "2.0.0"
 }
 
 
@@ -23,19 +23,19 @@ compileJava.options.encoding = "UTF-8"
 
 repositories {
     mavenCentral()
-    maven { url "https://repo.spring.io/milestone" }
+    jcenter()
 }
 
 spotbugs {
-    toolVersion = '3.1.10'
+    toolVersion = '3.1.12'
 }
 
 jacoco {
-    toolVersion = "0.8.2"
+    toolVersion = "0.8.3"
 }
 
 checkstyle {
-    toolVersion '8.15'
+    toolVersion '8.19'
 }
 
 springBoot {
@@ -94,7 +94,7 @@ docker {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-sleuth:2.1.0.M2"
+        mavenBom "org.springframework.cloud:spring-cloud-sleuth:2.1.1.RELEASE"
     }
 }
 
@@ -102,15 +102,13 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth'
-    implementation group: 'com.github.spotbugs', name: 'spotbugs-annotations', version: '3.1.10'
-    implementation group: 'io.micrometer', name: 'micrometer-registry-new-relic', version: '1.1.1'
-    runtime group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
+    implementation group: 'com.github.spotbugs', name: 'spotbugs-annotations', version: '3.1.12'
+    implementation group: 'io.micrometer', name: 'micrometer-registry-new-relic', version: '1.1.4'
 
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.2'
-    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.11.1'
-    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.23.4'
-    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.23.4'
-    testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.3.2'
-    testRuntime group: 'com.h2database', name: 'h2', version: '1.4.197'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.4.1'
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.26.0'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.26.0'
+    testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.4.1'
 }
