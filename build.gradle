@@ -16,6 +16,7 @@ allprojects {
     version = '0.0.1-SNAPSHOT'
     sourceCompatibility = 1.11
     targetCompatibility = 1.11
+    compileJava.options.encoding = "UTF-8"
 
     repositories {
         mavenCentral()
