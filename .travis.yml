@@ -1,7 +1,7 @@
 language: java
 jdk:
-- openjdk8
 - openjdk11
+- openjdk-ea
 env:
   global:
   # Following encrypted environment variables must be present for successful deployment
@@ -29,7 +29,7 @@ jobs:
   - stage: test
   - stage: deploy to development
     if: env(DEV_ACCOUNT_ID) is present
-    jdk: openjdk8
+    jdk: openjdk11
     env:
     - CLUSTER_NAME=
     - SERVICE_NAME=
@@ -46,7 +46,7 @@ jobs:
         branch: master
   - stage: deploy to production
     if: env(PROD_ACCOUNT_ID) is present
-    jdk: openjdk8
+    jdk: openjdk11
     env:
     - CLUSTER_NAME=
     - SERVICE_NAME=
@@ -61,8 +61,7 @@ jobs:
       on:
         branch: master
   allow_failures:
-  - jdk: openjdk10
-  - jdk: openjdk11
+  - jdk: openjdk-ea
   fast_finish: true
 notifications:
   slack:
