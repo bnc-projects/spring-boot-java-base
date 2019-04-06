@@ -13,38 +13,11 @@ springBoot {
     buildInfo()
 }
 
-jacocoTestReport {
-    reports {
-        html.enabled true
-        xml.enabled false
-        csv.enabled false
-    }
-}
-
 sonarqube {
     properties {
         property "sonar.projectKey", "${rootProject.name}:${project.name}"
         property "sonar.coverage.exclusions", "**/configuration/*"
         property "sonar.cpd.exclusions", "**/model/api/*,**/model/entity/*"
-    }
-}
-
-test {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
-
-    jacoco {
-        excludes += ['**/configuration/**']
-    }
-    finalizedBy jacocoTestReport
-}
-
-tasks.withType(com.github.spotbugs.SpotBugsTask) {
-    reports {
-        xml.enabled = false
-        html.enabled = true
     }
 }
 
