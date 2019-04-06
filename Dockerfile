@@ -1,4 +1,4 @@
-FROM openjdk:8u181-jre-slim
+FROM openjdk:11.0.3-jre-slim
 
 ARG JAR_FILE
 
