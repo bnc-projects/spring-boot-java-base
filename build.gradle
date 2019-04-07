@@ -14,8 +14,8 @@ allprojects {
 
     group = 'com.bnc'
     version = '0.0.1-SNAPSHOT'
-    sourceCompatibility = 1.11
-    targetCompatibility = 1.11
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
     compileJava.options.encoding = "UTF-8"
 
     repositories {
