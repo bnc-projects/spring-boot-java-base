@@ -1,10 +1,13 @@
 package com.bnc.sbjb.rest;
 
+import com.bnc.sbjb.model.api.CustomError;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
@@ -12,9 +15,12 @@ public class DefaultExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultExceptionHandler.class);
 
+    @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler({Exception.class})
-    public void handleException(Exception exception) {
-        logger.warn("errorMessage=\"{}\"", exception.getMessage());
+    @ResponseBody
+    public CustomError handleException(HttpServletRequest httpServletRequest, Exception ex) {
+        logger.error("Unknown exception [queryString=\"{}\" errorMessage=\"{}\"]", httpServletRequest.getQueryString(), ex.getMessage(), ex);
+        return new CustomError(HttpStatus.INTERNAL_SERVER_ERROR,
+            "Oops something went wrong. Please contact us if this keeps occurring.");
     }
 }
