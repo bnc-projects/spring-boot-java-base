@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DefaultErrorController implements ErrorController {
 
-    private final String PATH = "/error";
+    private static final String PATH = "/error";
 
     @GetMapping(value = PATH)
     public ResponseEntity<CustomError> error(HttpServletResponse response) {
