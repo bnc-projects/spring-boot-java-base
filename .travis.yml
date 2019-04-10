@@ -1,7 +1,7 @@
 language: java
 jdk:
-- openjdk8
 - openjdk11
+- openjdk-ea
 env:
   global:
   # Following encrypted environment variables must be present for successful deployment
@@ -21,15 +21,14 @@ cache:
   directories:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
-  - "$HOME/.local"
-script:
-- ./gradlew check sonarqube
 jobs:
   include:
   - stage: test
+    after_success:
+      - ./gradlew sonarqube
   - stage: deploy to development
     if: env(DEV_ACCOUNT_ID) is present
-    jdk: openjdk8
+    jdk: openjdk11
     env:
     - CLUSTER_NAME=
     - SERVICE_NAME=
@@ -46,13 +45,14 @@ jobs:
         branch: master
   - stage: deploy to production
     if: env(PROD_ACCOUNT_ID) is present
-    jdk: openjdk8
+    jdk: openjdk11
     env:
     - CLUSTER_NAME=
     - SERVICE_NAME=
     - AWS_ACCESS_KEY_ID=$PROD_ACCESS_KEY_ID
     - AWS_SECRET_ACCESS_KEY=$PROD_SECRET_ACCESS_KEY
     - REPOSITORY_URI=$PROD_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPOSITORY_NAME
+    script: skip
     before_deploy: deployment/scripts/common/push-docker-image.sh
     deploy:
       skip_cleanup: true
@@ -61,8 +61,7 @@ jobs:
       on:
         branch: master
   allow_failures:
-  - jdk: openjdk10
-  - jdk: openjdk11
+  - jdk: openjdk-ea
   fast_finish: true
 notifications:
   slack:

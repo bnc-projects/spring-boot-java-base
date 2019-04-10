@@ -1,0 +1,51 @@
+plugins {
+    id "org.springframework.boot" version "2.1.4.RELEASE"
+    id "io.spring.dependency-management" version "1.0.7.RELEASE"
+    id "com.palantir.docker" version "0.21.0"
+    id "com.gorylenko.gradle-git-properties" version "2.0.0"
+}
+
+jar {
+    baseName = rootProject.name + "-" + project.name
+}
+
+springBoot {
+    buildInfo()
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "${rootProject.name}:${project.name}"
+        property "sonar.coverage.exclusions", "**/configuration/*"
+        property "sonar.cpd.exclusions", "**/model/api/*,**/model/entity/*"
+    }
+}
+
+if (!project.hasProperty("REPOSITORY_URI")) {
+    ext.REPOSITORY_URI = jar.baseName
+}
+
+if (!project.hasProperty("TAG")) {
+    ext.TAG = jar.version
+}
+
+docker {
+    name "${REPOSITORY_URI}"
+    tags "${TAG}", 'latest'
+    files bootJar.archivePath, "${project.projectDir.absolutePath}/config/newrelic/newrelic.yml"
+    buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-sleuth:2.1.1.RELEASE"
+    }
+}
+
+dependencies {
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth'
+    implementation group: 'io.micrometer', name: 'micrometer-registry-new-relic', version: '1.1.4'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+}

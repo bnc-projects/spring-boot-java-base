@@ -1,116 +1,70 @@
 plugins {
-    id 'java'
-    id 'jacoco'
-    id 'checkstyle'
     id 'eclipse'
     id 'idea'
-    id "com.github.spotbugs" version "1.6.6"
-    id "org.springframework.boot" version "2.1.1.RELEASE"
-    id "io.spring.dependency-management" version "1.0.6.RELEASE"
-    id "com.palantir.docker" version "0.20.1"
-    id "org.sonarqube" version "2.6.2"
-    id "com.gorylenko.gradle-git-properties" version "1.5.2"
+    id "org.sonarqube" version "2.7" apply false
+    id "com.github.spotbugs" version "1.6.9" apply false
 }
 
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+    apply plugin: 'checkstyle'
+    apply plugin: 'com.github.spotbugs'
+    apply plugin: 'org.sonarqube'
 
-group = 'com.bnc'
-version = '0.0.1-SNAPSHOT'
+    group = 'com.bnc'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+    compileJava.options.encoding = "UTF-8"
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-compileJava.options.encoding = "UTF-8"
-
-repositories {
-    mavenCentral()
-    maven { url "https://repo.spring.io/milestone" }
-}
-
-spotbugs {
-    toolVersion = '3.1.10'
-}
-
-jacoco {
-    toolVersion = "0.8.2"
-}
-
-checkstyle {
-    toolVersion '8.15'
-}
-
-springBoot {
-    buildInfo()
-}
-
-tasks.withType(com.github.spotbugs.SpotBugsTask) {
-    reports {
-        xml.enabled = false
-        html.enabled = true
+    repositories {
+        mavenCentral()
+        jcenter()
     }
-}
 
-jacocoTestReport {
-    reports {
-        xml.enabled true
-        html.enabled true
-        csv.enabled false
+    spotbugs {
+        toolVersion = '3.1.12'
+        tasks.withType(com.github.spotbugs.SpotBugsTask) {
+            reports {
+                xml.enabled = false
+                html.enabled = true
+            }
+        }
+    }
+
+    jacoco {
+        toolVersion = "0.8.3"
+    }
+
+    checkstyle {
+        toolVersion '8.19'
+        tasks.withType(Checkstyle) {
+            reports {
+                xml.enabled false
+                html.enabled true
+            }
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+
+    dependencies {
+        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.4.1'
+        testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
+        testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.26.0'
+        testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.26.0'
+        testRuntime group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.4.1'
     }
 }
 
 sonarqube {
     properties {
-        property "sonar.projectKey", "${project.name}"
-        property "sonar.coverage.exclusions", "**/configuration/*"
-        property "sonar.cpd.exclusions", "**/model/api/*,**/model/entity/*"
+        property "sonar.projectKey", "${rootProject.name}"
     }
-}
-
-test {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
-
-    jacoco {
-        excludes += [ '**/configuration/**' ]
-    }
-    finalizedBy jacocoTestReport
-}
-
-if (!project.hasProperty("REPOSITORY_URI")) {
-    ext.REPOSITORY_URI = jar.baseName
-}
-
-if (!project.hasProperty("TAG")) {
-    ext.TAG = jar.version
-}
-
-docker {
-    name project.hasProperty("REPOSITORY_URI") ? "${REPOSITORY_URI}" : "${project.name}"
-    tags "${TAG}", 'latest'
-    files bootJar.archivePath, "${project.projectDir.absolutePath}/config/newrelic/newrelic.yml"
-    buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-sleuth:2.1.0.M2"
-    }
-}
-
-dependencies {
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth'
-    implementation group: 'com.github.spotbugs', name: 'spotbugs-annotations', version: '3.1.10'
-    implementation group: 'io.micrometer', name: 'micrometer-registry-new-relic', version: '1.1.1'
-    runtime group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
-
-    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.2'
-    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.11.1'
-    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.23.4'
-    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.23.4'
-    testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.3.2'
-    testRuntime group: 'com.h2database', name: 'h2', version: '1.4.197'
 }

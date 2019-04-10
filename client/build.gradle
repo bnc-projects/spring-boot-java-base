@@ -1,0 +1,9 @@
+jar {
+    baseName = rootProject.name + "-" + project.name
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "${rootProject.name}:${project.name}"
+    }
+}
