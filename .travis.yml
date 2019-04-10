@@ -21,9 +21,8 @@ cache:
   directories:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
-  - "$HOME/.local"
-script:
-- ./gradlew check sonarqube
+after_success:
+- ./gradlew sonarqube
 jobs:
   include:
   - stage: test
@@ -53,6 +52,7 @@ jobs:
     - AWS_ACCESS_KEY_ID=$PROD_ACCESS_KEY_ID
     - AWS_SECRET_ACCESS_KEY=$PROD_SECRET_ACCESS_KEY
     - REPOSITORY_URI=$PROD_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPOSITORY_NAME
+    script: skip
     before_deploy: deployment/scripts/common/push-docker-image.sh
     deploy:
       skip_cleanup: true
