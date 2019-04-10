@@ -21,11 +21,11 @@ cache:
   directories:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
-after_success:
-- ./gradlew sonarqube
 jobs:
   include:
   - stage: test
+    after_success:
+      - ./gradlew sonarqube
   - stage: deploy to development
     if: env(DEV_ACCOUNT_ID) is present
     jdk: openjdk11
