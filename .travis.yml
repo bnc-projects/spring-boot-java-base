@@ -35,9 +35,7 @@ jobs:
   - stage: publish artifacts
     if: env(OPS_AWS_ACCESS_KEY_ID) IS NOT blank
     jdk: openjdk11
-    script: skip
-    after_success:
-      - ./gradlew publish
+    script: ./gradlew publish
   - stage: deploy to development
     if: env(DEV_AWS_ACCOUNT_ID) IS NOT blank
     jdk: openjdk11
