@@ -1,12 +1,12 @@
 plugins {
     id "org.springframework.boot" version "2.1.4.RELEASE"
     id "io.spring.dependency-management" version "1.0.7.RELEASE"
-    id "com.palantir.docker" version "0.21.0"
+    id "com.palantir.docker" version "0.22.0"
     id "com.gorylenko.gradle-git-properties" version "2.0.0"
 }
 
 jar {
-    baseName = rootProject.name + "-" + project.name
+    archivesBaseName = rootProject.name + "-" + project.name
 }
 
 springBoot {
@@ -22,18 +22,18 @@ sonarqube {
 }
 
 if (!project.hasProperty("REPOSITORY_URI")) {
-    ext.REPOSITORY_URI = jar.baseName
+    ext.REPOSITORY_URI = jar.archiveBaseName.getOrNull()
 }
 
 if (!project.hasProperty("TAG")) {
-    ext.TAG = jar.version
+    ext.TAG = jar.archiveVersion.getOrNull()
 }
 
 docker {
-    name "${REPOSITORY_URI}"
-    tags "${TAG}", 'latest'
-    files bootJar.archivePath, "${project.projectDir.absolutePath}/config/newrelic/newrelic.yml"
-    buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
+    name "${REPOSITORY_URI}:latest"
+    tag "version", "${REPOSITORY_URI}:${TAG}"
+    files bootJar.archiveFile.getOrNull(), "${project.projectDir.absolutePath}/config/newrelic/newrelic.yml"
+    buildArgs(['JAR_FILE': "${bootJar.archiveFileName.getOrNull()}"])
 }
 
 dependencyManagement {
