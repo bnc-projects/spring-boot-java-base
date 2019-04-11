@@ -26,6 +26,13 @@ allprojects {
     repositories {
         mavenCentral()
         jcenter()
+        maven {
+            url "s3://artifact.bravenewcoin.com.s3-website-us-west-2.amazonaws.com/maven/release"
+            credentials(AwsCredentials) {
+                accessKey AWS_ACCESS_KEY_ID
+                secretKey AWS_SECRET_ACCESS_KEY
+            }
+        }
     }
 
     spotbugs {

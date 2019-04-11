@@ -5,6 +5,7 @@ jdk:
 env:
   global:
   # Following encrypted environment variables must be present for successful deployment
+  # OPS_AWS_ACCESS_KEY_ID,OPS_AWS_SECRET_ACCESS_KEY
   # DEV_ACCOUNT_ID,DEV_ACCESS_KEY_ID,DEV_SECRET_ACCESS_KEY
   # PROD_ACCOUNT_ID,PROD_ACCESS_KEY_ID,PROD_SECRET_ACCESS_KEY
   - AWS_DEFAULT_REGION=
@@ -26,6 +27,12 @@ jobs:
   - stage: test
     after_success:
       - ./gradlew sonarqube
+  - stage: publish artifacts
+    if: env(OPS_AWS_ACCESS_KEY_ID) is present
+    jdk: openjdk11
+    script: skip
+    after_success:
+      - ./gradlew publish -PAWS_ACCESS_KEY_ID=$OPS_AWS_ACCESS_KEY_ID -PAWS_SECRET_ACCESS_KEY=$OPS_AWS_SECRET_ACCESS_KEY
   - stage: deploy to development
     if: env(DEV_ACCOUNT_ID) is present
     jdk: openjdk11
