@@ -7,8 +7,8 @@ env:
   - AWS_DEFAULT_REGION=
   - ECR_REPOSITORY_NAME=
   # The following environment variables must be encrypted for successful deployment
-  - OPS_AWS_ACCESS_KEY_ID=
-  - OPS_AWS_SECRET_ACCESS_KEY=
+  - AWS_ACCESS_KEY_ID=
+  - AWS_SECRET_ACCESS_KEY=
   - DEV_AWS_ACCOUNT_ID=
   - DEV_AWS_ACCESS_KEY_ID=
   - DEV_AWS_SECRET_ACCESS_KEY=
@@ -33,11 +33,11 @@ jobs:
     after_success:
       - ./gradlew sonarqube
   - stage: publish artifacts
-    if: env(OPS_AWS_ACCESS_KEY_ID) IS NOT blank
+    if: env(AWS_ACCESS_KEY_ID) IS NOT blank AND env(AWS_SECRET_ACCESS_KEY) IS NOT blank
     jdk: openjdk11
     script: ./gradlew publish
   - stage: deploy to development
-    if: env(DEV_AWS_ACCOUNT_ID) IS NOT blank
+    if: env(DEV_AWS_ACCOUNT_ID) IS NOT blank AND env(DEV_AWS_ACCESS_KEY_ID) IS NOT blank
     jdk: openjdk11
     env:
     - CLUSTER_NAME=
@@ -54,7 +54,7 @@ jobs:
       on:
         branch: master
   - stage: deploy to production
-    if: env(PROD_AWS_ACCOUNT_ID) IS NOT blank
+    if: env(PROD_AWS_ACCOUNT_ID) IS NOT blank AND env(PROD_AWS_SECRET_ACCESS_KEY) IS NOT blank
     jdk: openjdk11
     env:
     - CLUSTER_NAME=
