@@ -31,7 +31,7 @@ jobs:
   include:
   - stage: test
     after_success:
-      - ./gradlew sonarqube publish
+      - ./gradlew sonarqube
   - stage: publish artifacts
     if: env(OPS_AWS_ACCESS_KEY_ID) IS NOT blank
     jdk: openjdk11
