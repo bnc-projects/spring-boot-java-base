@@ -3,6 +3,12 @@ plugins {
     id 'idea'
     id "org.sonarqube" version "2.7" apply false
     id "com.github.spotbugs" version "1.6.9" apply false
+    id "com.bnc.gradle.travis-ci-versioner" version "1.0.6"
+}
+
+travisVersioner {
+    major 0
+    minor 0
 }
 
 allprojects {
@@ -13,7 +19,6 @@ allprojects {
     apply plugin: 'org.sonarqube'
 
     group = 'com.bnc'
-    version = '0.0.1-SNAPSHOT'
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
     compileJava.options.encoding = "UTF-8"
