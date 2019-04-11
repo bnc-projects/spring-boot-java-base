@@ -4,12 +4,17 @@ jdk:
 - openjdk-ea
 env:
   global:
-  # Following encrypted environment variables must be present for successful deployment
-  # OPS_AWS_ACCESS_KEY_ID,OPS_AWS_SECRET_ACCESS_KEY
-  # DEV_ACCOUNT_ID,DEV_ACCESS_KEY_ID,DEV_SECRET_ACCESS_KEY
-  # PROD_ACCOUNT_ID,PROD_ACCESS_KEY_ID,PROD_SECRET_ACCESS_KEY
   - AWS_DEFAULT_REGION=
   - ECR_REPOSITORY_NAME=
+  # The following environment variables must be encrypted for successful deployment
+  - OPS_AWS_ACCESS_KEY_ID=
+  - OPS_AWS_SECRET_ACCESS_KEY=
+  - DEV_AWS_ACCOUNT_ID=
+  - DEV_AWS_ACCESS_KEY_ID=
+  - DEV_AWS_SECRET_ACCESS_KEY=
+  - PROD_AWS_ACCOUNT_ID=
+  - PROD_AWS_ACCESS_KEY_ID=
+  - PROD_AWS_SECRET_ACCESS_KEY=
 before_install:
 - pip install --user pip --upgrade
 - pip install --user awscli --upgrade
@@ -26,22 +31,22 @@ jobs:
   include:
   - stage: test
     after_success:
-      - ./gradlew sonarqube
+      - ./gradlew sonarqube publish
   - stage: publish artifacts
-    if: env(OPS_AWS_ACCESS_KEY_ID) is present
+    if: env(OPS_AWS_ACCESS_KEY_ID) IS NOT blank
     jdk: openjdk11
     script: skip
     after_success:
-      - ./gradlew publish -PAWS_ACCESS_KEY_ID=$OPS_AWS_ACCESS_KEY_ID -PAWS_SECRET_ACCESS_KEY=$OPS_AWS_SECRET_ACCESS_KEY
+      - ./gradlew publish
   - stage: deploy to development
-    if: env(DEV_ACCOUNT_ID) is present
+    if: env(DEV_AWS_ACCOUNT_ID) IS NOT blank
     jdk: openjdk11
     env:
     - CLUSTER_NAME=
     - SERVICE_NAME=
-    - AWS_ACCESS_KEY_ID=$DEV_ACCESS_KEY_ID
-    - AWS_SECRET_ACCESS_KEY=$DEV_SECRET_ACCESS_KEY
-    - REPOSITORY_URI=$DEV_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPOSITORY_NAME
+    - AWS_ACCESS_KEY_ID=$DEV_AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY=$DEV_AWS_SECRET_ACCESS_KEY
+    - REPOSITORY_URI=$DEV_AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPOSITORY_NAME
     script: skip
     before_deploy: deployment/scripts/common/push-docker-image.sh
     deploy:
@@ -51,14 +56,14 @@ jobs:
       on:
         branch: master
   - stage: deploy to production
-    if: env(PROD_ACCOUNT_ID) is present
+    if: env(PROD_AWS_ACCOUNT_ID) IS NOT blank
     jdk: openjdk11
     env:
     - CLUSTER_NAME=
     - SERVICE_NAME=
-    - AWS_ACCESS_KEY_ID=$PROD_ACCESS_KEY_ID
-    - AWS_SECRET_ACCESS_KEY=$PROD_SECRET_ACCESS_KEY
-    - REPOSITORY_URI=$PROD_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPOSITORY_NAME
+    - AWS_ACCESS_KEY_ID=$PROD_AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY=$PROD_AWS_SECRET_ACCESS_KEY
+    - REPOSITORY_URI=$PROD_AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPOSITORY_NAME
     script: skip
     before_deploy: deployment/scripts/common/push-docker-image.sh
     deploy:

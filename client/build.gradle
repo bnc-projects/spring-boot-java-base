@@ -17,8 +17,8 @@ publishing {
         maven {
             url "s3://artifact.bravenewcoin.com/maven/${project.version.endsWith('-SNAPSHOT') ? 'snapshot' : 'release'}"
             credentials(AwsCredentials) {
-                accessKey AWS_ACCESS_KEY_ID
-                secretKey AWS_SECRET_ACCESS_KEY
+                accessKey "${awsAccessKeyId}"
+                secretKey "${awsSecretAccessKey}"
             }
         }
     }

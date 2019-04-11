@@ -6,6 +6,11 @@ plugins {
     id "com.bnc.gradle.travis-ci-versioner" version "1.0.6"
 }
 
+ext {
+    awsAccessKeyId = hasProperty('AWS_ACCESS_KEY_ID') ? AWS_ACCESS_KEY_ID :  System.getenv('AWS_ACCESS_KEY_ID')
+    awsSecretAccessKey = hasProperty('AWS_SECRET_ACCESS_KEY') ? AWS_SECRET_ACCESS_KEY :  System.getenv('AWS_SECRET_ACCESS_KEY')
+}
+
 travisVersioner {
     major 0
     minor 0
@@ -29,8 +34,8 @@ allprojects {
         maven {
             url "s3://artifact.bravenewcoin.com.s3-website-us-west-2.amazonaws.com/maven/release"
             credentials(AwsCredentials) {
-                accessKey AWS_ACCESS_KEY_ID
-                secretKey AWS_SECRET_ACCESS_KEY
+                accessKey "${awsAccessKeyId}"
+                secretKey "${awsSecretAccessKey}"
             }
         }
     }
