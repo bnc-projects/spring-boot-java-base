@@ -23,7 +23,7 @@ docker run -p 8080:8080 -i -t -e JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,s
 
 ### Enabling New Relic
 New relic can be enabled by providing the following `JAVA_OPTS` environment variable. Ensure to provide the correct `newrelic.environment` system property. To configure New Relic add/update the Application Environments section in `newrelic.yml`, more information can be found [here](https://docs.newrelic.com/docs/agents/java-agent/configuration/java-agent-configuration-config-file). 
-```base
+```bash
 docker run -p 8080:8080 -i -t -e JAVA_OPTS="-javaagent:newrelic/newrelic.jar -Dnewrelic.environment=development -Dnewrelic.config.file=newrelic/newrelic.yml" spring-boot-java-base
 ```
 
