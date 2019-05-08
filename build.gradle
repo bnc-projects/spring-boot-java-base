@@ -7,8 +7,8 @@ plugins {
 }
 
 ext {
-    awsAccessKeyId = hasProperty('AWS_ACCESS_KEY_ID') ? AWS_ACCESS_KEY_ID :  System.getenv('AWS_ACCESS_KEY_ID')
-    awsSecretAccessKey = hasProperty('AWS_SECRET_ACCESS_KEY') ? AWS_SECRET_ACCESS_KEY :  System.getenv('AWS_SECRET_ACCESS_KEY')
+    awsAccessKeyId = properties.containsKey('AWS_ACCESS_KEY_ID') ? AWS_ACCESS_KEY_ID : System.getenv('AWS_ACCESS_KEY_ID')
+    awsSecretAccessKey = properties.containsKey('AWS_SECRET_ACCESS_KEY') ? AWS_SECRET_ACCESS_KEY : System.getenv('AWS_SECRET_ACCESS_KEY')
 }
 
 travisVersioner {
@@ -32,7 +32,7 @@ allprojects {
         mavenCentral()
         jcenter()
         maven {
-            url "s3://artifact.bravenewcoin.com.s3-website-us-west-2.amazonaws.com/maven/release"
+            url "s3://artifact.bravenewcoin.com/maven/release"
             credentials(AwsCredentials) {
                 accessKey "${awsAccessKeyId}"
                 secretKey "${awsSecretAccessKey}"
@@ -55,7 +55,7 @@ allprojects {
     }
 
     checkstyle {
-        toolVersion '8.19'
+        toolVersion '8.20'
         tasks.withType(Checkstyle) {
             reports {
                 xml.enabled false
@@ -72,11 +72,11 @@ allprojects {
     }
 
     dependencies {
-        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.4.1'
+        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.4.2'
         testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
-        testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.26.0'
-        testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.26.0'
-        testRuntime group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.4.1'
+        testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.27.0'
+        testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.27.0'
+        testRuntime group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.4.2'
     }
 }
 

@@ -43,6 +43,7 @@ dependencyManagement {
 }
 
 dependencies {
+    implementation project(':client')
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth'
