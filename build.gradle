@@ -55,7 +55,7 @@ allprojects {
     }
 
     checkstyle {
-        toolVersion '8.19'
+        toolVersion '8.20'
         tasks.withType(Checkstyle) {
             reports {
                 xml.enabled false
@@ -72,11 +72,11 @@ allprojects {
     }
 
     dependencies {
-        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.4.1'
+        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.4.2'
         testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
-        testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.26.0'
-        testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.26.0'
-        testRuntime group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.4.1'
+        testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.27.0'
+        testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.27.0'
+        testRuntime group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.4.2'
     }
 }
 
