@@ -1,7 +1,7 @@
 plugins {
     id 'eclipse'
     id 'idea'
-    id "org.sonarqube" version "2.7" apply false
+    id "org.sonarqube" version "2.7.1" apply false
     id "com.github.spotbugs" version "1.6.9" apply false
     id "com.bnc.gradle.travis-ci-versioner" version "1.0.6"
 }
@@ -9,6 +9,7 @@ plugins {
 ext {
     awsAccessKeyId = properties.containsKey('AWS_ACCESS_KEY_ID') ? AWS_ACCESS_KEY_ID : System.getenv('AWS_ACCESS_KEY_ID')
     awsSecretAccessKey = properties.containsKey('AWS_SECRET_ACCESS_KEY') ? AWS_SECRET_ACCESS_KEY : System.getenv('AWS_SECRET_ACCESS_KEY')
+    awsSessionToken = System.getenv('AWS_SESSION_TOKEN')
 }
 
 travisVersioner {
@@ -36,6 +37,9 @@ allprojects {
             credentials(AwsCredentials) {
                 accessKey "${awsAccessKeyId}"
                 secretKey "${awsSecretAccessKey}"
+                if (awsSessionToken) {
+                    sessionToken "${awsSessionToken}"
+                }
             }
         }
     }

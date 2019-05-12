@@ -19,6 +19,9 @@ publishing {
             credentials(AwsCredentials) {
                 accessKey "${awsAccessKeyId}"
                 secretKey "${awsSecretAccessKey}"
+                if (awsSessionToken) {
+                    sessionToken "${awsSessionToken}"
+                }
             }
         }
     }
