@@ -104,7 +104,9 @@ notifications:
     secure: S4Pg6XK5x3pfxldRNJVMuzLfPzKVsGdogr0u0r/pu5dpjJujoecsuDoPS8syej1hZRqJOxK36Ms+NDXRzHNK6w95X69kgwDjzoI3PoKmnqyBJIcgSueyNbm7KoQGgoKTOgEUHZ0A9JbcdH8ThBHUR8wltXctGd3kEp8KC3wSlXzDmLeFJPTqC8DMBmSC00nVL7LtXj4VdOwYZnERKErjjx5f+msOhCNbAXLr7p12O7ewHDhL1jaex4r4yzG8+oevDKYNgpHyd8BCsgsCnjiKewByiVB9q4GBjE6CN3c1VfKdWmPWwF4jgxsz8BqTjshM17msnRyXOaSsB6MG+gGMyNKwFVYEwlsAQyRl5i5IhvjIHVMZVcbon098CpNcpW/ZsWALVQSZUW8yBBVPfVs4gTI071R9hQvDWdHLEkApZpsD24tPwsXGdzupBceyqf3HZn9PDYnqMB+hDxSYmLoJRYqjdFxguUwZEYSRih0c+4npcCBO/QJ5m+4aoG2qJ7Zg10YPr3I/PU+kHKjMzvAME4iZ30CnW0gRskM7nVHZRVmR/vgweZDuo9GYXnOykUUur9S3OEhkEp6Ucmcnkv/DXRa5lU0gqpnfkcJv40UaqoxyypGn2U0dPHPCbYahvTu4QAAAkUU6RsJ3TlDhOg018lJVBBaLx+tXpTD+TpY7/XU=
 addons:
   snaps:
-    - aws-cli
+    - name: aws-cli
+      confinement: classic
+      channel: latest/stable
   sonarcloud:
     organization: bnc-projects
     token:
