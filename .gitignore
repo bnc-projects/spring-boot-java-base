@@ -1,3 +1,15 @@
+#  Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# .tfvars files
+*.tfvars
+
+# Crash logs
+crash.log
 
 # Created by https://www.gitignore.io/api/java,gradle,eclipse,netbeans,intellij
 
