@@ -38,6 +38,12 @@ cache:
   directories:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
+stages:
+  - init docker repository
+  - test
+  - publish artifacts
+  - deploy to development
+  - deploy to production
 jobs:
   include:
   - stage: init docker repository
