@@ -29,7 +29,6 @@ env:
     - secure: vBYFX0YlfvUhWm0W1sQxbt+Aq2Ab+OzJTSJwbncL+eSPZxO9oRnbQVug1O4nvz1UmjUxWzE3/Du4PPWK4eavw7bLZtGgMqXNTPiPvIS59cXZvRtF7LP9g122l4mTeveiPlowpBi7rl7cTaOPrO5LERv1ZhTCdClI0rW4qoTMjfaKhi2Mo8UtbFTXFy2HLnV+Vn8ETOUcqOoNdH1Q3kZk1lTL03dAtaMJ67I4EnTgCvw7AG7JtoqrplAIQ2etB+mO0zaVEdjLTQ15dlK6Ib+BrQ/s8hH2p9f2f8vxOVpwrKHljfApsZAr36VhSCl/Nnl7TbMHS9hzT+BfrL1fHXhfO0BWYHFRDIww2EEbGIPl4uBH8H9hJvJtXSLvWZWywv/5APmY/EF5YSoDPqqK75cWhLQAXaVaNSTTFU6We7UfyooXpPshZ5tTF9DHssPp6fAXYBZx9hwKtf3+ajmpV905aSFkYvfsrMYMhmK5rHRFsJGpLu99Chrb86FuPl1/K6ACNWiBUcfwd+rZLgrenI7PVUXHNvKvgJ/6Mn7+5cnC8YfyzeV8UajQRzSJOtle5RIg1nc4m5sy9oZ2gt8+hm4e1W56b8005rrEaVpaBhZKGXjujGZpvcXwXXo/bxsAttZFcBYWppSsDkn+Cy8NXPNdNz0HxGdFRnQuj/UJNO7pi58=
 before_install:
   - pip3 install --user pip --upgrade
-  - pip install --user awscli --upgrade
   - pip install --user ecs-deploy --upgrade
   - export PATH=$PATH:$HOME/.local/bin
 before_cache:
@@ -104,6 +103,8 @@ notifications:
   slack:
     secure: S4Pg6XK5x3pfxldRNJVMuzLfPzKVsGdogr0u0r/pu5dpjJujoecsuDoPS8syej1hZRqJOxK36Ms+NDXRzHNK6w95X69kgwDjzoI3PoKmnqyBJIcgSueyNbm7KoQGgoKTOgEUHZ0A9JbcdH8ThBHUR8wltXctGd3kEp8KC3wSlXzDmLeFJPTqC8DMBmSC00nVL7LtXj4VdOwYZnERKErjjx5f+msOhCNbAXLr7p12O7ewHDhL1jaex4r4yzG8+oevDKYNgpHyd8BCsgsCnjiKewByiVB9q4GBjE6CN3c1VfKdWmPWwF4jgxsz8BqTjshM17msnRyXOaSsB6MG+gGMyNKwFVYEwlsAQyRl5i5IhvjIHVMZVcbon098CpNcpW/ZsWALVQSZUW8yBBVPfVs4gTI071R9hQvDWdHLEkApZpsD24tPwsXGdzupBceyqf3HZn9PDYnqMB+hDxSYmLoJRYqjdFxguUwZEYSRih0c+4npcCBO/QJ5m+4aoG2qJ7Zg10YPr3I/PU+kHKjMzvAME4iZ30CnW0gRskM7nVHZRVmR/vgweZDuo9GYXnOykUUur9S3OEhkEp6Ucmcnkv/DXRa5lU0gqpnfkcJv40UaqoxyypGn2U0dPHPCbYahvTu4QAAAkUU6RsJ3TlDhOg018lJVBBaLx+tXpTD+TpY7/XU=
 addons:
+  snaps:
+    - aws-cli
   sonarcloud:
     organization: bnc-projects
     token:
