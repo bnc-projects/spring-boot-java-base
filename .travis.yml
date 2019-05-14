@@ -51,7 +51,7 @@ jobs:
         - terraform init -backend-config="bucket=${STATE_S3_BUCKET}" -backend-config="region=${AWS_DEFAULT_REGION}" -backend-config="dynamodb_table=${STATE_DYNAMODB_TABLE}" -backend-config="kms_key_id=${KMS_KEY_ID}" -backend-config="key=${KEY}" -backend-config="role_arn=${ROLE_ARN}"
         - terraform apply -backup="-" -input=false -auto-approve -var role_arn=${ROLE_ARN} -var service_name=${SERVICE_NAME}
         - REPOSITORY_URI=$(terraform output repository_url)
-        - cd $HOME
+        - cd $TRAVIS_BUILD_DIR
         - AWS_ACCESS_KEY_ID=$TRAVIS_AWS_ACCESS_KEY_ID
         - AWS_SECRET_ACCESS_KEY=$TRAVIS_AWS_SECRET_ACCESS_KEY
         - eval $(aws sts assume-role --role-arn "$OPERATIONS_ROLE_ARN"  --role-session-name "TravisCI" | jq -r '.Credentials | @sh "export AWS_SESSION_TOKEN=\(.SessionToken)\nexport AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey)"')
