@@ -53,8 +53,8 @@ jobs:
     cache: false
     before_install:
     - wget https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_amd64.zip
-    - unzip terraform_${VERSION}_linux_amd64.zip
-    - chmod +x terraform
+    - unzip terraform_${VERSION}_linux_amd64.zip -d $HOME/bin
+    - chmod +x $HOME/bin/terraform
     install:
     - cd deployment/terraform/ecr
     - ./terraform init -backend-config="bucket=${STATE_S3_BUCKET}" -backend-config="region=${AWS_DEFAULT_REGION}"
