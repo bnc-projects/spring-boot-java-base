@@ -56,19 +56,18 @@ jobs:
         - eval $(aws sts assume-role --role-arn "$OPERATIONS_ROLE_ARN"  --role-session-name "TravisCI" | jq -r '.Credentials | @sh "export AWS_SESSION_TOKEN=\(.SessionToken)\nexport AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey)"')
         - $(aws ecr get-login --no-include-email)
         - ./gradlew check
-        - ./gradlew docker dockerTag dockerPush -PTAG=$TRAVIS_BUILD_NUMBER -PREPOSITORY_URI=$REPOSITORY_URI
+        - ./gradlew docker dockerTag dockerTagsPush -PTAG=$TRAVIS_BUILD_NUMBER -PREPOSITORY_URI=$REPOSITORY_URI
         - ./gradlew publish
       after_success:
         - ./gradlew sonarqube
     - stage: deploy to development
-      if: env(DEV_AWS_ACCOUNT_ID) IS NOT blank AND env(DEV_AWS_ACCESS_KEY_ID) IS NOT
-        blank
+      if: env(DEV_AWS_ACCOUNT_ID) IS NOT blank AND env(DEV_AWS_ACCESS_KEY_ID) IS NOT blank
       jdk: openjdk11
       env:
         - CLUSTER_NAME=
         - SERVICE_NAME=
-        - AWS_ACCESS_KEY_ID=$DEV_AWS_ACCESS_KEY_ID
-        - AWS_SECRET_ACCESS_KEY=$DEV_AWS_SECRET_ACCESS_KEY
+        - AWS_ACCESS_KEY_ID=$TRAVIS_AWS_ACCESS_KEY_ID
+        - AWS_SECRET_ACCESS_KEY=$TRAVIS_AWS_SECRET_ACCESS_KEY
         - REPOSITORY_URI=$DEV_AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPOSITORY_NAME
       script: skip
       before_deploy: deployment/scripts/common/push-docker-image.sh
@@ -79,8 +78,7 @@ jobs:
         on:
           branch: master
     - stage: deploy to production
-      if: env(PROD_AWS_ACCOUNT_ID) IS NOT blank AND env(PROD_AWS_SECRET_ACCESS_KEY)
-        IS NOT blank
+      if: env(PROD_AWS_ACCOUNT_ID) IS NOT blank AND env(PROD_AWS_SECRET_ACCESS_KEY) IS NOT blank
       jdk: openjdk11
       env:
         - CLUSTER_NAME=
