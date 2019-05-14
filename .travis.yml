@@ -4,9 +4,7 @@ jdk:
 - openjdk-ea
 env:
   global:
-  - AWS_DEFAULT_REGION=
   - ECR_REPOSITORY_NAME=
-  # The following environment variables must be encrypted for successful deployment
   - AWS_ACCESS_KEY_ID=
   - AWS_SECRET_ACCESS_KEY=
   - DEV_AWS_ACCOUNT_ID=
@@ -15,6 +13,19 @@ env:
   - PROD_AWS_ACCOUNT_ID=
   - PROD_AWS_ACCESS_KEY_ID=
   - PROD_AWS_SECRET_ACCESS_KEY=
+  - AWS_DEFAULT_REGION=
+  - KMS_KEY_ID=
+  - TF_IN_AUTOMATION=1
+  - ROLE_ARN=
+  - SERVICE_NAME=spring-boot-java-base
+  - STATE_S3_BUCKET=
+  - STATE_DYNAMODB_TABLE=
+  - VERSION="0.11.13"
+  - secure: QFLxq6/aFRdQqLbR5NWDAPpnlzk5AQ3bRaYH+uegZaA5qMWvNNEoBjE5yvAJKiOe6jbqW7vqnmHFUSaMQS9gpL8O0r70rW5eswb8QUa+tSc+N2dluzCMp2+Fnj/xk8sAq+ieo5B5El296aLd+9gFK1xnjkORSZHGT+GIXxFZgqO/OCO9TETWuPtDaOkygZvPdBOLs2MItVrnBfWSUL5e6uhFn60G3+E3q3P44reesrcWyyv1x0QM91GsYm7pUVH5gW6K1vptArpW6+S5At1QtGgaLQj+6rY6ywqkOusSgFlYXrGrTGeeOiig8xKTKRQVX1myXWSVCUfiJcLp09rv2zfveQ9lmB42F+GgaocKv8FuIC8RDb4v3qdV3svFB0KpZfOHrdOW9cvTciMyIhzcF2UNui7pUkP5aMdruApAoSxzQP1nbl/lWcacHyoShibXSMw/GYgIGik2s8TY3B3J9secFkMoVgZD2qcmij2+hbTOmVnI3/ocnHdjRfe9Z8G7+P6NlMJ4AN25BglLMJaz4hvjzP3X50PUhPhorYtA9i9WB5cH9TWxnhemcerQjPsHFin2+gKLqEDrRZ+kPNkQiOXUKcfQNN80YaI0PTS4N38sMdluSAKWb6upwvWkmlZcOVZJdoa2s24lNyq2bCdzpmcfalFAZwKszHwKMrlmVgA=
+  - secure: tmIuWwh2CTYUrg1xPLjaNEQST8KKCsw/i6PhaEmamojeDdw+nEFSXm+Yyf3wBxSPI5sLC42lIb2dKia0vcF/V1oK8/V1D/b7VbdKU3LrBKYzqKbL3Y/R/LiirvGrdG/6C9Ai3ET0cUd+oqffCEi/CWRDY9xLdT6tYuMn829xLLZol2rA7ANDP+znGPqbhG9oXAwd5Xffkf5UGKaAtsghuC9eo+F+sKXAU+12ASqivk++D3oiIz/41wIWb6tFkuAsqKvFrbHysd6iTrZjKYTVhQ9aRcQCtPEhS+9FyYe71lhaHW8r5vb1+e+uh0dq2ye6aAPVZx0T1llHF5TvcbF6rYNuAqEbi5bYTr0iPQ3yUy8mH9RWfR0OpuiBNEqdfW1yuyDUm3IURB2CXrnpjgqcntMrizs5ukP9ltqLoAp8YfvtiM7bYrYPHVfyzVjrt1R8FeaNLZtQEk3VtSnO1CwZnD80rQ1YwkpN6jq9xd1mpNCIku96KjVMdJ/lwo1mNhUqDBO4+X5bDFG1j0zBPWvFc0FjQnttn6EJkx+c62VoEDFao1Yu4N7w8qfgxpNaA/j4xeEr8IRp27XvlZc9f8XYFNvmVtZK+GiPOKFnFCZ5BzJKdV97Ma1xRUQbARDG4aqoyZYBBoHuRRGaq/Gse/ZGIPoYS5etcRxAjEGOONP8rLw=
+  - secure: XoxbVPpLStp/Rh2Dbc1MC/pgZANIWSmXSgtA1mZMGCKh2FayvtkC4gSmaQy/P+HbCSrppdKrKqflUNG2T+ZU7K7rT0XB08onOSAhXjGRHtgZbKHWtWneZ5lQdKytbpxyoVG3CbenOTRStuC45EyO33wL0mDcyA3HFeosZefiOFp95FP8aQ52zj7q6blbId767GobGkjXVEKtv1m7Z3TyhDLvlMPgM3th+Dn2vo+uZSx3EvBtbTDjXW7TEI3wAo/vCLdyBrE+ARmkHv+kJjrnlEAh496qIs2NlEohDH/XqQb5GTcRhT4SC/SSeKS8qkybzXtdt7XtBO7XbGHGYAf5gWDVNjsnrHMz8u+edsHTtasrB+QJelYc8iTVjIH9KWAtV8ufD9c9Fk8KQLzpVr/88BF7VQTMBTjRQHOPeGAQnZMmYXiv3b9VL9HZBrnKS0vhuvJRIYtuT93aildK2VDGsvmDX/ofKBkZiQePU7Vq8LHvnGUQxkxo/b2WGfcnTt23X1R8FcKQgbrP9mA1HOlAA3nbVTGkZJzNoXbUtZt4sZR2WHtxNpQRsVaXrRPYATHu8UStfd138EaLeAPuM4EQYTKA/9cOf7pmxtOpypYsTmkIuzxLdFrw3aniagZFQ6SDbVakbPV1BOTr5K0jZKLeeFG516MUKLk+CrIwyALIEbY=
+  - secure: nkg6tw+1yVyky1PgDcMrj4HNgPTTQLYDbi+SHvyCxqsvcjcXsDMmh7kFHX4KiuaOIWcXKg9+lQ2buUy8qOwj1lPXbEO28ZYU41jZNM1Y4LXKOLe2d0Lz5r46LF/tJOok8XUerHdVUM/BxmXiFdSa8r2C2Or3khxf9Dqdu6nMvYmBP2s7g0ABZDNsqaQTj8iKA7XfgCiq9c9f0mDThQZ0fv79MPDGA6gL5EfkBhQ1DFd4MunJu9oxQ28fsl0vb/imOhMLTNvdcRVEz1tL/PJ5/MTcOgokmrhZ5IzTk1bbKOfaYw5s6GOGrDK0ZyQq8031P9sLj4c2HtY9W5ntT8x0utBYI390fHuYRwx2M9w9KhqikBxMPg9srd4kkG7vlJGJUf+9jS4pt/KP8TYzC9ryK/9ONz/Bys1LFN7lTHJqAZBR5cMpLLwuiXuIrDD/SL0yLWsnlMUAc0XU7CkPEnYvFBoaoX/MObO5Fy6rSXdDkaIrpWYD4AUXj8PEA/b9SafLxjmp68CtAqhQ+Kv0stAFDYbW3pW+edBKCQGtnzCeNWLK6F7hP6oqugHns8uaWdYx+vFyHrvYAAfb6ZWFnJ2umqHQbdDmgl/iwPlZsey1Z+1GUzPFnKv1B+L6VjsdPFpUlx9w7LNy9q0nxh1FTbRwlerYdGXs5ir3qjKo42wYJ/4=
+  - secure: rsQY9ftjfAY7q30Eu3eKJw+iOhFZNouV75HcXOiaMSJ0gqypQ3Lhv1vKSEQefV/EJIojEcxdJ8NRF3dyIrgKJvf0YezzSjzDleMRcP+AmmuQyeGqd5MYJ6kl8BRLerWWAuuc+bp2dLw/KCanXrDwh7bp2/V9pOTTdBfzBFG/nPrR40CLkI7AQaEccuHVb2ZphlzSf9VOzEYlBzilXuJvRkl+/GpyEE170O7jkOBImIT8OXnO1UXzzRUymZCZs3bYTu9nIknpLeVa0ba+VHla/dlSwFFJY+zs0v83lsQ+CErkMMikPQy7j5UlIKNF8X6Zubu0D0gOP0+PwWXsBbB5/E+YCyHNcox9mzuzsDkIdBO9tABE08Zhx/UVqU5KKnkIshMIxNFbMnXgA/rsd4NyT35onWIEoom13Nar/xJpIhnWSXTQhHzamjIjIA3Oj7et++Rt36sqZNqxkGQJqvV0fE6+khJ7Y8SCiaPJW91GUz9Xdx/8FW3QMT2UeI4MpX0VlIlkBZrhMO6v6gAp/zOib1jiuKCK1ZJTYkuYPLUwEzVx50+uRB7IxHT5mKeR8IfPktWxyYA/YRL0XHLkgaV7S4v49/3ReF3+KmPTHpmKnOq5VoEORAegcqcBFgATtddDTC4c1kuwjJzdka3qnBuWCWpm8jySzBQLilrNpKP+bW8=
 before_install:
 - pip install --user pip --upgrade
 - pip install --user awscli --upgrade
@@ -29,15 +40,42 @@ cache:
   - "$HOME/.gradle/wrapper/"
 jobs:
   include:
+  - stage: init docker repository
+    if: env(TERRAFORM_AWS_ACCESS_KEY_ID) IS NOT blank AND env(TERRAFORM_AWS_SECRET_ACCESS_KEY)
+      IS NOT blank
+    env:
+    - secure: WlgRNrhZNfvu2gwVdoUoxM86nNV7Cb9hK7ZQ6gUgR2zuM7O13aR4yXCpJT1ok8XuGj0oTtfmoqcKoXhHa0KjBVmFMCHrslkxmNTb/4aLDDJz+v/tck80d/e9kH6c3hinD2rC9xhyK7rJ21ORil8fe4+aPv5wQnu2xVTvtUg/deo/STQLbP3dIfEDS71vDq+YdjrxtuCB2/3dFN5OR+xopO3uj6lyZXglNWdYbt+ZLyZA3z5chrCmWdBWdyUbIyO3Na2C7MUVDfYzflcja7ppkWqk6UwESPNiPqAGFxdFV867qUB6kkTBtdyIgkAQzLGP5HWAomF4FRqrWMKz8N1Op2rdgAwm/121ClW76SlO1qj4HJ49BkS5iCkjsnXvX/wWC9iSYtOdcBSQl2PHBWvHJBktvJF5AjTvBCXHrZ+BqlRjkLwuO4uByzFUv+boO2B7w0I81IrckyHF8eZrWzojivdF0/VNmB61dwp2Ld+12h2JgghFk7ZiH0WvBwZtp/H/7/6u2Qb6ctIusuOadogV/+FjERiA8sxAAmcPQ0l2XnsrcpV7CwHGC4eM9ooz5mpvwH6eFO0Sc+HuoUh913vZqfqTUrh3adRUVxArw3gh+QorynnN/RWZ4VUIcdxnUaXFhTG8PMxZSDxdIBnlMA6UK9Cm6D83N2t0bbzadktWzOg=
+    - secure: vBYFX0YlfvUhWm0W1sQxbt+Aq2Ab+OzJTSJwbncL+eSPZxO9oRnbQVug1O4nvz1UmjUxWzE3/Du4PPWK4eavw7bLZtGgMqXNTPiPvIS59cXZvRtF7LP9g122l4mTeveiPlowpBi7rl7cTaOPrO5LERv1ZhTCdClI0rW4qoTMjfaKhi2Mo8UtbFTXFy2HLnV+Vn8ETOUcqOoNdH1Q3kZk1lTL03dAtaMJ67I4EnTgCvw7AG7JtoqrplAIQ2etB+mO0zaVEdjLTQ15dlK6Ib+BrQ/s8hH2p9f2f8vxOVpwrKHljfApsZAr36VhSCl/Nnl7TbMHS9hzT+BfrL1fHXhfO0BWYHFRDIww2EEbGIPl4uBH8H9hJvJtXSLvWZWywv/5APmY/EF5YSoDPqqK75cWhLQAXaVaNSTTFU6We7UfyooXpPshZ5tTF9DHssPp6fAXYBZx9hwKtf3+ajmpV905aSFkYvfsrMYMhmK5rHRFsJGpLu99Chrb86FuPl1/K6ACNWiBUcfwd+rZLgrenI7PVUXHNvKvgJ/6Mn7+5cnC8YfyzeV8UajQRzSJOtle5RIg1nc4m5sy9oZ2gt8+hm4e1W56b8005rrEaVpaBhZKGXjujGZpvcXwXXo/bxsAttZFcBYWppSsDkn+Cy8NXPNdNz0HxGdFRnQuj/UJNO7pi58=
+    cache: false
+    before_install:
+    - wget https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_amd64.zip
+    - unzip terraform_${VERSION}_linux_amd64.zip
+    - chmod +x terraform
+    install:
+    - cd deployment/terraform/ecr
+    - ./terraform init -backend-config="bucket=${STATE_S3_BUCKET}" -backend-config="region=${AWS_DEFAULT_REGION}"
+      -backend-config="dynamodb_table=${STATE_DYNAMODB_TABLE}" -backend-config="kms_key_id=${KMS_KEY_ID}"
+      -backend-config="role_arn=${ROLE_ARN}"
+    script:
+    - ./terraform plan -input=false -var role_arn=${ROLE_ARN} -var service_name=${SERVICE_NAME}
+    deploy:
+    - provider: script
+      script: ./terraform apply -backup="-" -input=false -auto-approve -var role_arn=${ROLE_ARN}
+        -var service_name=${SERVICE_NAME}
+      skip_cleanup: true
+      on:
+        all_branches: true
   - stage: test
     after_success:
-      - ./gradlew sonarqube
+    - "./gradlew sonarqube"
   - stage: publish artifacts
-    if: env(AWS_ACCESS_KEY_ID) IS NOT blank AND env(AWS_SECRET_ACCESS_KEY) IS NOT blank
+    if: env(AWS_ACCESS_KEY_ID) IS NOT blank AND env(AWS_SECRET_ACCESS_KEY) IS NOT
+      blank
     jdk: openjdk11
-    script: ./gradlew publish
+    script: "./gradlew publish"
   - stage: deploy to development
-    if: env(DEV_AWS_ACCOUNT_ID) IS NOT blank AND env(DEV_AWS_ACCESS_KEY_ID) IS NOT blank
+    if: env(DEV_AWS_ACCOUNT_ID) IS NOT blank AND env(DEV_AWS_ACCESS_KEY_ID) IS NOT
+      blank
     jdk: openjdk11
     env:
     - CLUSTER_NAME=
@@ -54,7 +92,8 @@ jobs:
       on:
         branch: master
   - stage: deploy to production
-    if: env(PROD_AWS_ACCOUNT_ID) IS NOT blank AND env(PROD_AWS_SECRET_ACCESS_KEY) IS NOT blank
+    if: env(PROD_AWS_ACCOUNT_ID) IS NOT blank AND env(PROD_AWS_SECRET_ACCESS_KEY)
+      IS NOT blank
     jdk: openjdk11
     env:
     - CLUSTER_NAME=
@@ -78,6 +117,6 @@ notifications:
     secure: S4Pg6XK5x3pfxldRNJVMuzLfPzKVsGdogr0u0r/pu5dpjJujoecsuDoPS8syej1hZRqJOxK36Ms+NDXRzHNK6w95X69kgwDjzoI3PoKmnqyBJIcgSueyNbm7KoQGgoKTOgEUHZ0A9JbcdH8ThBHUR8wltXctGd3kEp8KC3wSlXzDmLeFJPTqC8DMBmSC00nVL7LtXj4VdOwYZnERKErjjx5f+msOhCNbAXLr7p12O7ewHDhL1jaex4r4yzG8+oevDKYNgpHyd8BCsgsCnjiKewByiVB9q4GBjE6CN3c1VfKdWmPWwF4jgxsz8BqTjshM17msnRyXOaSsB6MG+gGMyNKwFVYEwlsAQyRl5i5IhvjIHVMZVcbon098CpNcpW/ZsWALVQSZUW8yBBVPfVs4gTI071R9hQvDWdHLEkApZpsD24tPwsXGdzupBceyqf3HZn9PDYnqMB+hDxSYmLoJRYqjdFxguUwZEYSRih0c+4npcCBO/QJ5m+4aoG2qJ7Zg10YPr3I/PU+kHKjMzvAME4iZ30CnW0gRskM7nVHZRVmR/vgweZDuo9GYXnOykUUur9S3OEhkEp6Ucmcnkv/DXRa5lU0gqpnfkcJv40UaqoxyypGn2U0dPHPCbYahvTu4QAAAkUU6RsJ3TlDhOg018lJVBBaLx+tXpTD+TpY7/XU=
 addons:
   sonarcloud:
-    organization: "bnc-projects"
+    organization: bnc-projects
     token:
-      secure: "Ehm9iNp6f5fBata+4mkkfwpUelmYZZAkmrakZ0jOsZn3Pw/e6+ZskxOWBdRZQxZbpsQ2QTxrunel4pNgjKpuj340OuDGQGb8it23VslTDuffpDguDkYVBe8RQER2TeJ5ZrcpYbTwNg0KUxwvvjSgbmwDogQkvXu6nxmGjcT+kcKMuVNBXSQrIPalKQNlq5Oga+IBfuqK0zhgRmsHq5LQVqjrn3dckXL7rtaqF7yXX8EIxaRXFzE36hjQlLB0b2OpT9ff6/Jx15kBgb0OYTwHOjhzg94UWljsW1u4Unl+B93drRV87HSmJN1kZZkzprixgvO+ERMaAwVsb3qqDb6qqhIS06uUZfmsV/lKOfoB2WEYA8KdS4oYUOuRULjrWBvhqA+dT/6QPHjSpgssVCfnuFsgw7vbyBuCZAifHmS0g9h/4+N40xYk4jw+L5jIDH72AdktD2o2qY+26lqw6XdxPPwKBrsBcElbYbfTdw/VMYlA9yoOFx5mlRUxhv0Jxt7u5ZD5FmE7H9XleTNnmO13dhcRfEZvUpEWa1Ccn5ueq/03kbXLIaZ6I0LM8ONK/qEqUmY12Ztf7QFs94HED54N62o+5fohbURsxVDE286VO1alUqgOVLOt7dd+X4JhDdu2ix4jHjPsan40eAy6e6FxFn4xsQF5BGPrFvDbCsvP6ok="
+      secure: Ehm9iNp6f5fBata+4mkkfwpUelmYZZAkmrakZ0jOsZn3Pw/e6+ZskxOWBdRZQxZbpsQ2QTxrunel4pNgjKpuj340OuDGQGb8it23VslTDuffpDguDkYVBe8RQER2TeJ5ZrcpYbTwNg0KUxwvvjSgbmwDogQkvXu6nxmGjcT+kcKMuVNBXSQrIPalKQNlq5Oga+IBfuqK0zhgRmsHq5LQVqjrn3dckXL7rtaqF7yXX8EIxaRXFzE36hjQlLB0b2OpT9ff6/Jx15kBgb0OYTwHOjhzg94UWljsW1u4Unl+B93drRV87HSmJN1kZZkzprixgvO+ERMaAwVsb3qqDb6qqhIS06uUZfmsV/lKOfoB2WEYA8KdS4oYUOuRULjrWBvhqA+dT/6QPHjSpgssVCfnuFsgw7vbyBuCZAifHmS0g9h/4+N40xYk4jw+L5jIDH72AdktD2o2qY+26lqw6XdxPPwKBrsBcElbYbfTdw/VMYlA9yoOFx5mlRUxhv0Jxt7u5ZD5FmE7H9XleTNnmO13dhcRfEZvUpEWa1Ccn5ueq/03kbXLIaZ6I0LM8ONK/qEqUmY12Ztf7QFs94HED54N62o+5fohbURsxVDE286VO1alUqgOVLOt7dd+X4JhDdu2ix4jHjPsan40eAy6e6FxFn4xsQF5BGPrFvDbCsvP6ok=
