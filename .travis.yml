@@ -26,6 +26,7 @@ env:
   - secure: XoxbVPpLStp/Rh2Dbc1MC/pgZANIWSmXSgtA1mZMGCKh2FayvtkC4gSmaQy/P+HbCSrppdKrKqflUNG2T+ZU7K7rT0XB08onOSAhXjGRHtgZbKHWtWneZ5lQdKytbpxyoVG3CbenOTRStuC45EyO33wL0mDcyA3HFeosZefiOFp95FP8aQ52zj7q6blbId767GobGkjXVEKtv1m7Z3TyhDLvlMPgM3th+Dn2vo+uZSx3EvBtbTDjXW7TEI3wAo/vCLdyBrE+ARmkHv+kJjrnlEAh496qIs2NlEohDH/XqQb5GTcRhT4SC/SSeKS8qkybzXtdt7XtBO7XbGHGYAf5gWDVNjsnrHMz8u+edsHTtasrB+QJelYc8iTVjIH9KWAtV8ufD9c9Fk8KQLzpVr/88BF7VQTMBTjRQHOPeGAQnZMmYXiv3b9VL9HZBrnKS0vhuvJRIYtuT93aildK2VDGsvmDX/ofKBkZiQePU7Vq8LHvnGUQxkxo/b2WGfcnTt23X1R8FcKQgbrP9mA1HOlAA3nbVTGkZJzNoXbUtZt4sZR2WHtxNpQRsVaXrRPYATHu8UStfd138EaLeAPuM4EQYTKA/9cOf7pmxtOpypYsTmkIuzxLdFrw3aniagZFQ6SDbVakbPV1BOTr5K0jZKLeeFG516MUKLk+CrIwyALIEbY=
   - secure: nkg6tw+1yVyky1PgDcMrj4HNgPTTQLYDbi+SHvyCxqsvcjcXsDMmh7kFHX4KiuaOIWcXKg9+lQ2buUy8qOwj1lPXbEO28ZYU41jZNM1Y4LXKOLe2d0Lz5r46LF/tJOok8XUerHdVUM/BxmXiFdSa8r2C2Or3khxf9Dqdu6nMvYmBP2s7g0ABZDNsqaQTj8iKA7XfgCiq9c9f0mDThQZ0fv79MPDGA6gL5EfkBhQ1DFd4MunJu9oxQ28fsl0vb/imOhMLTNvdcRVEz1tL/PJ5/MTcOgokmrhZ5IzTk1bbKOfaYw5s6GOGrDK0ZyQq8031P9sLj4c2HtY9W5ntT8x0utBYI390fHuYRwx2M9w9KhqikBxMPg9srd4kkG7vlJGJUf+9jS4pt/KP8TYzC9ryK/9ONz/Bys1LFN7lTHJqAZBR5cMpLLwuiXuIrDD/SL0yLWsnlMUAc0XU7CkPEnYvFBoaoX/MObO5Fy6rSXdDkaIrpWYD4AUXj8PEA/b9SafLxjmp68CtAqhQ+Kv0stAFDYbW3pW+edBKCQGtnzCeNWLK6F7hP6oqugHns8uaWdYx+vFyHrvYAAfb6ZWFnJ2umqHQbdDmgl/iwPlZsey1Z+1GUzPFnKv1B+L6VjsdPFpUlx9w7LNy9q0nxh1FTbRwlerYdGXs5ir3qjKo42wYJ/4=
   - secure: rsQY9ftjfAY7q30Eu3eKJw+iOhFZNouV75HcXOiaMSJ0gqypQ3Lhv1vKSEQefV/EJIojEcxdJ8NRF3dyIrgKJvf0YezzSjzDleMRcP+AmmuQyeGqd5MYJ6kl8BRLerWWAuuc+bp2dLw/KCanXrDwh7bp2/V9pOTTdBfzBFG/nPrR40CLkI7AQaEccuHVb2ZphlzSf9VOzEYlBzilXuJvRkl+/GpyEE170O7jkOBImIT8OXnO1UXzzRUymZCZs3bYTu9nIknpLeVa0ba+VHla/dlSwFFJY+zs0v83lsQ+CErkMMikPQy7j5UlIKNF8X6Zubu0D0gOP0+PwWXsBbB5/E+YCyHNcox9mzuzsDkIdBO9tABE08Zhx/UVqU5KKnkIshMIxNFbMnXgA/rsd4NyT35onWIEoom13Nar/xJpIhnWSXTQhHzamjIjIA3Oj7et++Rt36sqZNqxkGQJqvV0fE6+khJ7Y8SCiaPJW91GUz9Xdx/8FW3QMT2UeI4MpX0VlIlkBZrhMO6v6gAp/zOib1jiuKCK1ZJTYkuYPLUwEzVx50+uRB7IxHT5mKeR8IfPktWxyYA/YRL0XHLkgaV7S4v49/3ReF3+KmPTHpmKnOq5VoEORAegcqcBFgATtddDTC4c1kuwjJzdka3qnBuWCWpm8jySzBQLilrNpKP+bW8=
+  - secure: AqCThrzOrsP80XztRjyLS7ntP7h7KZqNv38tXLedMzBQFni4Wo8b+pOkcSvuOe/aXsX9h3kzVrzl36lS4S9seNLaLN+ZRcg3YPzSm3MlHWcneY+RvXWhUh+B51z7IUQcSQ24Mez13Udm6aGBEokDVNCacfDNk2J8c+0HB/KK9DTAvspCnFv8W2Qo7jvkQbvjVbr6RnadEXaWEuvtvfr5cX17HZPwco6+hwpGYOgKjVkeDj2yW/VzXaexzq4LLbRJdEcERxppe84OBG3IigYtVsASG94baAau+SfNq3oLQhK7RdK9lHsRONwX5kAvvM1g4AFjs1Vqtsy+jjtQUCE+hsJSm9akBqqFnOUjMDIJicdeHJptHYEZ77oT6R40pw+b5ZJGT9r2o5FJdLbygQkJ4VqwyT1lErFS6EX4apMNX1J2zx5ieiXmgh1DCeVgJSaVP4q1dnvGowfJhL7RxNww6PWHZWVzyi+x79/q8acjr/Y2+RkZzdk0gssR++4vbadRFwXsek+hfXVYIrRQfe5oEyidm99VcW1C6OfCxkXBOjqMAKnjEnUBf+B6p68pMEkBzd3/LhPxPTXEM3LXo1c6H4Jp75n/W4Wg+At8Wq/HnR1Vrojm/+rS1hEJV7GW3XxgTuHcRFueJpwlMaSbpfY9HmM0jsyiObPdsq4CJMUHjrM=
 before_install:
 - pip install --user pip --upgrade
 - pip install --user awscli --upgrade
@@ -39,11 +40,11 @@ cache:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
 stages:
-  - init docker repository
-  - test
-  - publish artifacts
-  - deploy to development
-  - deploy to production
+- init docker repository
+- test
+- publish artifacts
+- deploy to development
+- deploy to production
 jobs:
   include:
   - stage: init docker repository
@@ -58,7 +59,7 @@ jobs:
     install:
     - cd deployment/terraform/ecr
     - terraform init -backend-config="bucket=${STATE_S3_BUCKET}" -backend-config="region=${AWS_DEFAULT_REGION}"
-      -backend-config="dynamodb_table=${STATE_DYNAMODB_TABLE}" -backend-config="kms_key_id=${KMS_KEY_ID}"
+      -backend-config="dynamodb_table=${STATE_DYNAMODB_TABLE}" -backend-config="kms_key_id=${KMS_KEY_ID}" -backend-config="key=${KEY}"
       -backend-config="role_arn=${ROLE_ARN}"
     script:
     - terraform plan -input=false -var role_arn=${ROLE_ARN} -var service_name=${SERVICE_NAME}
