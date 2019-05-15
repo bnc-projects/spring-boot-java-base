@@ -1,0 +1,11 @@
+profile               = "<The profile to use for the AWS provider>"
+role_arn              = "<The role to assume to access the terraform remote state>"
+workspace_account_ids = "<Map of account ids for each workspace> "
+                         e.g: workspace_account_ids = { development = "<dev account id>", production = "<production account id>"}
+application_path = "<The context of Application>"
+service_name     = "<ECS service name>"
+splunk_url       = "<The url of splunk>"
+splunk_token     = "<The splunk token to send log information>"
+docker_image     = "The docker image to deploy ECS service"
+spring_profile   = "<The Java spring boot profile>"
+java_options     = "<The Java running time options>"
