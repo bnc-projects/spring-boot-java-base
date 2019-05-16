@@ -7,17 +7,17 @@ env:
     - TF_IN_AUTOMATION=1
     - SERVICE_NAME=spring-boot-java-base
     - VERSION=0.11.13
-    - AWS_ACCESS_KEY_ID=[secure]
-    - AWS_SECRET_ACCESS_KEY=[secure]
-    - AWS_DEFAULT_REGION=[secure]
-    - KMS_KEY_ID=[secure]
-    - ROLE_ARN=[secure]
-    - STATE_S3_BUCKET=[secure]
-    - STATE_DYNAMODB_TABLE=[secure]
-    - KEY=[secure]
-    - OPERATIONS_ROLE_ARN=[secure]
-    - DEVELOPMENT_ROLE_ARN=[secure]
-    - PRODUCTION_ROLE_ARN=[secure]
+    - AWS_ACCESS_KEY_ID=
+    - AWS_SECRET_ACCESS_KEY=
+    - AWS_DEFAULT_REGION=
+    - KMS_KEY_ID=
+    - ROLE_ARN=
+    - STATE_S3_BUCKET=
+    - STATE_DYNAMODB_TABLE=
+    - KEY=
+    - OPERATIONS_ROLE_ARN=
+    - DEVELOPMENT_ROLE_ARN=
+    - PRODUCTION_ROLE_ARN=
     - secure: QFLxq6/aFRdQqLbR5NWDAPpnlzk5AQ3bRaYH+uegZaA5qMWvNNEoBjE5yvAJKiOe6jbqW7vqnmHFUSaMQS9gpL8O0r70rW5eswb8QUa+tSc+N2dluzCMp2+Fnj/xk8sAq+ieo5B5El296aLd+9gFK1xnjkORSZHGT+GIXxFZgqO/OCO9TETWuPtDaOkygZvPdBOLs2MItVrnBfWSUL5e6uhFn60G3+E3q3P44reesrcWyyv1x0QM91GsYm7pUVH5gW6K1vptArpW6+S5At1QtGgaLQj+6rY6ywqkOusSgFlYXrGrTGeeOiig8xKTKRQVX1myXWSVCUfiJcLp09rv2zfveQ9lmB42F+GgaocKv8FuIC8RDb4v3qdV3svFB0KpZfOHrdOW9cvTciMyIhzcF2UNui7pUkP5aMdruApAoSxzQP1nbl/lWcacHyoShibXSMw/GYgIGik2s8TY3B3J9secFkMoVgZD2qcmij2+hbTOmVnI3/ocnHdjRfe9Z8G7+P6NlMJ4AN25BglLMJaz4hvjzP3X50PUhPhorYtA9i9WB5cH9TWxnhemcerQjPsHFin2+gKLqEDrRZ+kPNkQiOXUKcfQNN80YaI0PTS4N38sMdluSAKWb6upwvWkmlZcOVZJdoa2s24lNyq2bCdzpmcfalFAZwKszHwKMrlmVgA=
     - secure: tmIuWwh2CTYUrg1xPLjaNEQST8KKCsw/i6PhaEmamojeDdw+nEFSXm+Yyf3wBxSPI5sLC42lIb2dKia0vcF/V1oK8/V1D/b7VbdKU3LrBKYzqKbL3Y/R/LiirvGrdG/6C9Ai3ET0cUd+oqffCEi/CWRDY9xLdT6tYuMn829xLLZol2rA7ANDP+znGPqbhG9oXAwd5Xffkf5UGKaAtsghuC9eo+F+sKXAU+12ASqivk++D3oiIz/41wIWb6tFkuAsqKvFrbHysd6iTrZjKYTVhQ9aRcQCtPEhS+9FyYe71lhaHW8r5vb1+e+uh0dq2ye6aAPVZx0T1llHF5TvcbF6rYNuAqEbi5bYTr0iPQ3yUy8mH9RWfR0OpuiBNEqdfW1yuyDUm3IURB2CXrnpjgqcntMrizs5ukP9ltqLoAp8YfvtiM7bYrYPHVfyzVjrt1R8FeaNLZtQEk3VtSnO1CwZnD80rQ1YwkpN6jq9xd1mpNCIku96KjVMdJ/lwo1mNhUqDBO4+X5bDFG1j0zBPWvFc0FjQnttn6EJkx+c62VoEDFao1Yu4N7w8qfgxpNaA/j4xeEr8IRp27XvlZc9f8XYFNvmVtZK+GiPOKFnFCZ5BzJKdV97Ma1xRUQbARDG4aqoyZYBBoHuRRGaq/Gse/ZGIPoYS5etcRxAjEGOONP8rLw=
     - secure: XoxbVPpLStp/Rh2Dbc1MC/pgZANIWSmXSgtA1mZMGCKh2FayvtkC4gSmaQy/P+HbCSrppdKrKqflUNG2T+ZU7K7rT0XB08onOSAhXjGRHtgZbKHWtWneZ5lQdKytbpxyoVG3CbenOTRStuC45EyO33wL0mDcyA3HFeosZefiOFp95FP8aQ52zj7q6blbId767GobGkjXVEKtv1m7Z3TyhDLvlMPgM3th+Dn2vo+uZSx3EvBtbTDjXW7TEI3wAo/vCLdyBrE+ARmkHv+kJjrnlEAh496qIs2NlEohDH/XqQb5GTcRhT4SC/SSeKS8qkybzXtdt7XtBO7XbGHGYAf5gWDVNjsnrHMz8u+edsHTtasrB+QJelYc8iTVjIH9KWAtV8ufD9c9Fk8KQLzpVr/88BF7VQTMBTjRQHOPeGAQnZMmYXiv3b9VL9HZBrnKS0vhuvJRIYtuT93aildK2VDGsvmDX/ofKBkZiQePU7Vq8LHvnGUQxkxo/b2WGfcnTt23X1R8FcKQgbrP9mA1HOlAA3nbVTGkZJzNoXbUtZt4sZR2WHtxNpQRsVaXrRPYATHu8UStfd138EaLeAPuM4EQYTKA/9cOf7pmxtOpypYsTmkIuzxLdFrw3aniagZFQ6SDbVakbPV1BOTr5K0jZKLeeFG516MUKLk+CrIwyALIEbY=
@@ -49,7 +49,7 @@ jobs:
         - terraform apply -backup="-" -input=false -auto-approve -var bnc_deploy_role=${OPERATIONS_ROLE_ARN} -var role_arn=${ROLE_ARN} -var service_name=${SERVICE_NAME} >/dev/null
         - REPOSITORY_URI=$(terraform output repository_url)
         - cd $TRAVIS_BUILD_DIR
-        - eval $(aws sts assume-role --role-arn "$OPERATIONS_ROLE_ARN" --role-session-name "${TRAVIS_REPO_SLUG//\//\\-}" | jq -r '@sh "export AWS_SESSION_TOKEN=\(.Credentials.SessionToken)\nexport AWS_ACCESS_KEY_ID=\(.Credentials.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.Credentials.SecretAccessKey)\nexport AWS_INFO=\(.AssumedRoleUser.Arn)"')
+        - eval $(aws sts assume-role --role-arn "$OPERATIONS_ROLE_ARN" --role-session-name "${TRAVIS_REPO_SLUG//\//\\-}" | jq -r '@sh "export AWS_SESSION_TOKEN=\(.Credentials.SessionToken)\nexport AWS_ACCESS_KEY_ID=\(.Credentials.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.Credentials.SecretAccessKey)\nexport AWS_INFO=\(.AssumedRoleUser.Arn) "')
         - echo $AWS_INFO
         - $(aws ecr get-login --no-include-email)
         - ./gradlew check
