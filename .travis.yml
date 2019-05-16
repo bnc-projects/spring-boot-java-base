@@ -49,7 +49,8 @@ jobs:
         - terraform apply -backup="-" -input=false -auto-approve -var bnc_deploy_role=${OPERATIONS_ROLE_ARN} -var role_arn=${ROLE_ARN} -var service_name=${SERVICE_NAME} >/dev/null
         - REPOSITORY_URI=$(terraform output repository_url)
         - cd $TRAVIS_BUILD_DIR
-        - eval $(aws sts assume-role --role-arn "$OPERATIONS_ROLE_ARN" --role-session-name "${TRAVIS_REPO_SLUG//\//\\-}" | jq -r '.Credentials | @sh "export AWS_SESSION_TOKEN=\(.SessionToken)\nexport AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey)"')
+        - eval $(aws sts assume-role --role-arn "$OPERATIONS_ROLE_ARN" --role-session-name "${TRAVIS_REPO_SLUG//\//\\-}" | jq -r '@sh "export AWS_SESSION_TOKEN=\(.Credentials.SessionToken)\nexport AWS_ACCESS_KEY_ID=\(.Credentials.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.Credentials.SecretAccessKey)\nexport AWS_INFO=\(.AssumedRoleUser.Arn)"')
+        - echo $AWS_INFO
         - $(aws ecr get-login --no-include-email)
         - ./gradlew check
         - ./gradlew docker dockerTag dockerPush dockerTagsPush -PTAG=$TRAVIS_BUILD_NUMBER -PREPOSITORY_URI=$REPOSITORY_URI
@@ -90,9 +91,6 @@ jobs:
         script: ecs deploy $CLUSTER_NAME $SERVICE_NAME --tag $TRAVIS_BUILD_NUMBER --no-deregister
         on:
           branch: master
-  allow_failures:
-    - jdk: openjdk-ea
-  fast_finish: true
 notifications:
   slack:
     secure: S4Pg6XK5x3pfxldRNJVMuzLfPzKVsGdogr0u0r/pu5dpjJujoecsuDoPS8syej1hZRqJOxK36Ms+NDXRzHNK6w95X69kgwDjzoI3PoKmnqyBJIcgSueyNbm7KoQGgoKTOgEUHZ0A9JbcdH8ThBHUR8wltXctGd3kEp8KC3wSlXzDmLeFJPTqC8DMBmSC00nVL7LtXj4VdOwYZnERKErjjx5f+msOhCNbAXLr7p12O7ewHDhL1jaex4r4yzG8+oevDKYNgpHyd8BCsgsCnjiKewByiVB9q4GBjE6CN3c1VfKdWmPWwF4jgxsz8BqTjshM17msnRyXOaSsB6MG+gGMyNKwFVYEwlsAQyRl5i5IhvjIHVMZVcbon098CpNcpW/ZsWALVQSZUW8yBBVPfVs4gTI071R9hQvDWdHLEkApZpsD24tPwsXGdzupBceyqf3HZn9PDYnqMB+hDxSYmLoJRYqjdFxguUwZEYSRih0c+4npcCBO/QJ5m+4aoG2qJ7Zg10YPr3I/PU+kHKjMzvAME4iZ30CnW0gRskM7nVHZRVmR/vgweZDuo9GYXnOykUUur9S3OEhkEp6Ucmcnkv/DXRa5lU0gqpnfkcJv40UaqoxyypGn2U0dPHPCbYahvTu4QAAAkUU6RsJ3TlDhOg018lJVBBaLx+tXpTD+TpY7/XU=
