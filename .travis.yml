@@ -4,15 +4,17 @@ jdk:
 dist: xenial
 env:
   global:
-    - ECR_REPOSITORY_NAME=
-    - AWS_ACCESS_KEY_ID=
-    - AWS_SECRET_ACCESS_KEY=
-    - DEV_AWS_ACCOUNT_ID=
-    - DEV_AWS_ACCESS_KEY_ID=
-    - DEV_AWS_SECRET_ACCESS_KEY=
-    - PROD_AWS_ACCOUNT_ID=
-    - PROD_AWS_ACCESS_KEY_ID=
-    - PROD_AWS_SECRET_ACCESS_KEY=
+    - AWS_ACCESS_KEY_ID=[secure]
+    - AWS_SECRET_ACCESS_KEY=[secure]
+    - AWS_DEFAULT_REGION=[secure]
+    - KMS_KEY_ID=[secure]
+    - ROLE_ARN=[secure]
+    - STATE_S3_BUCKET=[secure]
+    - STATE_DYNAMODB_TABLE=[secure]
+    - KEY=[secure]
+    - OPERATIONS_ROLE_ARN=[secure]
+    - DEVELOPMENT_ROLE_ARN=[secure]
+    - PRODUCTION_ROLE_ARN=[secure]
     - TF_IN_AUTOMATION=1
     - SERVICE_NAME=spring-boot-java-base
     - VERSION=0.11.13
@@ -27,10 +29,15 @@ env:
     - secure: c/8Vz4mcDSiNjVBE9wGy11xtnByIdP+pqaizbqwA9WFA2aoCe8mIUmd05VUDAYdFKtULpnjx798FOtXY7cCtgM/yqmrZdGCMP39C6ki4zc7X2cwJl922chU6IitcUq68oHPw0X1YZYG3NNzVw7hDQDG9vKhenwhQWe6mBLtNAAnFWOBmLujtQ8RB6y42zyiojqn4M6FT+IfRyRGqPEYKiJzQdo35j8xocILpmRC4fw1sE87sE3aM/rSXqkTD8eILUQvMoW+wIZbaEK8bfwoqFlO96I4QK9oPeIozxCxULnyDhShk7kBUeFWuT6w4/sFEO5CFWukSwV67yA/wV6iy2PvP0jxraPME4sZrbiJxD32jcmIM2/i6IQMoUwaepEXvHwhJ+pvM5lVurNlkO3YSYLr0e7+1ubiw0YQc7R+5g/gjkwUZSB/KhoPFWK6Kft1HDv4sTPF5aTjKrbAvpBRjM6fawB/gkEXZLTddP0qurPGX4au4tJ93mV+DfMb6XOKGlegwbS6jkWoR+qC7c9x6+RZ57xYzhOWbpza0YsYQy/P4Wi7biCDK5hxwcfc6bu2EjEBlnaY1flis1GmRnFCy2Q+MbSbgqSAL2NMZKjEXwtj+vequffEisOnatKfUbmczKN9Xu/Y6s1HsR3StP7hRy7WaWfnVrCTgY//f0LgmS9Y=
     - secure: WlgRNrhZNfvu2gwVdoUoxM86nNV7Cb9hK7ZQ6gUgR2zuM7O13aR4yXCpJT1ok8XuGj0oTtfmoqcKoXhHa0KjBVmFMCHrslkxmNTb/4aLDDJz+v/tck80d/e9kH6c3hinD2rC9xhyK7rJ21ORil8fe4+aPv5wQnu2xVTvtUg/deo/STQLbP3dIfEDS71vDq+YdjrxtuCB2/3dFN5OR+xopO3uj6lyZXglNWdYbt+ZLyZA3z5chrCmWdBWdyUbIyO3Na2C7MUVDfYzflcja7ppkWqk6UwESPNiPqAGFxdFV867qUB6kkTBtdyIgkAQzLGP5HWAomF4FRqrWMKz8N1Op2rdgAwm/121ClW76SlO1qj4HJ49BkS5iCkjsnXvX/wWC9iSYtOdcBSQl2PHBWvHJBktvJF5AjTvBCXHrZ+BqlRjkLwuO4uByzFUv+boO2B7w0I81IrckyHF8eZrWzojivdF0/VNmB61dwp2Ld+12h2JgghFk7ZiH0WvBwZtp/H/7/6u2Qb6ctIusuOadogV/+FjERiA8sxAAmcPQ0l2XnsrcpV7CwHGC4eM9ooz5mpvwH6eFO0Sc+HuoUh913vZqfqTUrh3adRUVxArw3gh+QorynnN/RWZ4VUIcdxnUaXFhTG8PMxZSDxdIBnlMA6UK9Cm6D83N2t0bbzadktWzOg=
     - secure: vBYFX0YlfvUhWm0W1sQxbt+Aq2Ab+OzJTSJwbncL+eSPZxO9oRnbQVug1O4nvz1UmjUxWzE3/Du4PPWK4eavw7bLZtGgMqXNTPiPvIS59cXZvRtF7LP9g122l4mTeveiPlowpBi7rl7cTaOPrO5LERv1ZhTCdClI0rW4qoTMjfaKhi2Mo8UtbFTXFy2HLnV+Vn8ETOUcqOoNdH1Q3kZk1lTL03dAtaMJ67I4EnTgCvw7AG7JtoqrplAIQ2etB+mO0zaVEdjLTQ15dlK6Ib+BrQ/s8hH2p9f2f8vxOVpwrKHljfApsZAr36VhSCl/Nnl7TbMHS9hzT+BfrL1fHXhfO0BWYHFRDIww2EEbGIPl4uBH8H9hJvJtXSLvWZWywv/5APmY/EF5YSoDPqqK75cWhLQAXaVaNSTTFU6We7UfyooXpPshZ5tTF9DHssPp6fAXYBZx9hwKtf3+ajmpV905aSFkYvfsrMYMhmK5rHRFsJGpLu99Chrb86FuPl1/K6ACNWiBUcfwd+rZLgrenI7PVUXHNvKvgJ/6Mn7+5cnC8YfyzeV8UajQRzSJOtle5RIg1nc4m5sy9oZ2gt8+hm4e1W56b8005rrEaVpaBhZKGXjujGZpvcXwXXo/bxsAttZFcBYWppSsDkn+Cy8NXPNdNz0HxGdFRnQuj/UJNO7pi58=
+    - secure: qX/5RgREXn8WbTMj2wLzy7A1Cu4DJ2BwP/HWKDEjhWjWPJ9U5rw/nw7o5qM5l1YFuYGnd7PrgkcYFSsRjYH5mpiW5fB7GSPuxZelEvAKC68YjoarbT7OM7zPotCfp8KwSuXj5EX/uncZfcIjwUksgAcKNp6t01OSyG5ueoAfV+NKiP5rdVeAEKBfUAGUEY7Ru/y2IYvI5N5EOL2EFPSvtW39WkM54IAqjGpaYhRxWyrBRzYAsz2DpjwR8mLetHc8ZKrhTxCQ7Z94Wtxj4TwcY+ZLxuVxbA5OEC3QuLuAXfkcyiFWzm22fdH2zK2y/sQwc2Xe2DfpvjRRsPsADWefWWq0Qn79fD7BsNrFVXMXtcsKQwJyVGRQP4MNu7zTzBJ8U6oVun4pW95S8BUqEaZroyBec7DSfzhVeXvjLdHz2xJ1JWjAKXBSQwWsrC4G2Jg05M4sWtuPgjGRdEm4YsSJ/7u8IP9me0dWiFvZ71jmmUCxrt1GR9HOyhs14jys+85EAzaGnQXy1p6lvZtHrrP0NUI0HWkGiUwapKvyhIpVcqu/AecX3ohrUU9l64ISpRNN/UuN6lVhe+EWvBI61B1S+eLLThzD+huZK9stfyEPbakRB64DEzvWiB80dzEp1emXcuLfSGYJC2TRHuvF1NsT2TYBLpiVc4VKUJi0QyVnpxU=
 before_install:
   - pip3 install --user pip --upgrade
   - pip install --user ecs-deploy --upgrade
   - export PATH=$PATH:$HOME/.local/bin
+  - wget https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_amd64.zip
+  - unzip terraform_${VERSION}_linux_amd64.zip -d $HOME/bin
+  - chmod +x $HOME/bin/terraform
+  - eval $(aws sts assume-role --role-arn "$OPERATIONS_ROLE_ARN" --role-session-name "$TRAVIS_REPO_SLUG" | jq -r '.Credentials | @sh "export AWS_SESSION_TOKEN=\(.SessionToken)\nexport AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey)"')
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -41,19 +48,12 @@ cache:
 jobs:
   include:
     - stage: test
-      before_install:
-        - wget https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_amd64.zip
-        - unzip terraform_${VERSION}_linux_amd64.zip -d $HOME/bin
-        - chmod +x $HOME/bin/terraform
       script:
         - cd deployment/terraform/ecr
-        - terraform init -backend-config="bucket=${STATE_S3_BUCKET}" -backend-config="region=${AWS_DEFAULT_REGION}" -backend-config="dynamodb_table=${STATE_DYNAMODB_TABLE}" -backend-config="kms_key_id=${KMS_KEY_ID}" -backend-config="key=${KEY}" -backend-config="role_arn=${ROLE_ARN}"
-        - terraform apply -backup="-" -input=false -auto-approve -var role_arn=${ROLE_ARN} -var service_name=${SERVICE_NAME}
+        - terraform init -backend-config="bucket=${STATE_S3_BUCKET}" -backend-config="region=${AWS_DEFAULT_REGION}" -backend-config="dynamodb_table=${STATE_DYNAMODB_TABLE}" -backend-config="kms_key_id=${KMS_KEY_ID}" -backend-config="key=${KEY}" -backend-config="role_arn=${ROLE_ARN}" >/dev/null
+        - terraform apply -backup="-" -input=false -auto-approve -var bnc_deploy_role=${OPERATIONS_ROLE_ARN} -var role_arn=${ROLE_ARN} -var service_name=${SERVICE_NAME} >/dev/null
         - REPOSITORY_URI=$(terraform output repository_url)
         - cd $TRAVIS_BUILD_DIR
-        - AWS_ACCESS_KEY_ID=$TRAVIS_AWS_ACCESS_KEY_ID
-        - AWS_SECRET_ACCESS_KEY=$TRAVIS_AWS_SECRET_ACCESS_KEY
-        - eval $(aws sts assume-role --role-arn "$OPERATIONS_ROLE_ARN"  --role-session-name "TravisCI" | jq -r '.Credentials | @sh "export AWS_SESSION_TOKEN=\(.SessionToken)\nexport AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey)"')
         - $(aws ecr get-login --no-include-email)
         - ./gradlew check
         - ./gradlew docker dockerTag dockerPush dockerTagsPush -PTAG=$TRAVIS_BUILD_NUMBER -PREPOSITORY_URI=$REPOSITORY_URI

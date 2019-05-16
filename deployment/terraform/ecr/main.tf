@@ -18,7 +18,7 @@ provider "aws" {
   profile = "${var.profile}"
 
   assume_role {
-    role_arn     = "arn:aws:iam::${data.terraform_remote_state.techemy.bnc_ops_account_id}:role/BNCTerraform"
+    role_arn     = "${var.bnc_deploy_role}"
     session_name = "terraform"
   }
 }

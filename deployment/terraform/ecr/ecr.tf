@@ -4,9 +4,7 @@ module "ecr" {
     "arn:aws:iam::${data.terraform_remote_state.techemy.bnc_dev_account_id}:root",
     "arn:aws:iam::${data.terraform_remote_state.techemy.bnc_prod_account_id}:root"
   ]
-  allowed_write_principals = [
-    "${data.terraform_remote_state.bnc_ops.travis_ci_role_arn}"
-  ]
+  allowed_write_principals = []
   ecr_repo_name            = "${var.service_name}"
   tags                     = "${merge(local.common_tags, var.tags)}"
 }

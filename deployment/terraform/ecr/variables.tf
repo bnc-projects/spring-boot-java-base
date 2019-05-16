@@ -3,6 +3,11 @@ variable "aws_default_region" {
   default = "us-west-2"
 }
 
+variable "bnc_deploy_role" {
+  type        = "string"
+  description = "The role to assume to run this terraform project"
+}
+
 variable "profile" {
   type    = "string"
   default = "default"
