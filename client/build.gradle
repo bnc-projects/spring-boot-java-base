@@ -9,6 +9,7 @@ jar {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId = "com.bnc.${rootProject.name}"
             from components.java
         }
     }
