@@ -61,22 +61,21 @@ jobs:
     - stage: deploy to development
       jdk: openjdk11
       env:
-        - SERVICE_NAME=
-        - SERVICE_VERSION=$TRAVIS_BUILD_NUMBER
+        - TF_WORKSPACE=development
         - SPLUNK_URL =
         - SPLUNK_TOKEN=
         - WORKSPACE_ACCOUNT_IDS=
         - secure: dS38Oo3V58NKRLGKnS27YTNg2T2CnGChGdlw5ZsoW38OpVx9marItn428H0WFL7SkNSJfSnFXJclNj99DdBMxa3nKMEinYBP3LFc1vyCxmwnpHpvOumFaMqH9Jq9Iwce/IapsoTzF/GQnMavFdYAgnxetMIvPvpsIJBjST4yZy1W2SlMr0m3T2Awg44c0Qv9xaIMDy3GSw/EeriC1/exhPmnZOwmGNiFSXqtrNkn6QNkRbuHqzh0M+ajPRNbOlrwjiCvoWDPrUku07VhvFHPxGf0xk+H3nDDyS28QkWZIbnqjpWZVHlYiAJJVUNJ9zz8k6fppCLvTHpLQ1K39bHwUQRow8Pzkx9J99N+LQEntqfo+XeMk3QYy4UJfva1ANjtgObnv3nv06EFdKRtWFZwPyRFBZcoS92OWMOFXGGONn2W1PLmXElq0TANnams1b0zzd7o1HC2jkkibb5oRRBnj7HsBNotibPQbGhVTcjPZyD3kEtkS9XZBQyKGXXDOHbTBVCfEDNSsqlgMDv3uLo5RDiE1tO58TPhUZv7GkLEOwPZcQLqznw9GLqytvE6SyNVhRqtwkyXpAU7vfedBam2JgM3297h56U+EYavLWlwQ02TyK8lsYTBQSa8rQJQ89EkkLa5MEMcT7Ly1E04h3lZf47SPeWq3E9X5Kxo80Z2xuU=
-        - secure: dficrzM6yl5M/yjaJXABRY2Em6QmrpGh0lRqtKyfO7qUFYNExFqE23UCdeMdixhezbUFLncGzO5HwfWXi0UbVRpoKPNxukwgtIPiU4FKV5H8UhCij8fG2KE0jSuDIGv5AMvsXpVS8lo8gM32yvtYVuNUNy0ZKjmcILEX+PDWAN1WgPqWPQDQqgLsfbD5dqYABo779LzwfhuTQUNciSWKCpHUnfB1Y/gO4LoLeIySsaYEu5UWGp53qYsQVQh0KP8f01lfcvu9cZfZpuXOm9rH9HVxT8DECSjYUUjKV32iJKjzOVMtlrGrMCTbHhEVgnSCKo/TgMh6PMYI+ycX30HA1OTzrtRA1In26TBfVC9NAO0qIhKBGYfoUCuK6RiT3hI5c11p07tkKo44gLiRrRc80F/fwLwd7L6gRRgj0rHzUooPNwBdIgsW83HIz03XvYpVgK1/4Ynj9hCtiQGbmPsPKjoulfX2QMP52/j3daE9MRK+tc6zQaIXkqy37Zg2Ii3tn5VLu/xapi0HvZ94UDQMKSMTwAF01FsgKATN8I5XrAaremfErufQAUtmPgzxSk0VpVzMV+xtOG06oqb53QtfItQtfhXwPQV/A01hyNpAZfw0KiBK5Zu78/xh/mX96rRy09ED/nswzDOIZ9zFI99qyJ7b2K6EjRzy0eQFPd7Sgj8=
         - secure: nXDs5kInVf6Ty/JIa42b61X+xNcU/PVHfJJ7y9YVRX3HYrbtzusqVuxY1n+JQxZyOo8oSPwmT7OE1muxDP7Hy8APZEdjj1g2r+fp7//0w1OzEFzhk0Gj9b+okc8FgK2U+PnmhQ4n4RmhWC8Qx6L32qiECXzDP12kPuCTHu3uPC4qHLBSVH3fQ04Jk7QyJO4l9kIMRwxyARJ6VsUzwSe5jyytXVikvTZZl/CQoYMGNjMg6B091bt3b2I6Fbkw4jsV0II1VFkQXylj/nnWn2D8ohNG5pfWN3283Ks8f7r3R/yLSqJKqTOMEq7drdAXHdGveXY77xAGURnNXrUiIfMa4UmHhC6cDeC5rliOwjQVTqdo6D9UfkJV+IpSLx6PAIFezQraYEhi/lmFRhrCmsFYLJ85TPGdjkv52tFByDkRWe8+aV/owPT5NEwKJtx9BX6mU/pMavRH8IsIjhbQzeAOVxmU7/MWsU8V7lzfLtHmljZdM9E8V5f3oyDSXkA4bkLJx4P/YBCWc04ii6KXLHqWQ5LiCObhXw972fkegPIz9tDpo1NhxrgEg/cPWg9svE3bXCnegyExvTWeVnTS10IhhAyzA+EBM9kZh6asdQCwGuKnpBxkQaKsGZzUgfFRPQ/mEe2pPlRBo54Qi8ku430QtDoRQxiHkjQdyZkW7wdkonw=
         - secure: p3Budl8I27/NBUeWLcTLpCkEcwtfxOQ6GZoEUyay+C/58iNP2j6ECaRdAACb+n6lfvAqZqxgQtSwuMdOQ23/k9EE5fdMLI7CxeudQyFiZLwslvF4MjhJbEl02CrxYEzdnJPCOQbXjNHqpKgZH8Ty42U6VFGLLx3VgtP6KPh5gNenjr+UkLg76s/kDE4WNO7ate812ykB9bjfzy9yyFmgI7Y4gjVyS3XBd8v3TWta3VLeAExc/GqJpjk91iByPlWyOu4GVgZJesCaHgAFXXIl0jDxtG+KsOXpVZxjhWbxP0IjbBJzH6wevMYHvIvHleFPL5Y0n4qj/13YyTukyos4WRexBSkDIxZ+HlDZjwNt6fNqxVOYpLREz3FfY2lER2C7u60bNl8zz9j6bFwo0No0SnbjyFHe+q0bMgr5q9p1uQ/4rc1pfeVi/rb2DaPyQCI+OOUspBjBDXvozteV/YcVNO84c69jpfF4LVkEW7fF6e94cQi95q4MfEpoqxSb2cyJ5tqMthF6hVEZuDQtcC9FjhacS47HD+faQaov9EYPm/sPD9voONZo9y6hCpujMmRlVOp4vS0jykBe9ZQtE9eQR3ZEqPqWVMND06WazRHPyI5VCQtXjMiS6ZUKEUP59+BYtnZadfbQvrXtQ/HDKf0TauaMwGUwKjxRQBo8D+FpqOQ=
         - secure: qy3HdUT1zG5enGgdHMSK7vZ9I45iM130QjycViOuK756GyBtDVikQAeu88LCLaGFWeIdXvipZ2ZAbJ2sjxSzG0zpVf+J6HOeX1MSqYctdRsYAowr/vJryvNlQ1h0LESPOGHbZ1KKISVKvjncwHQzCJ0wQaXDtzmsllpn5qn38MNdov1xCfDAt6vjhXyJKr3ZoMEHQCNM5dj9KhkZ3Rdqj+DnzIO+WbYYoOr9FiNs8n2E/AcOdDJKB0c56GeqEJKbTIxWxLZW4CYQQlk9M1q4khbPIM1Z237uW4/8Xx2+zV7c6XxgqaW0sjY2Qr682W3f36HQlh96Wd9+QOU/g2TmkefM/J6XEpcmO/BCxnGxBeaMCVtuEufYcLXXxe/kByKq/sBe29FgIbss/GBNyb3Gg4feoAESjq4yGPMr5yzMRAMNPvCqafegwVIp4SHfkWbzsRGwQn/mMdG4fdP+0Cl4S8pW0lJMlo3G/+TwyqXCmn6jKB/yKWn9UCEfg11WAMFZHYteXlSVP8iqGSPkZC6wz15NmC4vihletmvoT0rq6o2epl/Oo9P5QWBl3PTcXYBAgdD5Y07r1rQQepG7cMec7Cpsnna5eKlqm+7zvXQgRszkQMzsShen9b/pEzqCtfqKLCEU5a6PHwYN/6+GopbI8SvyC2BZoabiqqm1Nl9VDbg=
-      script:
+      install:
         - cd deployment/terraform/ecs-service
         - terraform init -backend-config="bucket=${STATE_S3_BUCKET}" -backend-config="region=${AWS_DEFAULT_REGION}" -backend-config="dynamodb_table=${STATE_DYNAMODB_TABLE}" -backend-config="kms_key_id=${KMS_KEY_ID}" -backend-config="key=${SERVICE_KEY}" -backend-config="role_arn=${ROLE_ARN}" > /dev/null
-        - terraform workspace select development
+      script:
+        - terraform apply -backup="-" -input=false -auto-approve -var role_arn=${ROLE_ARN} -var workspace_account_ids=${WORKSPACE_ACCOUNT_IDS} -var service_name=${SERVICE_NAME} -var service_version=${TRAVIS_BUILD_NUMBER} -var splunk_url=${SPLUNK_URL} -var splunk_token=${SPLUNK_TOKEN} > /dev/null
+      before_deploy:
         - eval $(aws sts assume-role --role-arn "$DEVELOPMENT_ROLE_ARN" --role-session-name "${TRAVIS_REPO_SLUG//\//-}" | jq -r '.Credentials | @sh "export AWS_SESSION_TOKEN=\(.SessionToken)\nexport AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey) "')
-        - terraform apply -backup="-" -input=false -auto-approve -var role_arn=${ROLE_ARN} -var workspace_account_ids=${WORKSPACE_ACCOUNT_IDS} -var service_name=${SERVICE_NAME} -var service_version=${SERVICE_VERSION} -var splunk_url=${SPLUNK_URL} -var splunk_token=${SPLUNK_TOKEN} > /dev/null
       deploy:
         skip_cleanup: true
         provider: script
