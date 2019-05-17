@@ -72,8 +72,10 @@ jobs:
         - cd deployment/terraform/ecs-service
         - terraform init -backend-config="bucket=${STATE_S3_BUCKET}" -backend-config="region=${AWS_DEFAULT_REGION}" -backend-config="dynamodb_table=${STATE_DYNAMODB_TABLE}" -backend-config="kms_key_id=${KMS_KEY_ID}" -backend-config="key=${SERVICE_KEY}" -backend-config="role_arn=${ROLE_ARN}" > /dev/null
       script:
+        - cd $TRAVIS_BUILD_DIR && cd deployment/terraform/ecs-service
         - terraform apply -backup="-" -input=false -auto-approve -var role_arn=${ROLE_ARN} -var workspace_account_ids=${WORKSPACE_ACCOUNT_IDS} -var service_name=${SERVICE_NAME} -var service_version=${TRAVIS_BUILD_NUMBER} -var splunk_url=${SPLUNK_URL} -var splunk_token=${SPLUNK_TOKEN} > /dev/null
       before_deploy:
+        - cd $TRAVIS_BUILD_DIR && cd deployment/terraform/ecs-service
         - CLUSTER_NAME=$(terraform output ecs_cluster_name)
         - eval $(aws sts assume-role --role-arn "$DEVELOPMENT_ROLE_ARN" --role-session-name "${TRAVIS_REPO_SLUG//\//-}" | jq -r '.Credentials | @sh "export AWS_SESSION_TOKEN=\(.SessionToken)\nexport AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey) "')
       deploy:
