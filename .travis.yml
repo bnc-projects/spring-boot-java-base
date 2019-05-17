@@ -80,7 +80,7 @@ jobs:
       deploy:
         skip_cleanup: true
         provider: script
-        script: aws ecs wait services-stable --services $SERVICE_NAME --cluster $CLUSTER_NAME
+        script: aws ecs wait services-stable --services ${SERVICE_NAME} --cluster ${CLUSTER_NAME}
         on:
           all_branches: true
     - stage: deploy to production
