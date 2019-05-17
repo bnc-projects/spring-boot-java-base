@@ -28,12 +28,17 @@ allprojects {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
     compileJava.options.encoding = "UTF-8"
+    compileTestJava.options.encoding = "UTF-8"
 
     repositories {
         mavenCentral()
         jcenter()
         maven {
+            // This repository is only used for Brave New Coin artifacts. It is not required to build this project.
             url "s3://artifact.bravenewcoin.com/maven/release"
+            content {
+                includeGroup "com.bnc"
+            }
             credentials(AwsCredentials) {
                 accessKey "${awsAccessKeyId}"
                 secretKey "${awsSecretAccessKey}"
