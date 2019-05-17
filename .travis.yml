@@ -71,8 +71,8 @@ jobs:
         - secure: qy3HdUT1zG5enGgdHMSK7vZ9I45iM130QjycViOuK756GyBtDVikQAeu88LCLaGFWeIdXvipZ2ZAbJ2sjxSzG0zpVf+J6HOeX1MSqYctdRsYAowr/vJryvNlQ1h0LESPOGHbZ1KKISVKvjncwHQzCJ0wQaXDtzmsllpn5qn38MNdov1xCfDAt6vjhXyJKr3ZoMEHQCNM5dj9KhkZ3Rdqj+DnzIO+WbYYoOr9FiNs8n2E/AcOdDJKB0c56GeqEJKbTIxWxLZW4CYQQlk9M1q4khbPIM1Z237uW4/8Xx2+zV7c6XxgqaW0sjY2Qr682W3f36HQlh96Wd9+QOU/g2TmkefM/J6XEpcmO/BCxnGxBeaMCVtuEufYcLXXxe/kByKq/sBe29FgIbss/GBNyb3Gg4feoAESjq4yGPMr5yzMRAMNPvCqafegwVIp4SHfkWbzsRGwQn/mMdG4fdP+0Cl4S8pW0lJMlo3G/+TwyqXCmn6jKB/yKWn9UCEfg11WAMFZHYteXlSVP8iqGSPkZC6wz15NmC4vihletmvoT0rq6o2epl/Oo9P5QWBl3PTcXYBAgdD5Y07r1rQQepG7cMec7Cpsnna5eKlqm+7zvXQgRszkQMzsShen9b/pEzqCtfqKLCEU5a6PHwYN/6+GopbI8SvyC2BZoabiqqm1Nl9VDbg=
       script:
         - cd deployment/terraform/ecs-service
-        - terraform workspace select development
         - terraform init -backend-config="bucket=${STATE_S3_BUCKET}" -backend-config="region=${AWS_DEFAULT_REGION}" -backend-config="dynamodb_table=${STATE_DYNAMODB_TABLE}" -backend-config="kms_key_id=${KMS_KEY_ID}" -backend-config="key=${SERVICE_KEY}" -backend-config="role_arn=${ROLE_ARN}" > /dev/null
+        - terraform workspace select development
       deploy:
         skip_cleanup: true
         provider: script
