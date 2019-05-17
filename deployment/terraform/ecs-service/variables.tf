@@ -3,6 +3,11 @@ variable "aws_default_region" {
   default = "us-west-2"
 }
 
+variable "bnc_deploy_role" {
+  type        = "string"
+  description = "The role to assume to run this terraform project"
+}
+
 variable "profile" {
   type    = "string"
   default = "default"
@@ -17,11 +22,6 @@ variable "tags" {
   type        = "map"
   description = "A map of tags to add to all resources"
   default     = {}
-}
-
-variable "workspace_account_ids" {
-  type        = "map"
-  description = "The AWS account id for workloads"
 }
 
 variable "service_name" {

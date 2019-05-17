@@ -19,7 +19,7 @@ provider "aws" {
   profile = "${var.profile}"
 
   assume_role {
-    role_arn     = "arn:aws:iam::${var.workspace_account_ids[terraform.workspace]}:role/BNCTerraform"
+    role_arn     = "${var.bnc_deploy_role}"
     session_name = "terraform"
   }
 }
