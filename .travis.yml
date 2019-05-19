@@ -62,7 +62,7 @@ jobs:
       jdk: openjdk11
       env:
         - TF_WORKSPACE=development
-        - SPLUNK_URL =
+        - SPLUNK_URL=
         - SPLUNK_TOKEN=
         - secure: nXDs5kInVf6Ty/JIa42b61X+xNcU/PVHfJJ7y9YVRX3HYrbtzusqVuxY1n+JQxZyOo8oSPwmT7OE1muxDP7Hy8APZEdjj1g2r+fp7//0w1OzEFzhk0Gj9b+okc8FgK2U+PnmhQ4n4RmhWC8Qx6L32qiECXzDP12kPuCTHu3uPC4qHLBSVH3fQ04Jk7QyJO4l9kIMRwxyARJ6VsUzwSe5jyytXVikvTZZl/CQoYMGNjMg6B091bt3b2I6Fbkw4jsV0II1VFkQXylj/nnWn2D8ohNG5pfWN3283Ks8f7r3R/yLSqJKqTOMEq7drdAXHdGveXY77xAGURnNXrUiIfMa4UmHhC6cDeC5rliOwjQVTqdo6D9UfkJV+IpSLx6PAIFezQraYEhi/lmFRhrCmsFYLJ85TPGdjkv52tFByDkRWe8+aV/owPT5NEwKJtx9BX6mU/pMavRH8IsIjhbQzeAOVxmU7/MWsU8V7lzfLtHmljZdM9E8V5f3oyDSXkA4bkLJx4P/YBCWc04ii6KXLHqWQ5LiCObhXw972fkegPIz9tDpo1NhxrgEg/cPWg9svE3bXCnegyExvTWeVnTS10IhhAyzA+EBM9kZh6asdQCwGuKnpBxkQaKsGZzUgfFRPQ/mEe2pPlRBo54Qi8ku430QtDoRQxiHkjQdyZkW7wdkonw=
         - secure: p3Budl8I27/NBUeWLcTLpCkEcwtfxOQ6GZoEUyay+C/58iNP2j6ECaRdAACb+n6lfvAqZqxgQtSwuMdOQ23/k9EE5fdMLI7CxeudQyFiZLwslvF4MjhJbEl02CrxYEzdnJPCOQbXjNHqpKgZH8Ty42U6VFGLLx3VgtP6KPh5gNenjr+UkLg76s/kDE4WNO7ate812ykB9bjfzy9yyFmgI7Y4gjVyS3XBd8v3TWta3VLeAExc/GqJpjk91iByPlWyOu4GVgZJesCaHgAFXXIl0jDxtG+KsOXpVZxjhWbxP0IjbBJzH6wevMYHvIvHleFPL5Y0n4qj/13YyTukyos4WRexBSkDIxZ+HlDZjwNt6fNqxVOYpLREz3FfY2lER2C7u60bNl8zz9j6bFwo0No0SnbjyFHe+q0bMgr5q9p1uQ/4rc1pfeVi/rb2DaPyQCI+OOUspBjBDXvozteV/YcVNO84c69jpfF4LVkEW7fF6e94cQi95q4MfEpoqxSb2cyJ5tqMthF6hVEZuDQtcC9FjhacS47HD+faQaov9EYPm/sPD9voONZo9y6hCpujMmRlVOp4vS0jykBe9ZQtE9eQR3ZEqPqWVMND06WazRHPyI5VCQtXjMiS6ZUKEUP59+BYtnZadfbQvrXtQ/HDKf0TauaMwGUwKjxRQBo8D+FpqOQ=
@@ -84,22 +84,30 @@ jobs:
         on:
           all_branches: true
     - stage: deploy to production
-      if: env(PROD_AWS_ACCOUNT_ID) IS NOT blank AND env(PROD_AWS_SECRET_ACCESS_KEY) IS NOT blank
       jdk: openjdk11
       env:
-        - CLUSTER_NAME=
-        - SERVICE_NAME=
-        - AWS_ACCESS_KEY_ID=$PROD_AWS_ACCESS_KEY_ID
-        - AWS_SECRET_ACCESS_KEY=$PROD_AWS_SECRET_ACCESS_KEY
-        - REPOSITORY_URI=$PROD_AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPOSITORY_NAME
-      script: skip
-      before_deploy: deployment/scripts/common/push-docker-image.sh
+        - TF_WORKSPACE=production
+        - SPLUNK_URL=
+        - SPLUNK_TOKEN=
+        - secure: qJgNsPCfuHLqj8ilWEdglGT6RnLJJHx9ZOuU82HXVwkeZ+fww7CCqq4HtEYL2klp+V4edngTBCNBihtLUlW16usv3K9xyc0II3/brnZheLazrqUrGQE08Ip75p7f87ZiE5iMQTtxDsSr4UHztl3XB55DntPKIqurNvmsD+Q21AhFb0A94Ktu7cxlNkEcMd+IJaQTy4Xz3vFBL/xhuzEBRaVVNeJIrE0a9C6MpQY6P+dKsYRAfvXzKVy2E1wcU7h1dCLlzBA0EVcRrAi5MLxueffMptlsbFdcxYsGFWI243nY1p5DVmnnDqa1UOqNJnGWLe59DnqtmLYThUH1X2voz6z7RkyfO8wCFHkhuf2cnA5IbEeZ2TZrDshPB9wtwXq5tHJ4wZmDQxNHtDlszgYKCPfUjLYMPIs0sZZY8iHrLOqRvb1Esc0bs/BXmgrWd/7yNFtafS4pMEG9cdUEt3nos5q8vnjQUAgEd2T3oW8ENduHUDeqW5PU9wKIK/nHJOL+LmCYRKKYUsb/ry/BDGN7hnKuTbGAP/4l7QYk+CFueY//H/+eOF73UHZfl2py1LRui8Uyd+koDoUczW4Bd6UZutT8Vb6hhHNsiCVffLEXvMvQbUHT3IRKcwSh5zDorBG7i+a00FCJfHwuBLClgXqjdlQ2opahXD7Y+CWKawBGw6o=
+        - secure: BXvYtV2Ek6kzoRFrkVrHRps7dee2ygY+XiV8pCZ+e23bRi6D/Ew8uZ/1FKwNV3XNO/blFyGiMMwDShnX9UFDXVvHV352t/lpw6w5+jEzPr4YM4duKKt9zd4oO39TliIziazQS3W7lR4z00MIQ1YJ3F6zJZsPgj6RwYgqlViBjUXASt28lUaJGT7aL795oLpU314N4DgfGqSDU/8sakgteq5zYF2qxwWEAd+4muhsj3ixBWQitukGML6KFtX4EYz6o6um7NKcC/STDvfSLjNKoxeV1XNyuIoWxqF/b9iDfhJOlaCSur3RruJoV+XjPrBpBfpjBFJZuyQ++OFxoYo0PoVzPxxPe6bGDVEz10QEG6BNfeWRDtiMAL862wSuyCt8wpJhxVfHEXffhi2Uw2FAzMCMfOTV7LYjfcwH9ZqoRJ1ZzxOEA6zejHquOiy26bIaclFa4/n2rurDs3IPlwAJMJWcI7V0+S7gDiwoO3GUFF0tgm6hz9zn5pexaGBu5Lptc50LI2XkBMHbG1dmnOVdyblTGqSnAkTIcS26ChjlTFScYs+BqGhzydMgV9ZUPjlgJ2a0C+y9sYbxeTy5kS9LxPnsL/9jCwQmLPnwjn+Icm7gDTb5Yfa1O7oqTEHTTZICDqrIuMy4/MN4IqMNb2LDZHuElFX9CyVP4NIGGLH6yaw=
+      install:
+        - cd deployment/terraform/ecs-service
+        - terraform init -backend-config="bucket=${STATE_S3_BUCKET}" -backend-config="region=${AWS_DEFAULT_REGION}" -backend-config="dynamodb_table=${STATE_DYNAMODB_TABLE}" -backend-config="kms_key_id=${KMS_KEY_ID}" -backend-config="key=${SERVICE_KEY}" -backend-config="role_arn=${ROLE_ARN}" > /dev/null
+        - terraform plan -input=false -var role_arn=${ROLE_ARN} -var bnc_deploy_role=${PRODUCTION_ROLE_ARN} -var service_name=${SERVICE_NAME} -var service_version=${TRAVIS_BUILD_NUMBER} -var splunk_url=${SPLUNK_URL} -var splunk_token=${SPLUNK_TOKEN} > /dev/null
+      script:
+        - cd $TRAVIS_BUILD_DIR && cd deployment/terraform/ecs-service
+        - terraform apply -backup="-" -input=false -auto-approve -var role_arn=${ROLE_ARN} -var bnc_deploy_role=${PRODUCTION_ROLE_ARN} -var service_name=${SERVICE_NAME} -var service_version=${TRAVIS_BUILD_NUMBER} -var splunk_url=${SPLUNK_URL} -var splunk_token=${SPLUNK_TOKEN} > /dev/null
+      before_deploy:
+        - cd $TRAVIS_BUILD_DIR && cd deployment/terraform/ecs-service
+        - CLUSTER_NAME=$(terraform output ecs_cluster_name)
+        - eval $(aws sts assume-role --role-arn "$PRODUCTION_ROLE_ARN" --role-session-name "${TRAVIS_REPO_SLUG//\//-}" | jq -r '.Credentials | @sh "export AWS_SESSION_TOKEN=\(.SessionToken)\nexport AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey) "')
       deploy:
         skip_cleanup: true
         provider: script
-        script: ecs deploy $CLUSTER_NAME $SERVICE_NAME --tag $TRAVIS_BUILD_NUMBER --no-deregister
+        script: aws ecs wait services-stable --services ${SERVICE_NAME} --cluster ${CLUSTER_NAME}
         on:
-          branch: master
+          all_branches: true
 notifications:
   slack:
     secure: S4Pg6XK5x3pfxldRNJVMuzLfPzKVsGdogr0u0r/pu5dpjJujoecsuDoPS8syej1hZRqJOxK36Ms+NDXRzHNK6w95X69kgwDjzoI3PoKmnqyBJIcgSueyNbm7KoQGgoKTOgEUHZ0A9JbcdH8ThBHUR8wltXctGd3kEp8KC3wSlXzDmLeFJPTqC8DMBmSC00nVL7LtXj4VdOwYZnERKErjjx5f+msOhCNbAXLr7p12O7ewHDhL1jaex4r4yzG8+oevDKYNgpHyd8BCsgsCnjiKewByiVB9q4GBjE6CN3c1VfKdWmPWwF4jgxsz8BqTjshM17msnRyXOaSsB6MG+gGMyNKwFVYEwlsAQyRl5i5IhvjIHVMZVcbon098CpNcpW/ZsWALVQSZUW8yBBVPfVs4gTI071R9hQvDWdHLEkApZpsD24tPwsXGdzupBceyqf3HZn9PDYnqMB+hDxSYmLoJRYqjdFxguUwZEYSRih0c+4npcCBO/QJ5m+4aoG2qJ7Zg10YPr3I/PU+kHKjMzvAME4iZ30CnW0gRskM7nVHZRVmR/vgweZDuo9GYXnOykUUur9S3OEhkEp6Ucmcnkv/DXRa5lU0gqpnfkcJv40UaqoxyypGn2U0dPHPCbYahvTu4QAAAkUU6RsJ3TlDhOg018lJVBBaLx+tXpTD+TpY7/XU=
