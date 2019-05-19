@@ -61,7 +61,6 @@ jobs:
       after_success:
         - ./gradlew sonarqube
     - stage: deploy to development
-      if: env(DEVELOPMENT_ROLE_ARN) IS NOT blank
       jdk: openjdk11
       env:
         - TF_WORKSPACE=development
@@ -84,7 +83,6 @@ jobs:
         on:
           all_branches: true
     - stage: deploy to production
-      if: env(PRODUCTION_ROLE_ARN) IS NOT blank
       jdk: openjdk11
       env:
         - TF_WORKSPACE=production
