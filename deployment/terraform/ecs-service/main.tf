@@ -15,12 +15,27 @@ locals {
 
 provider "aws" {
   region  = "${var.aws_default_region}"
-  version = "~> 2.10.0"
+  version = "~> 2.11.0"
   profile = "${var.profile}"
 
+  allowed_account_ids = [
+    "${data.terraform_remote_state.techemy.bnc_account_ids["market_data_${terraform.workspace}"]}",
+  ]
+
   assume_role {
-    role_arn     = "${var.bnc_deploy_role}"
+    role_arn     = "${data.terraform_remote_state.techemy.bnc_deployment_roles["market_data_${terraform.workspace}"]}"
     session_name = "terraform"
+  }
+}
+
+data "terraform_remote_state" "techemy" {
+  backend = "s3"
+  config {
+    bucket   = "terraform.techemy.co"
+    key      = "techemy/master"
+    region   = "${var.aws_default_region}"
+    profile  = "${var.profile}"
+    role_arn = "${var.role_arn}"
   }
 }
 
@@ -47,4 +62,3 @@ data "terraform_remote_state" "ecr" {
     role_arn = "${var.role_arn}"
   }
 }
-

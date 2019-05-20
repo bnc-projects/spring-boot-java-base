@@ -71,8 +71,6 @@ STATE_S3_BUCKET=
 STATE_DYNAMODB_TABLE=
 KEY=<The project key for the ECR repository>, e.g bnc/<team>/ecr/<service-name>
 SERVICE_KEY=<The project key for ECS service>, e.g bnc/<team>/<workspace>/ecs/<service-name>
-DEVELOPMENT_ROLE_ARN=
-PRODUCTION_ROLE_ARN=
 SPLUNK_URL=
 ```
 
