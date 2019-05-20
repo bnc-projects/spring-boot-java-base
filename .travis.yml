@@ -72,7 +72,7 @@ jobs:
       deploy: &deploy-service
         skip_cleanup: true
         provider: script
-        script: deployment/script/travis_deploy.sh
+        script: sh deployment/script/travis_deploy.sh
         on:
           all_branches: true
     - stage: deploy to production
