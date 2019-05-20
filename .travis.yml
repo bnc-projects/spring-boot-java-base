@@ -76,6 +76,7 @@ jobs:
         on:
           all_branches: true
     - stage: deploy to production
+      if: env(DEPLOY_PRODUCTION) IS present # remove the condition if you want to deploy to production
       jdk: openjdk11
       env:
         - TF_WORKSPACE=production
