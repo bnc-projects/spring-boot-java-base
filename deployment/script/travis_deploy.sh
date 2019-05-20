@@ -1,4 +1,4 @@
-#!bin/bash
+#! /bin/sh
 
 cd $TRAVIS_BUILD_DIR
 cd deployment/terraform/ecs-service
