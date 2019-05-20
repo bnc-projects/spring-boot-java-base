@@ -9,6 +9,7 @@ jar {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId = "com.bnc.${rootProject.name}"
             from components.java
         }
     }
@@ -19,6 +20,9 @@ publishing {
             credentials(AwsCredentials) {
                 accessKey "${awsAccessKeyId}"
                 secretKey "${awsSecretAccessKey}"
+                if (awsSessionToken) {
+                    sessionToken "${awsSessionToken}"
+                }
             }
         }
     }

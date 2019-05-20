@@ -1,0 +1,7 @@
+bnc_deploy_role  = "<The role to assume to access the development AWS account"
+profile          = "<The profile to use for the AWS provider>"
+role_arn         = "<The role to assume to access the terraform remote state>"
+service_name     = "<ECS service name>"
+service_version  = "<The version of the service to deploy from ECR>"
+splunk_url       = "<The url of splunk>"
+splunk_token     = "<The splunk token to send log information>"
