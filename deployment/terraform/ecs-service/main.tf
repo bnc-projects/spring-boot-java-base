@@ -19,27 +19,16 @@ provider "aws" {
   profile = "${var.profile}"
 
   allowed_account_ids = [
-    "${data.terraform_remote_state.techemy.bnc_account_ids["market_data_${terraform.workspace}"]}",
+    "${data.terraform_remote_state.market_data.aws_account_id}",
   ]
 
   assume_role {
-    role_arn     = "${data.terraform_remote_state.techemy.bnc_deployment_roles["market_data_${terraform.workspace}"]}"
+    role_arn     = "${data.terraform_remote_state.market_data.deployment_role_arn}"
     session_name = "terraform"
   }
 }
 
-data "terraform_remote_state" "techemy" {
-  backend = "s3"
-  config {
-    bucket   = "terraform.techemy.co"
-    key      = "techemy/master"
-    region   = "${var.aws_default_region}"
-    profile  = "${var.profile}"
-    role_arn = "${var.role_arn}"
-  }
-}
-
-data "terraform_remote_state" "market-data" {
+data "terraform_remote_state" "market_data" {
   backend   = "s3"
   workspace = "${terraform.workspace}"
   config {
