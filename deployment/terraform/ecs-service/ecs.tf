@@ -1,5 +1,5 @@
 module "ecs_service" {
-  source                   = "git::https://github.com/bnc-projects/terraform-ecs-service.git?ref=initial-module"
+  source                   = "git::https://github.com/bnc-projects/terraform-ecs-service.git?ref=1.0.0"
   alarm_actions            = [
     "${data.terraform_remote_state.market-data.alert_topic_arn}"
   ]
