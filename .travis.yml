@@ -76,7 +76,6 @@ jobs:
         on:
           all_branches: true
     - stage: deploy to production
-      if: env(PRODUCTION_ROLE_ARN) IS present
       jdk: openjdk11
       env:
         - TF_WORKSPACE=production
