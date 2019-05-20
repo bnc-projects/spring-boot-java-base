@@ -1,9 +1,9 @@
 module "ecs_service" {
-  source                   = "git::https://github.com/bnc-projects/terraform-ecs-service.git?ref=1.0.0"
+  source                   = "git::https://github.com/bnc-projects/terraform-ecs-service.git?ref=1.0.1"
   alarm_actions            = [
     "${data.terraform_remote_state.market-data.alert_topic_arn}"
   ]
-  application_path         = "/v1/service"
+  application_path         = "/sbjb"
   cluster_name             = "${data.terraform_remote_state.market-data.ecs_cluster_name}"
   docker_image             = "${data.terraform_remote_state.ecr.repository_url}:${var.service_version}"
   external_lb_listener_arn = "${data.terraform_remote_state.market-data.external_lb_https_listener_arn}"
