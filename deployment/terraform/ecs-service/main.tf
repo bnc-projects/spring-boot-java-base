@@ -15,16 +15,20 @@ locals {
 
 provider "aws" {
   region  = "${var.aws_default_region}"
-  version = "~> 2.10.0"
+  version = "~> 2.11.0"
   profile = "${var.profile}"
 
+  allowed_account_ids = [
+    "${data.terraform_remote_state.market_data.aws_account_id}",
+  ]
+
   assume_role {
-    role_arn     = "${var.bnc_deploy_role}"
+    role_arn     = "${data.terraform_remote_state.market_data.deployment_role_arn}"
     session_name = "terraform"
   }
 }
 
-data "terraform_remote_state" "market-data" {
+data "terraform_remote_state" "market_data" {
   backend   = "s3"
   workspace = "${terraform.workspace}"
   config {
@@ -47,4 +51,3 @@ data "terraform_remote_state" "ecr" {
     role_arn = "${var.role_arn}"
   }
 }
-

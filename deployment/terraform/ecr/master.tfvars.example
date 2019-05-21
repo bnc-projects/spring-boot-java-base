@@ -1,4 +1,3 @@
-bnc_deploy_role = "<The role to assume to run this terraform project>"
 profile         = "<The profile to use for the AWS provider>"
 role_arn        = "<The role to assume to access the terraform remote state>"
 service_name    = "<The service name>"
