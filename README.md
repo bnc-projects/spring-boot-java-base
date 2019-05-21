@@ -82,10 +82,6 @@ SPLUNK_TOKEN=
 
 ### Deployment to development ECS cluster
 
-#### Setup AWS Credentials
-
-1. Setup the AWS profile using `aws configure --profile bnc-terraform`. The credentials can be retrieved using `terraform output` command in the terraform-techemy-master project if you have this setup.
-
 #### Terraform ECR Project
 
 1. cd deployment/terraform/ecr
