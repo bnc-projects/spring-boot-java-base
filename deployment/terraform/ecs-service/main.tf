@@ -9,34 +9,34 @@ locals {
   common_tags = {
     Owner       = "bravenewcoin"
     Team        = "Market Data"
-    Environment = "${terraform.workspace}"
+    Environment = terraform.workspace
   }
 }
 
 provider "aws" {
-  region  = "${var.aws_default_region}"
+  region  = var.aws_default_region
   version = "~> 2.11.0"
-  profile = "${var.profile}"
+  profile = var.profile
 
   allowed_account_ids = [
-    "${data.terraform_remote_state.market_data.aws_account_id}",
+    data.terraform_remote_state.market_data.outputs.aws_account_id,
   ]
 
   assume_role {
-    role_arn     = "${data.terraform_remote_state.market_data.deployment_role_arn}"
+    role_arn     = data.terraform_remote_state.market_data.outputs.deployment_role_arn
     session_name = "terraform"
   }
 }
 
 data "terraform_remote_state" "market_data" {
   backend   = "s3"
-  workspace = "${terraform.workspace}"
+  workspace = terraform.workspace
   config {
     bucket               = "terraform.techemy.co"
     key                  = "market-data"
-    region               = "${var.aws_default_region}"
-    profile              = "${var.profile}"
-    role_arn             = "${var.role_arn}"
+    region               = var.aws_default_region
+    profile              = var.profile
+    role_arn             = var.role_arn
     workspace_key_prefix = "bnc"
   }
 }
@@ -46,8 +46,8 @@ data "terraform_remote_state" "ecr" {
   config {
     bucket   = "terraform.techemy.co"
     key      = "bnc/market-data/ecr/${var.service_name}"
-    region   = "${var.aws_default_region}"
-    profile  = "${var.profile}"
-    role_arn = "${var.role_arn}"
+    region   = var.aws_default_region
+    profile  = var.profile
+    role_arn = var.role_arn
   }
 }
