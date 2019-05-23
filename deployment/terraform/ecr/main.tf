@@ -29,7 +29,7 @@ provider "aws" {
 
 data "terraform_remote_state" "bnc_ops" {
   backend = "s3"
-  config {
+  config = {
     bucket   = "terraform.techemy.co"
     key      = "bnc/ops"
     region   = var.aws_default_region
