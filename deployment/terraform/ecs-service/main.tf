@@ -1,4 +1,5 @@
 terraform {
+  required_version = ">= 0.12"
   backend "s3" {
     workspace_key_prefix = "bnc"
     encrypt              = true
@@ -31,7 +32,7 @@ provider "aws" {
 data "terraform_remote_state" "market_data" {
   backend   = "s3"
   workspace = terraform.workspace
-  config {
+  config = {
     bucket               = "terraform.techemy.co"
     key                  = "market-data"
     region               = var.aws_default_region
@@ -43,9 +44,9 @@ data "terraform_remote_state" "market_data" {
 
 data "terraform_remote_state" "ecr" {
   backend = "s3"
-  config {
+  config = {
     bucket   = "terraform.techemy.co"
-    key      = "bnc/market-data/ecr/${var.service_name}"
+    key      = format("bnc/market-data/ecr/%s", var.service_name)
     region   = var.aws_default_region
     profile  = var.profile
     role_arn = var.role_arn

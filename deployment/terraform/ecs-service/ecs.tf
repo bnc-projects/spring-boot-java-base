@@ -5,12 +5,12 @@ module "ecs_service" {
   ]
   application_path         = "/sbjb"
   cluster_name             = data.terraform_remote_state.market_data.outputs.outputs.ecs_cluster_name
-  docker_image             = "${data.terraform_remote_state.ecr.outputs.repository_url}:${var.service_version}"
+  docker_image             = format("%s:%s", data.terraform_remote_state.ecr.outputs.repository_url, var.service_version)
   external_lb_listener_arn = data.terraform_remote_state.market_data.outputs.outputs.external_lb_https_listener_arn
   external_lb_name         = data.terraform_remote_state.market_data.outputs.external_lb_name
   internal_lb_listener_arn = data.terraform_remote_state.market_data.outputs.internal_lb_https_listener_arn
   internal_lb_name         = data.terraform_remote_state.market_data.outputs.internal_lb_name
-  java_options             = "-javaagent:newrelic/newrelic.jar -Dnewrelic.environment=${terraform.workspace} -Dnewrelic.config.file=newrelic/newrelic.yml"
+  java_options             = format("-javaagent:newrelic/newrelic.jar -Dnewrelic.environment=%s -Dnewrelic.config.file=newrelic/newrelic.yml", terraform.workspace)
   is_exposed_externally    = false
   priority                 = 50
   service_name             = var.service_name
