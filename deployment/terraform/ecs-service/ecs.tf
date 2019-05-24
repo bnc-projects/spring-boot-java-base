@@ -4,9 +4,9 @@ module "ecs_service" {
     data.terraform_remote_state.market_data.outputs.alert_topic_arn
   ]
   application_path         = "/sbjb"
-  cluster_name             = data.terraform_remote_state.market_data.outputs.outputs.ecs_cluster_name
+  cluster_name             = data.terraform_remote_state.market_data.outputs.ecs_cluster_name
   docker_image             = format("%s:%s", data.terraform_remote_state.ecr.outputs.repository_url, var.service_version)
-  external_lb_listener_arn = data.terraform_remote_state.market_data.outputs.outputs.external_lb_https_listener_arn
+  external_lb_listener_arn = data.terraform_remote_state.market_data.outputs.external_lb_https_listener_arn
   external_lb_name         = data.terraform_remote_state.market_data.outputs.external_lb_name
   internal_lb_listener_arn = data.terraform_remote_state.market_data.outputs.internal_lb_https_listener_arn
   internal_lb_name         = data.terraform_remote_state.market_data.outputs.internal_lb_name
