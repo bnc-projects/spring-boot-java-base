@@ -1,5 +1,5 @@
 module "ecr" {
-  source = "git::https://github.com/bnc-projects/terraform-aws-ecr.git?ref=1.0.0"
+  source = "git::https://github.com/bnc-projects/terraform-aws-ecr.git?ref=terraform_0.12"
   allowed_read_principals = [
     data.terraform_remote_state.bnc_ops.outputs.bnc_account_ids["market_data_development"],
     data.terraform_remote_state.bnc_ops.outputs.bnc_account_ids["market_data_production"],
