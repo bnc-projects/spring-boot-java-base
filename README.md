@@ -62,8 +62,8 @@ terraform workspace new development
 
 1. Encrypt the following global environment variables using the Travis-CI CLI.
 ```
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
+DEPLOYMENT_ACCESS_KEY_ID=
+DEPLOYMENT_SECRET_ACCESS_KEY=
 AWS_DEFAULT_REGION=
 KMS_KEY_ID=
 ROLE_ARN=
@@ -72,6 +72,7 @@ STATE_DYNAMODB_TABLE=
 KEY=<The project key for the ECR repository>, e.g bnc/<team>/ecr/<service-name>
 SERVICE_KEY=<The project key for ECS service>, e.g ecs/<service-name>
 SPLUNK_URL=
+OPERATIONS_ROLE_ARN=
 ```
 
 2. Encrypt the following environment variables for the development deployment:
