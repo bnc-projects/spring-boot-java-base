@@ -7,8 +7,8 @@ env:
     - TF_IN_AUTOMATION=1
     - SERVICE_NAME=spring-boot-java-base
     - VERSION=0.12.0
-    - AWS_ACCESS_KEY_ID=
-    - AWS_SECRET_ACCESS_KEY=
+    - DEPLOYMENT_ACCESS_KEY_ID=
+    - DEPLOYMENT_SECRET_ACCESS_KEY=
     - AWS_DEFAULT_REGION=
     - KMS_KEY_ID=
     - ROLE_ARN=
@@ -17,8 +17,9 @@ env:
     - KEY=
     - SERVICE_KEY=
     - SPLUNK_URL=
-    - secure: QFLxq6/aFRdQqLbR5NWDAPpnlzk5AQ3bRaYH+uegZaA5qMWvNNEoBjE5yvAJKiOe6jbqW7vqnmHFUSaMQS9gpL8O0r70rW5eswb8QUa+tSc+N2dluzCMp2+Fnj/xk8sAq+ieo5B5El296aLd+9gFK1xnjkORSZHGT+GIXxFZgqO/OCO9TETWuPtDaOkygZvPdBOLs2MItVrnBfWSUL5e6uhFn60G3+E3q3P44reesrcWyyv1x0QM91GsYm7pUVH5gW6K1vptArpW6+S5At1QtGgaLQj+6rY6ywqkOusSgFlYXrGrTGeeOiig8xKTKRQVX1myXWSVCUfiJcLp09rv2zfveQ9lmB42F+GgaocKv8FuIC8RDb4v3qdV3svFB0KpZfOHrdOW9cvTciMyIhzcF2UNui7pUkP5aMdruApAoSxzQP1nbl/lWcacHyoShibXSMw/GYgIGik2s8TY3B3J9secFkMoVgZD2qcmij2+hbTOmVnI3/ocnHdjRfe9Z8G7+P6NlMJ4AN25BglLMJaz4hvjzP3X50PUhPhorYtA9i9WB5cH9TWxnhemcerQjPsHFin2+gKLqEDrRZ+kPNkQiOXUKcfQNN80YaI0PTS4N38sMdluSAKWb6upwvWkmlZcOVZJdoa2s24lNyq2bCdzpmcfalFAZwKszHwKMrlmVgA=
-    - secure: tmIuWwh2CTYUrg1xPLjaNEQST8KKCsw/i6PhaEmamojeDdw+nEFSXm+Yyf3wBxSPI5sLC42lIb2dKia0vcF/V1oK8/V1D/b7VbdKU3LrBKYzqKbL3Y/R/LiirvGrdG/6C9Ai3ET0cUd+oqffCEi/CWRDY9xLdT6tYuMn829xLLZol2rA7ANDP+znGPqbhG9oXAwd5Xffkf5UGKaAtsghuC9eo+F+sKXAU+12ASqivk++D3oiIz/41wIWb6tFkuAsqKvFrbHysd6iTrZjKYTVhQ9aRcQCtPEhS+9FyYe71lhaHW8r5vb1+e+uh0dq2ye6aAPVZx0T1llHF5TvcbF6rYNuAqEbi5bYTr0iPQ3yUy8mH9RWfR0OpuiBNEqdfW1yuyDUm3IURB2CXrnpjgqcntMrizs5ukP9ltqLoAp8YfvtiM7bYrYPHVfyzVjrt1R8FeaNLZtQEk3VtSnO1CwZnD80rQ1YwkpN6jq9xd1mpNCIku96KjVMdJ/lwo1mNhUqDBO4+X5bDFG1j0zBPWvFc0FjQnttn6EJkx+c62VoEDFao1Yu4N7w8qfgxpNaA/j4xeEr8IRp27XvlZc9f8XYFNvmVtZK+GiPOKFnFCZ5BzJKdV97Ma1xRUQbARDG4aqoyZYBBoHuRRGaq/Gse/ZGIPoYS5etcRxAjEGOONP8rLw=
+    - OPERATIONS_ROLE_ARN=
+    - secure: LlEjlURrz76BpvROwMZTGDu9pmxmA9+o8mJNkgfMOGNnGtXFEqMRvlDV01G1C//yHFsCXYlfC8ZDPcibSRSL4caSIvlGGEFhmMn/1fcxZEyzSNpP4Ufu+j7sJgdMusKasDect/cXkquR7ftaB7mQpM7gI82tfgHLXF6+eia5LaT8iK2ZlkOA6tbIiy/moIflqelhCVcDFCXWtpmv16lK3gtpDtrFDhjsVtyHI/efM+AhjXjzMASd57ZuNZ1G1JEdFQrhO+av6G3hkPRTStyGe0ElidSxUTSeEj5UthF3rQJKK6O5vBkWyISMXXlyROqcEFJf57XrzH1OVlM7Wbas56dKqJeUDart+3Gojw4ehJ2gDnDvBl/wA8Yby7OYwbG/rJ1iGdIrfbQtftl93YBzE8xvn9rvMQOVjkwWgQjVxCO6Nm/4cFBVmH6JhnKSuLp9DlzLmV5lo82TFWhYv8y5TkrbNTsv6fgURa88Fwus0JuGtSnww39J9bi+gXXPw/mad5uq62Ho02pp+rhXlyz99LfBYg6IS0zbaLHOmoHd2hUH63VslXN7Vg9GoK+clL9dOcHhQhdCHCEK6rTSeO6iidh1C+fq6TxOrb5NkUJhTkseKJBfRHZJA1Vtjuxp/BTLfmq41YeV4Zb9HqTciFkE+dTMY56ajcBJmg7uPYY6qR0=
+    - secure: eNYNkE58JBX/I0TTHVhskluQMiGOmTPyuYyaUi3oZmGLGrTyIgjtpKe8G/vrOCVFVCKbIKD9CfklagDCu8hGL+hn/b+4c4DsmICGm9edEVoueUdwcm2/ztcStka4ZOROryGGvN50KgCAGTPW3HIhvL9NbjryqPYQijcQz6+GF63nYrMdgTl43buLOfWX9gpO/eFULsgkbHQ8+1LI3x/SyIm5dDuG6Lr2oAPCa+46DxB7W5W/m2ydrSmP6nXvwCr41qgTY7OpxSEl1DFeYDP9TmoOjTEWKo7qbrOZ4wF43p6xJcggPrNxzQ6CHpBA/SqLVye724sVbBMaLkPD7qWc/O+XMW930rwTR+l3Bs2TEhl1JX2t7gNKD6PCyhMNJK6P0hExeBVHxbzSkeOfU3MK21EB4TQZ7uySMPO9ZCcr7abFxnvyF3lhR4rHTNf8de/2E/MVt/sXhymqHy/MHmpjPZ44gFA5HXC5DRCkKw1iND3RjLl8L0aSI3DKbChyDI/IHzppAs/bWFhYQ80p1KR94EDnI3MdKCy7i403QWS11wNiJsh6A3SyYoS4+UfjZo7jsp+YgPH8nGnK3mbXLrXeU1xW7BVBx9jOvLz73l79IsewZxczOUacfDCkoY+7FSX8QlWyPXxAbgYLVcOUHuSX3kVzxCsB02IGnX0PMv7v/5g=
     - secure: XoxbVPpLStp/Rh2Dbc1MC/pgZANIWSmXSgtA1mZMGCKh2FayvtkC4gSmaQy/P+HbCSrppdKrKqflUNG2T+ZU7K7rT0XB08onOSAhXjGRHtgZbKHWtWneZ5lQdKytbpxyoVG3CbenOTRStuC45EyO33wL0mDcyA3HFeosZefiOFp95FP8aQ52zj7q6blbId767GobGkjXVEKtv1m7Z3TyhDLvlMPgM3th+Dn2vo+uZSx3EvBtbTDjXW7TEI3wAo/vCLdyBrE+ARmkHv+kJjrnlEAh496qIs2NlEohDH/XqQb5GTcRhT4SC/SSeKS8qkybzXtdt7XtBO7XbGHGYAf5gWDVNjsnrHMz8u+edsHTtasrB+QJelYc8iTVjIH9KWAtV8ufD9c9Fk8KQLzpVr/88BF7VQTMBTjRQHOPeGAQnZMmYXiv3b9VL9HZBrnKS0vhuvJRIYtuT93aildK2VDGsvmDX/ofKBkZiQePU7Vq8LHvnGUQxkxo/b2WGfcnTt23X1R8FcKQgbrP9mA1HOlAA3nbVTGkZJzNoXbUtZt4sZR2WHtxNpQRsVaXrRPYATHu8UStfd138EaLeAPuM4EQYTKA/9cOf7pmxtOpypYsTmkIuzxLdFrw3aniagZFQ6SDbVakbPV1BOTr5K0jZKLeeFG516MUKLk+CrIwyALIEbY=
     - secure: nkg6tw+1yVyky1PgDcMrj4HNgPTTQLYDbi+SHvyCxqsvcjcXsDMmh7kFHX4KiuaOIWcXKg9+lQ2buUy8qOwj1lPXbEO28ZYU41jZNM1Y4LXKOLe2d0Lz5r46LF/tJOok8XUerHdVUM/BxmXiFdSa8r2C2Or3khxf9Dqdu6nMvYmBP2s7g0ABZDNsqaQTj8iKA7XfgCiq9c9f0mDThQZ0fv79MPDGA6gL5EfkBhQ1DFd4MunJu9oxQ28fsl0vb/imOhMLTNvdcRVEz1tL/PJ5/MTcOgokmrhZ5IzTk1bbKOfaYw5s6GOGrDK0ZyQq8031P9sLj4c2HtY9W5ntT8x0utBYI390fHuYRwx2M9w9KhqikBxMPg9srd4kkG7vlJGJUf+9jS4pt/KP8TYzC9ryK/9ONz/Bys1LFN7lTHJqAZBR5cMpLLwuiXuIrDD/SL0yLWsnlMUAc0XU7CkPEnYvFBoaoX/MObO5Fy6rSXdDkaIrpWYD4AUXj8PEA/b9SafLxjmp68CtAqhQ+Kv0stAFDYbW3pW+edBKCQGtnzCeNWLK6F7hP6oqugHns8uaWdYx+vFyHrvYAAfb6ZWFnJ2umqHQbdDmgl/iwPlZsey1Z+1GUzPFnKv1B+L6VjsdPFpUlx9w7LNy9q0nxh1FTbRwlerYdGXs5ir3qjKo42wYJ/4=
     - secure: rsQY9ftjfAY7q30Eu3eKJw+iOhFZNouV75HcXOiaMSJ0gqypQ3Lhv1vKSEQefV/EJIojEcxdJ8NRF3dyIrgKJvf0YezzSjzDleMRcP+AmmuQyeGqd5MYJ6kl8BRLerWWAuuc+bp2dLw/KCanXrDwh7bp2/V9pOTTdBfzBFG/nPrR40CLkI7AQaEccuHVb2ZphlzSf9VOzEYlBzilXuJvRkl+/GpyEE170O7jkOBImIT8OXnO1UXzzRUymZCZs3bYTu9nIknpLeVa0ba+VHla/dlSwFFJY+zs0v83lsQ+CErkMMikPQy7j5UlIKNF8X6Zubu0D0gOP0+PwWXsBbB5/E+YCyHNcox9mzuzsDkIdBO9tABE08Zhx/UVqU5KKnkIshMIxNFbMnXgA/rsd4NyT35onWIEoom13Nar/xJpIhnWSXTQhHzamjIjIA3Oj7et++Rt36sqZNqxkGQJqvV0fE6+khJ7Y8SCiaPJW91GUz9Xdx/8FW3QMT2UeI4MpX0VlIlkBZrhMO6v6gAp/zOib1jiuKCK1ZJTYkuYPLUwEzVx50+uRB7IxHT5mKeR8IfPktWxyYA/YRL0XHLkgaV7S4v49/3ReF3+KmPTHpmKnOq5VoEORAegcqcBFgATtddDTC4c1kuwjJzdka3qnBuWCWpm8jySzBQLilrNpKP+bW8=
@@ -27,10 +28,13 @@ env:
     - secure: WlgRNrhZNfvu2gwVdoUoxM86nNV7Cb9hK7ZQ6gUgR2zuM7O13aR4yXCpJT1ok8XuGj0oTtfmoqcKoXhHa0KjBVmFMCHrslkxmNTb/4aLDDJz+v/tck80d/e9kH6c3hinD2rC9xhyK7rJ21ORil8fe4+aPv5wQnu2xVTvtUg/deo/STQLbP3dIfEDS71vDq+YdjrxtuCB2/3dFN5OR+xopO3uj6lyZXglNWdYbt+ZLyZA3z5chrCmWdBWdyUbIyO3Na2C7MUVDfYzflcja7ppkWqk6UwESPNiPqAGFxdFV867qUB6kkTBtdyIgkAQzLGP5HWAomF4FRqrWMKz8N1Op2rdgAwm/121ClW76SlO1qj4HJ49BkS5iCkjsnXvX/wWC9iSYtOdcBSQl2PHBWvHJBktvJF5AjTvBCXHrZ+BqlRjkLwuO4uByzFUv+boO2B7w0I81IrckyHF8eZrWzojivdF0/VNmB61dwp2Ld+12h2JgghFk7ZiH0WvBwZtp/H/7/6u2Qb6ctIusuOadogV/+FjERiA8sxAAmcPQ0l2XnsrcpV7CwHGC4eM9ooz5mpvwH6eFO0Sc+HuoUh913vZqfqTUrh3adRUVxArw3gh+QorynnN/RWZ4VUIcdxnUaXFhTG8PMxZSDxdIBnlMA6UK9Cm6D83N2t0bbzadktWzOg=
     - secure: vBYFX0YlfvUhWm0W1sQxbt+Aq2Ab+OzJTSJwbncL+eSPZxO9oRnbQVug1O4nvz1UmjUxWzE3/Du4PPWK4eavw7bLZtGgMqXNTPiPvIS59cXZvRtF7LP9g122l4mTeveiPlowpBi7rl7cTaOPrO5LERv1ZhTCdClI0rW4qoTMjfaKhi2Mo8UtbFTXFy2HLnV+Vn8ETOUcqOoNdH1Q3kZk1lTL03dAtaMJ67I4EnTgCvw7AG7JtoqrplAIQ2etB+mO0zaVEdjLTQ15dlK6Ib+BrQ/s8hH2p9f2f8vxOVpwrKHljfApsZAr36VhSCl/Nnl7TbMHS9hzT+BfrL1fHXhfO0BWYHFRDIww2EEbGIPl4uBH8H9hJvJtXSLvWZWywv/5APmY/EF5YSoDPqqK75cWhLQAXaVaNSTTFU6We7UfyooXpPshZ5tTF9DHssPp6fAXYBZx9hwKtf3+ajmpV905aSFkYvfsrMYMhmK5rHRFsJGpLu99Chrb86FuPl1/K6ACNWiBUcfwd+rZLgrenI7PVUXHNvKvgJ/6Mn7+5cnC8YfyzeV8UajQRzSJOtle5RIg1nc4m5sy9oZ2gt8+hm4e1W56b8005rrEaVpaBhZKGXjujGZpvcXwXXo/bxsAttZFcBYWppSsDkn+Cy8NXPNdNz0HxGdFRnQuj/UJNO7pi58=
     - secure: p3Budl8I27/NBUeWLcTLpCkEcwtfxOQ6GZoEUyay+C/58iNP2j6ECaRdAACb+n6lfvAqZqxgQtSwuMdOQ23/k9EE5fdMLI7CxeudQyFiZLwslvF4MjhJbEl02CrxYEzdnJPCOQbXjNHqpKgZH8Ty42U6VFGLLx3VgtP6KPh5gNenjr+UkLg76s/kDE4WNO7ate812ykB9bjfzy9yyFmgI7Y4gjVyS3XBd8v3TWta3VLeAExc/GqJpjk91iByPlWyOu4GVgZJesCaHgAFXXIl0jDxtG+KsOXpVZxjhWbxP0IjbBJzH6wevMYHvIvHleFPL5Y0n4qj/13YyTukyos4WRexBSkDIxZ+HlDZjwNt6fNqxVOYpLREz3FfY2lER2C7u60bNl8zz9j6bFwo0No0SnbjyFHe+q0bMgr5q9p1uQ/4rc1pfeVi/rb2DaPyQCI+OOUspBjBDXvozteV/YcVNO84c69jpfF4LVkEW7fF6e94cQi95q4MfEpoqxSb2cyJ5tqMthF6hVEZuDQtcC9FjhacS47HD+faQaov9EYPm/sPD9voONZo9y6hCpujMmRlVOp4vS0jykBe9ZQtE9eQR3ZEqPqWVMND06WazRHPyI5VCQtXjMiS6ZUKEUP59+BYtnZadfbQvrXtQ/HDKf0TauaMwGUwKjxRQBo8D+FpqOQ=
+    - secure: VEvaiWUH7CQbLQpmOoNZUU8nuZpgRt4c7UeuPRsR1Za4hNv1nBNLZ9z4Rb25zgkY6Ap7jQMo6BVfDLDgFB5nEHA/ftf/niSQiDp+NKjasJ4EKUxxyGIiuRbM2YDGh5SsrEjgHEyUFqUPw3J4qsnmbNAj6JbLnlDYeeTAu45j98Gj8P0Dxj1ZuTeGl/dXJ6VPimNDHAOugw3BOUAOQ+A8oCDz7SSGer/1Qwk3Z6hCtuykyw7LHPtwataJM3xTEvasYb64BUW58TnSiMVF2wKmgdPUVxcFIZFnZAEHJVvuJk0V2nfLOuGsNRTZSf/BlGGwS0p9UUpsAvuTHvoK1y3VhaDOU2KmscKcfifF1oA9v8gynuVxCJbFRd6SUiXu7e5Lm1t+YJ59wNAkQGgeydfVOFve7O7oRg2+gQxhUdN6NHfpVrrCcjCCInQyg2gLGwYYzr3NceG84e47yw3/OhAkbBoFurZ85AZVkHgFrtD4TCma5DBH+rC3Hud1LqEUZ3oLHt2m8kSIg5pGN3J+lVhPX/YcW37Op6rwxPTYYJnIJtTmV1gWBB/3OkqcMmWDZD6qFFBNEckOOTnoUOMthtJioy651+9+lUjH/TE+GJwHJuiq2wQhvUmsMBfOBwV9dtBE9YYd+ylO9XzDIUiSHIrh9Ug5oUKB+tPpdMF24/LmZQ8=
 before_install:
   - wget https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_amd64.zip
   - unzip terraform_${VERSION}_linux_amd64.zip -d $HOME/bin
   - chmod +x $HOME/bin/terraform
+  - export AWS_ACCESS_KEY_ID=$DEPLOYMENT_ACCESS_KEY_ID
+  - export AWS_SECRET_ACCESS_KEY=$DEPLOYMENT_SECRET_ACCESS_KEY
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -41,14 +45,18 @@ cache:
 jobs:
   include:
     - stage: test
+      install:
+        - eval $(aws sts assume-role --role-arn "$OPERATIONS_ROLE_ARN" --role-session-name "${TRAVIS_REPO_SLUG//\//-}" | jq -r '.Credentials | @sh "export AWS_SESSION_TOKEN=\(.SessionToken)\nexport AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey) "')
+        - ./gradlew assemble
+        - export AWS_ACCESS_KEY_ID=$DEPLOYMENT_ACCESS_KEY_ID
+        - export AWS_SECRET_ACCESS_KEY=$DEPLOYMENT_SECRET_ACCESS_KEY
+        - unset AWS_SESSION_TOKEN
       script:
         - cd deployment/terraform/ecr
         - terraform init -backend-config="bucket=${STATE_S3_BUCKET}" -backend-config="region=${AWS_DEFAULT_REGION}" -backend-config="dynamodb_table=${STATE_DYNAMODB_TABLE}" -backend-config="kms_key_id=${KMS_KEY_ID}" -backend-config="key=${KEY}" -backend-config="role_arn=${ROLE_ARN}" 1>/dev/null
         - terraform apply -backup="-" -input=false -auto-approve -var role_arn=${ROLE_ARN} -var service_name=${SERVICE_NAME} 1>/dev/null
         - REPOSITORY_URI=$(terraform output repository_url)
-        - DEPLOYMENT_ROLE_ARN=$(terraform output deployment_role_arn)
         - cd $TRAVIS_BUILD_DIR
-        - eval $(aws sts assume-role --role-arn "$DEPLOYMENT_ROLE_ARN" --role-session-name "${TRAVIS_REPO_SLUG//\//-}" | jq -r '.Credentials | @sh "export AWS_SESSION_TOKEN=\(.SessionToken)\nexport AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey) "')
         - $(aws ecr get-login --no-include-email)
         - ./gradlew check
         - ./gradlew docker dockerTag dockerPush dockerTagsPush -PTAG=$TRAVIS_BUILD_NUMBER -PREPOSITORY_URI=$REPOSITORY_URI
