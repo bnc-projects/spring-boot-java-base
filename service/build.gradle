@@ -6,7 +6,7 @@ plugins {
 }
 
 jar {
-    archivesBaseName = rootProject.name + "-" + project.name
+    archivesBaseName = rootProject.name
 }
 
 springBoot {
