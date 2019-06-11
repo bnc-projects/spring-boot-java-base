@@ -9,7 +9,7 @@ jar {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId = "com.bnc.${rootProject.name}"
+            artifactId  = "${rootProject.name}-${project.name}"
             from components.java
         }
     }
