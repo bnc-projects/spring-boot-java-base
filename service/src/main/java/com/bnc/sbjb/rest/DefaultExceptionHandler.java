@@ -1,6 +1,6 @@
 package com.bnc.sbjb.rest;
 
-import com.bnc.sbjb.model.api.CustomError;
+import com.bnc.api.model.error.CustomError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

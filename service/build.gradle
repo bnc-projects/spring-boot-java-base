@@ -1,6 +1,6 @@
 plugins {
-    id "org.springframework.boot" version "2.1.5.RELEASE"
-    id "io.spring.dependency-management" version "1.0.7.RELEASE"
+    id "org.springframework.boot" version "2.1.6.RELEASE"
+    id "io.spring.dependency-management" version "1.0.8.RELEASE"
     id "com.palantir.docker" version "0.22.1"
     id "com.gorylenko.gradle-git-properties" version "2.0.0"
 }
@@ -40,7 +40,7 @@ dependencies {
     implementation project(':client')
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: '2.1.1.RELEASE'
-    implementation group: 'io.micrometer', name: 'micrometer-registry-new-relic', version: '1.1.4'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: '2.1.2.RELEASE'
+    implementation group: 'io.micrometer', name: 'micrometer-registry-new-relic', version: '1.2.0'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 }

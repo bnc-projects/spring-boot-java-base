@@ -1,6 +1,6 @@
 package com.bnc.sbjb.rest;
 
-import com.bnc.sbjb.model.api.CustomError;
+import com.bnc.api.model.error.CustomError;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
