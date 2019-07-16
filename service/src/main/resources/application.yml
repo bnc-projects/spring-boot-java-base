@@ -28,6 +28,7 @@ management:
     export:
       newrelic:
         enabled: false
+        connect-timeout: 10s
     tags:
       application: ${spring.application.name}
       container: ${HOSTNAME:}${COMPUTERNAME:}
