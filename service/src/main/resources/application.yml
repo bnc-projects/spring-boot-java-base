@@ -10,7 +10,7 @@ spring:
 
 logging:
   level:
-    io.micrometer.newrelic: WARN
+    io.micrometer.newrelic: ERROR
 
 resource:
   path: /sbjb
