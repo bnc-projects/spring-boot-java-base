@@ -10,7 +10,7 @@ spring:
 
 logging:
   level:
-    io.micrometer.newrelic: WARN
+    io.micrometer.newrelic: ERROR
 
 resource:
   path: /sbjb
@@ -28,6 +28,7 @@ management:
     export:
       newrelic:
         enabled: false
+        connect-timeout: 10s
     tags:
       application: ${spring.application.name}
       container: ${HOSTNAME:}${COMPUTERNAME:}
