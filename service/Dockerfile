@@ -1,12 +1,12 @@
-FROM openjdk:11.0.3-jre-slim
+FROM openjdk:11.0.4-jre-slim
 
 ARG JAR_FILE
 
 RUN  apt-get update && apt-get install -y wget
+RUN mkdir newrelic && wget https://download.newrelic.com/newrelic/java-agent/newrelic-agent/5.3.0/newrelic-agent-5.3.0.jar -O newrelic/newrelic.jar
 
-COPY ${JAR_FILE} app.jar
-RUN mkdir newrelic && wget https://download.newrelic.com/newrelic/java-agent/newrelic-agent/4.12.1/newrelic-agent-4.12.1.jar -O newrelic/newrelic.jar
 COPY newrelic.yml newrelic/newrelic.yml
+COPY ${JAR_FILE} app.jar
 
 EXPOSE 8080
 
