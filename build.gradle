@@ -64,7 +64,7 @@ allprojects {
     }
 
     checkstyle {
-        toolVersion '8.20'
+        toolVersion '8.23'
         tasks.withType(Checkstyle) {
             reports {
                 xml.enabled false
@@ -83,8 +83,8 @@ allprojects {
     dependencies {
         implementation group: 'com.bnc', name: 'market-data-api', version: '0.0.8'
 
-        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.5.0'
-        testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
+        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.5.1'
+        testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.13.1'
         testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.0.0'
         testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.0.0'
     }
