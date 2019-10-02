@@ -64,7 +64,7 @@ allprojects {
     }
 
     checkstyle {
-        toolVersion '8.2'
+        toolVersion '8.23'
         tasks.withType(Checkstyle) {
             reports {
                 xml.enabled false
