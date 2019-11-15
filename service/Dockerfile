@@ -2,8 +2,8 @@ FROM adoptopenjdk:13.0.1_9-jre-hotspot-bionic
 
 ARG JAR_FILE
 
-RUN  apt-get update && apt-get install -y wget
-RUN mkdir newrelic && wget https://download.newrelic.com/newrelic/java-agent/newrelic-agent/5.3.0/newrelic-agent-5.3.0.jar -O newrelic/newrelic.jar
+RUN apt-get update && apt-get install -y wget
+RUN mkdir newrelic && wget https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic.jar -O newrelic/newrelic.jar
 
 COPY newrelic.yml newrelic/newrelic.yml
 COPY ${JAR_FILE} app.jar
