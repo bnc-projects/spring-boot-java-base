@@ -1,4 +1,4 @@
-FROM openjdk:11.0.4-jre-slim
+FROM adoptopenjdk:13.0.1_9-jre-hotspot-bionic
 
 ARG JAR_FILE
 
