@@ -1,16 +1,9 @@
-FROM adoptopenjdk:13.0.1_9-jre-hotspot-bionic
-
-ARG JAR_FILE
-
-RUN apt-get update && apt-get install -y wget
-RUN mkdir newrelic && wget https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic.jar -O newrelic/newrelic.jar
-
-COPY newrelic.yml newrelic/newrelic.yml
-COPY ${JAR_FILE} app.jar
-
+FROM adoptopenjdk:13-jre-hotspot
 EXPOSE 8080
 
 ENTRYPOINT exec java -XX:MaxRAMPercentage=80 -XX:+AlwaysPreTouch -XX:+UseStringDeduplication -Djava.security.egd=file:/dev/./urandom $JAVA_OPTS -jar app.jar
 
-HEALTHCHECK --start-period=300s \
-  CMD wget --quiet --tries=1 --spider --timeout=30 http://localhost:8080/actuator/health || exit 1
+HEALTHCHECK --start-period=30s \
+  CMD curl --silent --fail --max-time 30 http://localhost:8080/actuator/health || exit 1
+
+COPY *.jar app.jar
