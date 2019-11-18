@@ -15,7 +15,7 @@ locals {
 
 provider "aws" {
   region  = var.aws_default_region
-  version = "~> 2.11.0"
+  version = "~> 2.36.0"
   profile = var.profile
 
   allowed_account_ids = [

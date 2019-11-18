@@ -1,7 +1,7 @@
 language: java
 jdk:
-- openjdk11
-dist: xenial
+- openjdk13
+dist: bionic
 env:
   global:
   - TF_IN_AUTOMATION=1

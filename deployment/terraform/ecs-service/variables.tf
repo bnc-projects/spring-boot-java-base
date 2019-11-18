@@ -3,6 +3,24 @@ variable "aws_default_region" {
   default = "us-west-2"
 }
 
+variable "cpu" {
+  type        = number
+  default     = 128
+  description = "The CPU limit for the task and container."
+}
+
+variable "memory" {
+  type        = number
+  default     = 512
+  description = "The hard memory limit for the task and container"
+}
+
+variable "memory_reservation" {
+  type        = number
+  default     = 512
+  description = "The soft memory limit for the task and container"
+}
+
 variable "profile" {
   type    = string
   default = "default"
