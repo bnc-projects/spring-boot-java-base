@@ -64,7 +64,7 @@ module "container_definition" {
 resource "aws_iam_role" "execution_task_role" {
   name               = format("%s-execution", var.service_name)
   assume_role_policy = data.aws_iam_policy_document.task_service_assume_role.json
-  tags               = var.tags
+  tags               = merge(local.common_tags, var.tags)
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_default_policy" {
@@ -75,7 +75,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_default_policy" {
 resource "aws_iam_role" "task_role" {
   name               = format("%s-task", var.service_name)
   assume_role_policy = data.aws_iam_policy_document.task_service_assume_role.json
-  tags               = var.tags
+  tags               = merge(local.common_tags, var.tags)
 }
 
 resource "aws_ecs_task_definition" "task_definition" {
