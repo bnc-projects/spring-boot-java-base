@@ -92,12 +92,13 @@ module "ecs_service" {
   source                   = "git::https://github.com/bnc-projects/terraform-ecs-service.git?ref=1.3.2"
   application_path         = "/v1/sbjb"
   attach_load_balancer     = true
-  cluster_name             = data.terraform_remote_state.market_data.outputs.ecs_cluster_name
+  cluster                  = data.terraform_remote_state.market_data.outputs.ecs_cluster_name
   external_lb_listener_arn = data.terraform_remote_state.market_data.outputs.external_lb_https_listener_arn
   external_lb_name         = join("/", [
     local.variable.external_lb_name_parts[1],
     local.variable.external_lb_name_parts[2],
     local.variable.external_lb_name_parts[3]])
+  healthcheck_path         = "/actuator/health"
   internal_lb_listener_arn = data.terraform_remote_state.market_data.outputs.internal_lb_https_listener_arn
   internal_lb_name         = join("/", [
     local.variable.internal_lb_name_parts[1],
