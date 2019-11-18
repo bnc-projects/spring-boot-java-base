@@ -89,7 +89,7 @@ resource "aws_ecs_task_definition" "task_definition" {
 }
 
 module "ecs_service" {
-  source                   = "git::https://github.com/bnc-projects/terraform-ecs-service.git?ref=1.3.2"
+  source                   = "git::https://github.com/bnc-projects/terraform-ecs-service.git?ref=1.3.3"
   application_path         = "/v1/sbjb"
   attach_load_balancer     = true
   cluster                  = data.terraform_remote_state.market_data.outputs.ecs_cluster_name
