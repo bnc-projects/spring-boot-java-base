@@ -99,7 +99,7 @@ module "ecs_service" {
   internal_lb_listener_arn = data.terraform_remote_state.market_data.outputs.internal_lb_https_listener_arn
   internal_lb_name         = data.terraform_remote_state.market_data.outputs.internal_lb_name
   is_exposed_externally    = false
-  priority                 = 50
+  priority                 = 53
   service_name             = var.service_name
   task_definition_arn      = aws_ecs_task_definition.task_definition.arn
   vpc_id                   = data.terraform_remote_state.market_data.outputs.vpc_id
