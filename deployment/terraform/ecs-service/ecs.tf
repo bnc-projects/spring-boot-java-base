@@ -94,27 +94,14 @@ module "ecs_service" {
   attach_load_balancer     = true
   cluster                  = data.terraform_remote_state.market_data.outputs.ecs_cluster_name
   external_lb_listener_arn = data.terraform_remote_state.market_data.outputs.external_lb_https_listener_arn
-  external_lb_name         = join("/", [
-    local.variable.external_lb_name_parts[1],
-    local.variable.external_lb_name_parts[2],
-    local.variable.external_lb_name_parts[3]])
+  external_lb_name         = data.terraform_remote_state.market_data.outputs.external_lb_name
   healthcheck_path         = "/actuator/health"
   internal_lb_listener_arn = data.terraform_remote_state.market_data.outputs.internal_lb_https_listener_arn
-  internal_lb_name         = join("/", [
-    local.variable.internal_lb_name_parts[1],
-    local.variable.internal_lb_name_parts[2],
-    local.variable.internal_lb_name_parts[3]])
+  internal_lb_name         = data.terraform_remote_state.market_data.outputs.internal_lb_name
   is_exposed_externally    = false
   priority                 = 50
   service_name             = var.service_name
   task_definition_arn      = aws_ecs_task_definition.task_definition.arn
   vpc_id                   = data.terraform_remote_state.market_data.outputs.vpc_id
   tags                     = merge(local.common_tags, var.tags)
-}
-
-locals {
-  variable = {
-    internal_lb_name_parts = split("/", data.terraform_remote_state.market_data.outputs.internal_lb_name)
-    external_lb_name_parts = split("/", data.terraform_remote_state.market_data.outputs.external_lb_name)
-  }
 }
