@@ -81,8 +81,6 @@ resource "aws_iam_role" "task_role" {
 resource "aws_ecs_task_definition" "task_definition" {
   container_definitions = "[${module.container_definition.container_definition}]"
   family                = var.service_name
-  cpu                   = var.cpu
-  memory                = var.memory
   execution_role_arn    = aws_iam_role.execution_task_role.arn
   task_role_arn         = aws_iam_role.task_role.arn
   tags                  = merge(local.common_tags, var.tags)
