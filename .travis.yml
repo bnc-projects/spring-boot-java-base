@@ -63,7 +63,6 @@ jobs:
     after_success:
     - ./gradlew sonarqube
   - stage: deploy to development
-    jdk: openjdk11
     env:
     - TF_WORKSPACE=development
     - SPLUNK_TOKEN=
@@ -78,7 +77,6 @@ jobs:
         all_branches: true
   - stage: deploy to production
     if: env(DEPLOY_PRODUCTION) IS present
-    jdk: openjdk11
     env:
     - TF_WORKSPACE=production
     - SPLUNK_TOKEN=
