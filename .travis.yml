@@ -7,6 +7,7 @@ env:
   - TF_IN_AUTOMATION=1
   - SERVICE_NAME=spring-boot-java-base
   - VERSION=0.12.9
+  - AUTHOR_NAME="$(git log -1 $TRAVIS_COMMIT --pretty="%aN")"
   - DEPLOYMENT_ACCESS_KEY_ID=
   - DEPLOYMENT_SECRET_ACCESS_KEY=
   - AWS_DEFAULT_REGION=
