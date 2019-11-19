@@ -55,6 +55,7 @@ module "container_definition" {
   portMappings      = [
     {
       containerPort = 8080
+      hostPort      = 0,
       protocol      = "tcp"
     }
   ]
