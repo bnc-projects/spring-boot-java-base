@@ -55,7 +55,7 @@ module "container_definition" {
   portMappings      = [
     {
       containerPort = 8080
-      hostPort      = 8080,
+      hostPort      = 0,
       protocol      = "tcp"
     }
   ]
@@ -64,7 +64,7 @@ module "container_definition" {
 resource "aws_iam_role" "execution_task_role" {
   name               = format("%s-execution", var.service_name)
   assume_role_policy = data.aws_iam_policy_document.task_service_assume_role.json
-  tags               = var.tags
+  tags               = merge(local.common_tags, var.tags)
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_default_policy" {
@@ -75,21 +75,19 @@ resource "aws_iam_role_policy_attachment" "ecs_task_default_policy" {
 resource "aws_iam_role" "task_role" {
   name               = format("%s-task", var.service_name)
   assume_role_policy = data.aws_iam_policy_document.task_service_assume_role.json
-  tags               = var.tags
+  tags               = merge(local.common_tags, var.tags)
 }
 
 resource "aws_ecs_task_definition" "task_definition" {
   container_definitions = "[${module.container_definition.container_definition}]"
   family                = var.service_name
-  cpu                   = var.cpu
-  memory                = var.memory
   execution_role_arn    = aws_iam_role.execution_task_role.arn
   task_role_arn         = aws_iam_role.task_role.arn
   tags                  = merge(local.common_tags, var.tags)
 }
 
 module "ecs_service" {
-  source                   = "git::https://github.com/bnc-projects/terraform-ecs-service.git?ref=1.3.2"
+  source                   = "git::https://github.com/bnc-projects/terraform-ecs-service.git?ref=1.3.4"
   application_path         = "/v1/sbjb"
   attach_load_balancer     = true
   cluster                  = data.terraform_remote_state.market_data.outputs.ecs_cluster_name

@@ -31,12 +31,6 @@ variable "role_arn" {
   description = "The role to assume to access the terraform remote state"
 }
 
-variable "tags" {
-  type        = map(string)
-  description = "A map of tags to add to all resources"
-  default     = {}
-}
-
 variable "service_name" {
   type        = string
   description = "The name of the ECS service"
@@ -55,4 +49,10 @@ variable "splunk_url" {
 variable "splunk_token" {
   type        = string
   description = "The token used to send log to Splunk collector"
+}
+
+variable "tags" {
+  type        = map(string)
+  description = "A map of tags to add to all resources"
+  default     = {}
 }
