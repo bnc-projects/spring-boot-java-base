@@ -1,4 +1,4 @@
-FROM adoptopenjdk:13-jre-hotspot
+FROM adoptopenjdk:11-jre-hotspot
 
 RUN groupadd -g 999 appuser && useradd -r -u 999 -g appuser appuser
 USER appuser
