@@ -2,9 +2,6 @@ language: java
 jdk:
 - openjdk11
 dist: bionic
-branches:
-  only:
-    - master
 env:
   global:
   - TF_IN_AUTOMATION=1
@@ -63,11 +60,13 @@ jobs:
     - cd $TRAVIS_BUILD_DIR
     - eval $(aws sts assume-role --role-arn "$OPERATIONS_ROLE_ARN" --role-session-name "${TRAVIS_REPO_SLUG//\//-}" | jq -r '.Credentials | @sh "export AWS_SESSION_TOKEN=\(.SessionToken)\nexport AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey) "')
     - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
-    - ./gradlew check docker dockerTag dockerTagsPush publish -PTAG=$TRAVIS_BUILD_NUMBER -PREPOSITORY_URI=$REPOSITORY_URI
-    - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./gradlew dockerPush; fi
+    - ./gradlew check docker dockerTag -PTAG=$TRAVIS_BUILD_NUMBER -PREPOSITORY_URI=$REPOSITORY_URI
+    - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./gradlew dockerTagsPush publish; fi
+    - if [ "$TRAVIS_PULL_REQUEST" = "false" && "$TRAVIS_BRANCH" = "master" ]; then bash ./gradlew dockerPush; fi
     after_success:
     - ./gradlew sonarqube
   - stage: deploy to development
+    if: type = push
     env:
     - SPLUNK_TOKEN=
     - secure: nmuSCIxhq7lJlJ+nu0S8sTF/eYs0EMgEodfl8TwJD50DoFSD8w20vBJW3uFgzMK5XccenUGicZQhRy7HC1waFT2Pu4XHr23xgKlL67UJMsL+pzRLzFuIqXyd7t//KiTGiOHVP8xoS6O2rc1c09CqMg5K6JrlgFxgLi8mnbOveMnSOhRbDIPmbhfaX/xBdj1/Thy4BaHxohLTMd/h+nPosG/9y5aeKi/cieKuRqUAkWgQT56p0TT+bpO3Q+gY6CY0feoariloBSJWiHo0YKmiRGqQd9819dMq6roZjonEB8qJb/YygcJJwwAx/IkRt3Rs6pZhY4UVVLgw4eyjVg4LQ7kl1FuTJWAq5qT6LmCZf+Ec+GYvjUsNTrY9A+wpmhh9Xf6P3XQgI4nGcm5nqh+0UmPhkBZW4YgYWV2SSU1BkdzxG6PiZpB4RWImek7xwvyudPQFCx5bX0gxiKd7QNkS3bEHQjcLJnjVtOsY35iTwdtJlu4zBaHO4z2YWoXet7hzGRL9ZsqmSu5iIjx95Pg1Lc5GFYNKaj06sYPQkiwNrgikbX279gnFkljygrBykcysBSl7l9noQVf9D0oNBecqMPsy6wOV7j1O6ElBxKw5c2EZoiOXkU9B9huyU9QY2DGgY1YBpXxI9hsJQqHpPnpVDBw1PgPWfL2DoErPK+MeiUM=
@@ -80,7 +79,7 @@ jobs:
       on:
         all_branches: true
   - stage: deploy to production
-    if: env(DEPLOY_PRODUCTION) IS present
+    if: type = push AND branch = master AND env(DEPLOY_PRODUCTION) IS present
     env:
     - SPLUNK_TOKEN=
     - secure: Nyl2YPIjXzhXjum+rYBBf+jQbgTz5Mnw/tgvJhggOldHViRufNew5X8rLnpY3wJieoyqgmE2NjUMbx0ZLREQwjhndG5l2txeqknjyYjKaMAoN0mSju7gRtUSIHNvJhLQ0pqejus80f7G1ejbInXeuJNFrx0mx2Z3kP00FRCSgSXiABlXdUv1kDk2un4x+9SDTHz3fmfFH+6ccbAAhm6ns/91bKxvBJZfBlW7aQRVD6cnauZbbrzQpwLPV2qmxuYeg0CLaf4vSnQPOx6abmDLBliPlILRoQjJ1vGdpCIwXExDThAOB9dvhBunGxWgPB2Gqe0hFMPx6wkdinsoFkrUKzHy3CmFjJgCNfgJktSQEfYduCD6dfSdVrZ4kljvMf1taDqEw7vjoQoXxkaftZUxbhMrjrnIqt1SGSxvdQZCKjwxxwiMYXwlMWM1HLdTlPsN569dTOr74C82U9fCPd2IBTLWrAcJ5bKbcVUyP9hI54zaowB6IQju1yTidmuptRfWr/G0ozmdoTVCHMgxF1U8wGzxsGlWrMGW6mDLZfEs/Cq53RiSUNC+NGhGN9TTFIX6qQr/P85kPDhIgqG8/SXxW+rDaknfhnm0UsR1mPhNEOIa9beEIM1/LmszkCFOsr4Eilm+J05lGOseVASoOFDlY/2oZI3ZGLzJzLuWZCnwswY=
