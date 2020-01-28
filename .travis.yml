@@ -54,7 +54,7 @@ jobs:
     - unset AWS_SESSION_TOKEN
     script:
     - ./gradlew check
-    - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then deployment/script/travis_push_container.sh; fi
+    - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash deployment/script/travis_push_container.sh; fi
     - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then ./gradlew dockerPush; fi
     after_success:
     - ./gradlew sonarqube
