@@ -53,13 +53,9 @@ jobs:
     - export AWS_SECRET_ACCESS_KEY=$DEPLOYMENT_SECRET_ACCESS_KEY
     - unset AWS_SESSION_TOKEN
     script:
-    - if [ "TRAVIS_EVENT_TYPE" = "push" ]; then deployment/script/travis_deploy.sh; fi
-    - cd $TRAVIS_BUILD_DIR
-    - eval $(aws sts assume-role --role-arn "$OPERATIONS_ROLE_ARN" --role-session-name "${TRAVIS_REPO_SLUG//\//-}" | jq -r '.Credentials | @sh "export AWS_SESSION_TOKEN=\(.SessionToken)\nexport AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey) "')
-    - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
-    - ./gradlew check docker dockerTag -PTAG=$TRAVIS_BUILD_NUMBER -PREPOSITORY_URI=$REPOSITORY_URI
-    - echo $REPOSITORY_URI
-    - if [ "TRAVIS_EVENT_TYPE" = "push" ]; then ./gradlew dockerTagsPush publish; fi
+    - if [ "TRAVIS_EVENT_TYPE" = "push" ]; then deployment/script/travis_deploy_ecr.sh; fi
+    - ./gradlew check
+    - if [ "TRAVIS_EVENT_TYPE" = "push" ]; then ./gradlew docker dockerTag dockerTagsPush publish -PTAG=$TRAVIS_BUILD_NUMBER -PREPOSITORY_URI=$REPOSITORY_URI; fi
     - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then ./gradlew dockerPush; fi
     after_success:
     - ./gradlew sonarqube
