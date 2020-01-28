@@ -8,3 +8,8 @@ cd $TRAVIS_BUILD_DIR
 eval $(aws sts assume-role --role-arn "$OPERATIONS_ROLE_ARN" --role-session-name "${TRAVIS_REPO_SLUG//\//-}" | jq -r '.Credentials | @sh "export AWS_SESSION_TOKEN=\(.SessionToken)\nexport AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey) "') || exit 1
 $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION) || exit 1
 ./gradlew docker dockerTag dockerTagsPush publish -PTAG=$TRAVIS_BUILD_NUMBER -PREPOSITORY_URI=$REPOSITORY_URI || exit 1
+
+# Only tag latest when we are building master
+if [ "$TRAVIS_BRANCH" == "master" ]; then
+  ./gradlew dockerPush -PTAG=$TRAVIS_BUILD_NUMBER -PREPOSITORY_URI=$REPOSITORY_URI || exit 1
+fi
