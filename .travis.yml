@@ -53,9 +53,8 @@ jobs:
     - export AWS_SECRET_ACCESS_KEY=$DEPLOYMENT_SECRET_ACCESS_KEY
     - unset AWS_SESSION_TOKEN
     script:
-    - if [ "TRAVIS_EVENT_TYPE" = "push" ]; then deployment/script/travis_deploy_ecr.sh; fi
     - ./gradlew check
-    - if [ "TRAVIS_EVENT_TYPE" = "push" ]; then ./gradlew docker dockerTag dockerTagsPush publish -PTAG=$TRAVIS_BUILD_NUMBER -PREPOSITORY_URI=$REPOSITORY_URI; fi
+    - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then deployment/script/travis_push_container.sh; fi
     - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then ./gradlew dockerPush; fi
     after_success:
     - ./gradlew sonarqube
