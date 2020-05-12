@@ -37,9 +37,11 @@ docker {
 
 dependencies {
     implementation project(':client')
+
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: '2.2.2.RELEASE'
     implementation group: 'io.micrometer', name: 'micrometer-registry-new-relic'
+
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 }
