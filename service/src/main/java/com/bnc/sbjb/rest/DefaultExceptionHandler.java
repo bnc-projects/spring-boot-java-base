@@ -86,8 +86,27 @@ public class DefaultExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public CustomError handleException(HttpServletRequest httpServletRequest, Exception ex) {
-        logger.error("Unknown exception [queryString=\"{}\" errorMessage=\"{}\"]", httpServletRequest.getQueryString(), ex.getMessage(), ex);
+        final String queryString = sanitizedQueryString(httpServletRequest.getQueryString(), 250);
+        logger.error("Unknown exception [queryString=\"{}\" errorMessage=\"{}\"]", queryString, ex.getMessage(), ex);
         return new CustomError(HttpStatus.INTERNAL_SERVER_ERROR,
             "Oops something went wrong. Please contact us if this keeps occurring.");
+    }
+
+    /**
+     * Logging should not be vulnerable to injection attacks.
+     *
+     * @param queryString The query string to sanitize.
+     * @param maxLength The max acceptable length
+     * @return A string that is no more characters than the max length requested, with new lines and tabs replaced.
+     */
+    private String sanitizedQueryString(String queryString, int maxLength) {
+        if (queryString == null) {
+            return "";
+        }
+        return queryString
+            .substring(0, Math.min(queryString.length(), maxLength))
+            .replaceAll("[\n]+", "\\\\n")
+            .replaceAll("[\r]+", "\\\\r")
+            .replaceAll("[\t]+", "\\\\t");
     }
 }
