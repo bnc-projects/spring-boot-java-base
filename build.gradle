@@ -63,6 +63,12 @@ allprojects {
         toolVersion = "0.8.5"
     }
 
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+        }
+    }
+
     checkstyle {
         toolVersion '8.28'
         tasks.withType(Checkstyle) {
