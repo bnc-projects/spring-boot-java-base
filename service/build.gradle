@@ -42,6 +42,7 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: '2.2.2.RELEASE'
     implementation group: 'io.micrometer', name: 'micrometer-registry-new-relic'
+    implementation group: 'com.github.spotbugs', name: 'spotbugs-annotations', version: '3.1.12'
 
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 }
