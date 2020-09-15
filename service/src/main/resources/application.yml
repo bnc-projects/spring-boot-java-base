@@ -25,6 +25,18 @@ management:
     health:
       show-details: ALWAYS
   metrics:
+    enable:
+      jvm: true
+      http: false
+      cache: false
+      hikaricp: false
+      system: false
+      jdbc: false
+      logback: false
+      tomcat: false
+      process:
+        enabled: false
+        cpu: true
     export:
       newrelic:
         enabled: false
@@ -32,6 +44,7 @@ management:
     tags:
       application: ${spring.application.name}
       container: ${HOSTNAME:}${COMPUTERNAME:}
+
 ---
 spring:
   profiles: production
