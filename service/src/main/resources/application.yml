@@ -47,7 +47,21 @@ management:
 
 ---
 spring:
-  profiles: production
+  config:
+    activate:
+      on-profile: localhost
+
+---
+spring:
+  config:
+    activate:
+      on-profile: development
+
+---
+spring:
+  config:
+    activate:
+      on-profile: production
 management:
   metrics:
     export:

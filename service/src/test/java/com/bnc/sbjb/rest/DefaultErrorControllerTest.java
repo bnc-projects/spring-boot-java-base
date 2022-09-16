@@ -19,17 +19,9 @@ class DefaultErrorControllerTest {
     @Autowired
     private TestRestTemplate template;
 
-    @Autowired
-    private DefaultErrorController defaultErrorController;
-
     @Test
     void error() {
         ResponseEntity<String> actual = template.getForEntity("/invalidurl", String.class);
         assertThat(actual.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    }
-
-    @Test
-    void error_path() {
-        assertThat(defaultErrorController.getErrorPath()).isEqualTo("/error");
     }
 }

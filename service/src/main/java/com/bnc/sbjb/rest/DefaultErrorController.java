@@ -18,9 +18,4 @@ public class DefaultErrorController implements ErrorController {
         HttpStatus status = HttpStatus.valueOf(response.getStatus());
         return ResponseEntity.status(response.getStatus()).body(new CustomError(status, status.getReasonPhrase()));
     }
-
-    @Override
-    public String getErrorPath() {
-        return PATH;
-    }
 }

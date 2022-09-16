@@ -2,7 +2,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id "org.sonarqube" version "2.8" apply false
-    id "com.github.spotbugs" version "3.0.0" apply false
+    id "com.github.spotbugs" version "4.7.1" apply false
     id "com.bnc.gradle.travis-ci-versioner" version "1.1.1"
 }
 
@@ -50,8 +50,11 @@ allprojects {
     }
 
     spotbugs {
-        toolVersion = '4.0.0-beta5'
-        tasks.withType(com.github.spotbugs.SpotBugsTask) {
+        toolVersion = '4.7.1'
+    }
+
+    [spotbugsMain, spotbugsTest].each { task ->
+        task.configure {
             reports {
                 xml.enabled = false
                 html.enabled = true
@@ -89,8 +92,8 @@ allprojects {
     dependencies {
         implementation group: 'com.bnc', name: 'market-data-api', version: '0.2.10'
 
-        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.6.0'
-        testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.14.0'
+        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.9.0'
+        testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.23.1'
         testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.2.4'
         testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.2.4'
     }
