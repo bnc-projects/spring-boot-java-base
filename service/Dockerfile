@@ -1,4 +1,4 @@
-FROM adoptopenjdk:11.0.8_10-jre-hotspot-bionic
+FROM openjdk:11.0.16-jdk-oracle
 
 RUN groupadd -g 999 appuser && useradd -r -u 999 -g appuser appuser
 USER appuser
